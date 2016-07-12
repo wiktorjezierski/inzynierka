@@ -18,6 +18,12 @@ import com.mysql.jdbc.log.Log;
  * @author Wiktor Jezierski
  */
 public class DataBaseController {
+	
+	public final static String FIND_FRIENDS = "Relation.findFriends";
+	public final static String LOG_IN = "User.UpdateStatusLogIn";
+	public final static String LOG_OUT = "User.UpdateStatusLogOut";
+	public final static String CHECK_LOGIN_FOR_FREE = "User.CheckLogin";
+
 
 	private final String PERSISTENCE_NAME = "MainServer";
 

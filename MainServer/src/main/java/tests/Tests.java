@@ -9,12 +9,19 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import actions.Response;
 import actions.SignUP;
 
 public class Tests {
 	private static Socket client;
 
 	public static void main(String[] args) {
+		for (int i = 0; i < 5; i++) {
+			tests(i);
+		}
+	}
+
+	private static void tests(int i) {
 		String serverName = "192.168.0.4";
 //		String serverName = "10.0.2.15";
 		int port = 6066;
@@ -33,10 +40,15 @@ public class Tests {
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
 			ObjectInputStream objectInputStream  = new ObjectInputStream(client.getInputStream());
 			
-			SignUP rejestracja = new SignUP("wjeziorko", "wiktor", "jezierski", true);
+			SignUP rejestracja = new SignUP("wjeziorko" + i, "wiktor", "jezierski", true);
 			objectOutputStream.writeObject(rejestracja);
+			Response response = (Response)objectInputStream.readObject();
 			
-		} catch (IOException e) {
+
+			Thread.sleep(3000);
+			objectOutputStream.close();
+			client.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

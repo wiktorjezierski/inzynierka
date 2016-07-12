@@ -5,6 +5,8 @@ import database.User;
 
 public class SignUP implements Actions {
 	
+	private static final long serialVersionUID = 3307103721179068946L;
+
 	private String login;
 
 	private String imie;
@@ -25,13 +27,16 @@ public class SignUP implements Actions {
 
 	public Response run() {
 		try {
+			
 			User user = new User(login, imie, nazwisko, status, DataHelper.getIp());
 			DataBaseController dbController = new DataBaseController();
 			dbController.saveToDataBase(user);
+			return new Response(true);
+
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new Response(false);
 		}
-		return null;
 	}
 
 	public String getLogin() {

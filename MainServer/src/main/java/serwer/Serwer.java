@@ -31,7 +31,9 @@ public class Serwer extends Thread {
 	}
 
 	public void run() {
-		openConnection();
+		while (true) {
+			openConnection();
+		}
 	}
 	
 	public void openConnection() {
@@ -46,20 +48,16 @@ public class Serwer extends Thread {
 			out = new DataOutputStream(server.getOutputStream());
 			out.writeUTF(Integer.toString(++port));
 			
-			// nowe
 			objectInputStream = new ObjectInputStream(server.getInputStream());
 			DataHelper.setIp(server.getInetAddress().toString());
 			objectOutputStream = new ObjectOutputStream(server.getOutputStream());
 			Actions actions = (Actions)objectInputStream.readObject();
 			Response response = actions.run();
 			objectOutputStream.writeObject(response);
-			// nowe
 
 		} catch (SocketTimeoutException s) {
 			System.out.println("Socket timed out!");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

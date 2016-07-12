@@ -6,8 +6,9 @@ import database.DataBaseController;
 import database.User;
 
 public class SignInSignOut implements Actions {
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = -1766433058468964068L;
+	
 	private String userLogin;
 	private boolean direction;
 
@@ -16,10 +17,8 @@ public class SignInSignOut implements Actions {
 			User user = dbController.findByPrimaryKey(User.class, userLogin);
 			user.setStatus(direction);
 			user.setIp(DataHelper.getIp());
-			List<User> friends = dbController.executeNamedQuery(User.class, Actions.FIND_FRIENDS, userLogin);
-		Response response = new Response();
-		response.setUsers(friends);
-		return response;
+			List<User> friends = dbController.executeNamedQuery(User.class, DataBaseController.FIND_FRIENDS, userLogin);
+		return new Response(friends);
 	}
 
 	public String getLogin() {
