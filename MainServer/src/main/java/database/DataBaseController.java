@@ -31,26 +31,6 @@ public class DataBaseController {
 	private static EntityManager entityManager;
 
 	public static void main(String[] args) {
-		DataBaseController db = new DataBaseController();
-		// db.remove(wyp);
-
-		// List<WypozyczeniaEntity> lista =
-		// db.findAll(WypozyczeniaEntity.class);
-		// JOptionPane.showMessageDialog(null, lista.get(1).toString());
-
-//		List<WypozyczeniaEntity> lista = db.findByNamedQuery(WypozyczeniaEntity.class, "test2", 17);
-//		JOptionPane.showMessageDialog(null, lista.get(0).toString());
-
-		// WypozyczeniaEntity wyp1 =
-		// db.findByPrimaryKey(WypozyczeniaEntity.class, 17);
-		// JOptionPane.showMessageDialog(null, wyp1.toString());
-		
-//		List<WypozyczeniaEntity> list =  db.findAll(WypozyczeniaEntity.class);
-//		JOptionPane.showMessageDialog(null, list.get(0).toString());
-//		
-//		List<KlienciEntity> lista = db.executeNamedQueryForLike(KlienciEntity.class, "znajdzPoNazwisku", "P");
-//		JOptionPane.showMessageDialog(null, lista.size());
-//		db.closeConnection(); 
 	}
 
 	/**
@@ -89,6 +69,13 @@ public class DataBaseController {
 	public void closeConnection() {
 		entityManager.close();
 		entityManagerFactory.close();
+	}
+	
+	/**
+	 * 
+	 * */
+	public boolean transactionIsActive() {
+		return entityManager.getTransaction().isActive();
 	}
 	
 	/**

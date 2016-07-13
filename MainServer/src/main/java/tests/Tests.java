@@ -16,9 +16,9 @@ public class Tests {
 	private static Socket client;
 
 	public static void main(String[] args) {
-		for (int i = 0; i < 5; i++) {
-			tests(i);
-		}
+//		for (int i = 0; i < 5; i++) {
+			tests(1);
+//		}
 	}
 
 	private static void tests(int i) {
@@ -34,7 +34,7 @@ public class Tests {
 			out.writeUTF("Hello from " + client.getLocalSocketAddress());
 			InputStream inFromServer = client.getInputStream();
 			DataInputStream in = new DataInputStream(inFromServer);
-			String newPort = in.readUTF();
+			int newPort = Integer.parseInt(in.readUTF());
 			System.out.println("Server says " + newPort + " " + client.getRemoteSocketAddress());
 
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());

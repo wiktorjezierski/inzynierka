@@ -3,16 +3,10 @@ package serwer;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
-import actions.Actions;
-import actions.DataHelper;
-import actions.Response;
 import database.DataBaseController;
 
 public class Serwer extends Thread {
@@ -20,13 +14,11 @@ public class Serwer extends Thread {
 	private static int port = 6066;
 	private ServerSocket serverSocket;
 	private DataOutputStream out;
-	private OutputStream stream;
-	private ObjectInputStream objectInputStream;
-	private ObjectOutputStream objectOutputStream;
+	private DataBaseController mController;
 
 	public Serwer() throws IOException {
-		DataBaseController dbController = new DataBaseController();
-		dbController.openConnection();
+		mController = new DataBaseController();
+		mController.openConnection();
 		serverSocket = new ServerSocket(port);
 	}
 
@@ -35,37 +27,24 @@ public class Serwer extends Thread {
 			openConnection();
 		}
 	}
-	
+
 	public void openConnection() {
 		try {
 			System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
 			Socket server = serverSocket.accept();
 			System.out.println("Just connected to " + server.getRemoteSocketAddress());
-			
-			
+
 			DataInputStream in = new DataInputStream(server.getInputStream());
 			System.out.println(in.readUTF());
 			out = new DataOutputStream(server.getOutputStream());
 			out.writeUTF(Integer.toString(++port));
-			
-			objectInputStream = new ObjectInputStream(server.getInputStream());
-			DataHelper.setIp(server.getInetAddress().toString());
-			objectOutputStream = new ObjectOutputStream(server.getOutputStream());
-			Actions actions = (Actions)objectInputStream.readObject();
-			Response response = actions.run();
-			objectOutputStream.writeObject(response);
+
+			Thread t = new ServerAction(port, mController);
+			t.start();
 
 		} catch (SocketTimeoutException s) {
 			System.out.println("Socket timed out!");
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void send(byte [] bytes) {
-		try {
-			stream.write(bytes, 0, bytes.length);
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
