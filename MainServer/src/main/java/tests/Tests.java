@@ -36,6 +36,8 @@ public class Tests {
 			DataInputStream in = new DataInputStream(inFromServer);
 			int newPort = Integer.parseInt(in.readUTF());
 			System.out.println("Server says " + newPort + " " + client.getRemoteSocketAddress());
+			
+			client = new Socket(serverName, newPort);
 
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
 			ObjectInputStream objectInputStream  = new ObjectInputStream(client.getInputStream());
