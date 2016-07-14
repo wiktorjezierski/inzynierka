@@ -17,18 +17,21 @@ public class SignUP implements Actions {
 	
 	private String ip;
 	
-	public SignUP(String login, String imie, String nazwisko, boolean status) {
+	private DeviceType deviceType;
+	
+	public SignUP(String login, String imie, String nazwisko, boolean status, DeviceType deviceType) {
 		super();
 		this.login = login;
 		this.imie = imie;
 		this.nazwisko = nazwisko;
 		this.status = status;
+		this.deviceType = deviceType;
 	}
 
 	public Response run() {
 		try {
 			
-			User user = new User(login, imie, nazwisko, status, DataHelper.getIp());
+			User user = new User(login, imie, nazwisko, status, DataHelper.getIp(), deviceType);
 			DataBaseController dbController = new DataBaseController();
 			dbController.saveToDataBase(user);
 			return new Response(true);

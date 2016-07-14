@@ -3,6 +3,8 @@ package database;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import actions.DeviceType;
+
 
 /**
  * The persistent class for the users database table.
@@ -30,17 +32,22 @@ public class User implements Serializable {
 	
 	@Column(name="IP")
 	private String ip;
+
+	@Column(name="DEVICE")
+	@Enumerated(EnumType.ORDINAL)
+	private DeviceType deviceType;
 	
 	public User() {
 	}
 	
-	public User(String login, String imie, String nazwisko, boolean status, String ip) {
+	public User(String login, String imie, String nazwisko, boolean status, String ip, DeviceType deviceType) {
 		super();
 		this.login = login;
 		this.imie = imie;
 		this.nazwisko = nazwisko;
 		this.status = status;
 		this.ip = ip;
+		this.deviceType = deviceType;
 	}
 	
 	public User(String login, String imie, String nazwisko, boolean status) {
@@ -113,5 +120,13 @@ public class User implements Serializable {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+
+	public DeviceType getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(DeviceType deviceType) {
+		this.deviceType = deviceType;
 	}
 }

@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import actions.DeviceType;
 import actions.Response;
 import actions.SignUP;
 
@@ -42,7 +43,7 @@ public class Tests {
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
 			ObjectInputStream objectInputStream  = new ObjectInputStream(client.getInputStream());
 			
-			SignUP rejestracja = new SignUP("wjeziorko" + i, "wiktor", "jezierski", true);
+			SignUP rejestracja = new SignUP("wjeziorko" + i, "wiktor", "jezierski", true, DeviceType.PC);
 			objectOutputStream.writeObject(rejestracja);
 			Response response = (Response)objectInputStream.readObject();
 			
