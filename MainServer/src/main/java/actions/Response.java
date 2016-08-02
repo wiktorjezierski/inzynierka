@@ -11,8 +11,6 @@ public class Response implements Serializable {
 	
 	private List<User> users;
 	private boolean confirmation;
-	
-	
 
 	public Response(boolean confirmation) {
 		this.confirmation = confirmation;
@@ -37,5 +35,4 @@ public class Response implements Serializable {
 	public void setConfirmation(boolean confirmation) {
 		this.confirmation = confirmation;
 	}
-	
 }
