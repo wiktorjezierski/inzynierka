@@ -9,9 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.swing.JOptionPane;
-
-import com.mysql.jdbc.log.Log;
 
 
 /**
@@ -106,17 +103,17 @@ public class DataBaseController {
 	/**
 	 * Save object into Data Base, function is template
 	 */
-	public <T> boolean saveToDataBase(T param) throws Exception {
-	/*	try {*/
+	public <T> boolean saveToDataBase(T param) {
+		try {
 			beginTransaction();
 			entityManager.persist(param);
 			commitTransaction();
 
 			return true;
-	/*	} catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		}*/
+		}
 	}
 	
 	/**

@@ -11,6 +11,7 @@ import java.net.Socket;
 
 import actions.DeviceType;
 import actions.Response;
+import actions.SignInSignOut;
 import actions.SignUP;
 
 public class Tests {
@@ -43,10 +44,13 @@ public class Tests {
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
 			ObjectInputStream objectInputStream  = new ObjectInputStream(client.getInputStream());
 			
-			SignUP rejestracja = new SignUP("wjeziorko" + i, "wiktor", "jezierski", true, DeviceType.PC);
-			objectOutputStream.writeObject(rejestracja);
-			Response response = (Response)objectInputStream.readObject();
+//			SignUP rejestracja = new SignUP("wjeziorko" + i, "admin123", "wiktor", "jezierski", true);
+//			objectOutputStream.writeObject(rejestracja);
+//			Response response = (Response)objectInputStream.readObject();
 			
+			SignInSignOut logowanie = new SignInSignOut("wjeziorko1", "admin123", true, DeviceType.PC);
+			objectOutputStream.writeObject(logowanie);
+			Response response = (Response)objectInputStream.readObject();
 
 			Thread.sleep(3000);
 			objectOutputStream.close();

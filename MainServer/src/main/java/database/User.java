@@ -1,9 +1,17 @@
 package database;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-import actions.DeviceType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
 
 
 /**
@@ -30,24 +38,11 @@ public class User implements Serializable {
 	
 	private boolean status;
 	
-	@Column(name="IP")
-	private String ip;
-
-	@Column(name="DEVICE")
-	@Enumerated(EnumType.ORDINAL)
-	private DeviceType deviceType;
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	private UserCurrentDetail detailsID;
 	
 	public User() {
-	}
-	
-	public User(String login, String imie, String nazwisko, boolean status, String ip, DeviceType deviceType) {
-		super();
-		this.login = login;
-		this.imie = imie;
-		this.nazwisko = nazwisko;
-		this.status = status;
-		this.ip = ip;
-		this.deviceType = deviceType;
 	}
 	
 	public User(String login, String imie, String nazwisko, boolean status) {
@@ -57,7 +52,7 @@ public class User implements Serializable {
 		this.nazwisko = nazwisko;
 		this.status = status;
 	}
-
+	
 	//bi-directional one-to-one association to Relation
 	@OneToOne(mappedBy="user1")
 	private Relation relation1;
@@ -114,19 +109,11 @@ public class User implements Serializable {
 		this.status = status;
 	}
 
-	public String getIp() {
-		return ip;
+	public UserCurrentDetail getDetailsID() {
+		return detailsID;
 	}
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	public DeviceType getDeviceType() {
-		return deviceType;
-	}
-
-	public void setDeviceType(DeviceType deviceType) {
-		this.deviceType = deviceType;
+	public void setDetailsID(UserCurrentDetail detailsID) {
+		this.detailsID = detailsID;
 	}
 }

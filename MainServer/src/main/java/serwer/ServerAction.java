@@ -42,7 +42,7 @@ public class ServerAction extends Thread {
 			while (true) {
 				Actions actions = (Actions) objectInputStream.readObject();
 				while(mController.transactionIsActive());
-				Response response = actions.run();
+				Response response = actions.run();			// TODO: USER add ip as parameter
 				objectOutputStream.writeObject(response);
 			}
 			

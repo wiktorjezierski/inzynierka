@@ -1,6 +1,7 @@
 package actions;
 
 import database.DataBaseController;
+import database.Login;
 import database.User;
 
 public class SignUP implements Actions {
@@ -8,6 +9,8 @@ public class SignUP implements Actions {
 	private static final long serialVersionUID = 3307103721179068946L;
 
 	private String login;
+	
+	private String password;
 
 	private String imie;
 
@@ -15,25 +18,23 @@ public class SignUP implements Actions {
 	
 	private boolean status;
 	
-	private String ip;
-	
-	private DeviceType deviceType;
-	
-	public SignUP(String login, String imie, String nazwisko, boolean status, DeviceType deviceType) {
+	public SignUP(String login, String password, String imie, String nazwisko, boolean status) {
 		super();
 		this.login = login;
+		this.password = password;
 		this.imie = imie;
 		this.nazwisko = nazwisko;
 		this.status = status;
-		this.deviceType = deviceType;
 	}
 
 	public Response run() {
 		try {
 			
-			User user = new User(login, imie, nazwisko, status, DataHelper.getIp(), deviceType);
 			DataBaseController dbController = new DataBaseController();
+			User user = new User(login, imie, nazwisko, status);
 			dbController.saveToDataBase(user);
+			Login login = new Login(this.login, password);
+			dbController.saveToDataBase(login);
 			return new Response(true);
 
 		} catch (Exception e) {
@@ -74,11 +75,11 @@ public class SignUP implements Actions {
 		this.status = status;
 	}
 
-	public String getIp() {
-		return ip;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setIp(String ip) {
-		this.ip = ip;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

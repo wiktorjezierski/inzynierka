@@ -1,10 +1,12 @@
 package actions;
 
 import java.util.List;
+import java.util.UUID;
 
 import database.DataBaseController;
 import database.Login;
 import database.User;
+import database.UserCurrentDetail;
 
 public class SignInSignOut implements Actions {
 
@@ -13,23 +15,36 @@ public class SignInSignOut implements Actions {
 	private String userLogin;
 	private String userPassword;
 	private boolean direction;
+	private DeviceType device;
 	
-	public SignInSignOut(String userLogin, String userPassword, boolean direction) {
+	public SignInSignOut(String userLogin, String userPassword, boolean direction, DeviceType device) {
 		this.userLogin = userLogin;
 		this.userPassword = userPassword;
 		this.direction = direction;
+		this.device = device;
 	}
 
 	public Response run() {
-		DataBaseController dbController = new DataBaseController();
-		Login login = dbController.findByPrimaryKey(Login.class, userLogin);
+		DataBaseController mController = new DataBaseController();
+		Login login = mController.findByPrimaryKey(Login.class, userLogin);
+		
 		if (userPassword != null && login != null && userPassword.equals(login.getPassword())) {
-			User user = dbController.findByPrimaryKey(User.class, userLogin);
+			User user = mController.findByPrimaryKey(User.class, userLogin);
 			user.setStatus(direction);
-			user.setIp(DataHelper.getIp());
-			List<User> friends = dbController.executeNamedQuery(User.class, DataBaseController.FIND_FRIENDS, userLogin);
+			
+			UserCurrentDetail details = user.getDetailsID();
+			if(details != null){
+				mController.remove(details);
+			}
+			
+			UserCurrentDetail userCurrentDetail = new UserCurrentDetail(UUID.randomUUID(), device, "ip");
+			user.setDetailsID(userCurrentDetail);
+			mController.saveToDataBase(user);
+			
+			List<User> friends = mController.executeNamedQuery(User.class, DataBaseController.FIND_FRIENDS, userLogin);
 			return new Response(friends);
-		} else {
+		} 
+		else {
 			return new Response(false);
 		}
 	}
