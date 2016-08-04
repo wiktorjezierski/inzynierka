@@ -6,6 +6,7 @@ import javax.persistence.*;
 import actions.DeviceType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +27,8 @@ public class UserCurrentDetail implements Serializable {
 
 	private String detailid;
 
-	private byte device;
+	@Enumerated(EnumType.ORDINAL)
+	private DeviceType device;
 
 	private String ip;
 
@@ -37,12 +39,12 @@ public class UserCurrentDetail implements Serializable {
 	public UserCurrentDetail() {
 	}
 
-	public UserCurrentDetail(UUID randomUUID, DeviceType device, String ip) {
+	public UserCurrentDetail(UUID randomUUID, DeviceType device, String ip, User user) {
 		this.sessionId = randomUUID.toString();
-		this.device = convertDeviceType(device);;
+		this.device = device;
 		this.ip = ip;
+		users = new ArrayList<User>(Arrays.asList(user));
 	}
-	
 
 	public UUID getSessionId() {
 		return UUID.fromString(this.sessionId);
@@ -60,19 +62,12 @@ public class UserCurrentDetail implements Serializable {
 		this.detailid = detailid;
 	}
 
-	public byte getDevice() {
+	public DeviceType getDevice() {
 		return this.device;
 	}
 
 	public void setDevice(DeviceType device) {
-		this.device = convertDeviceType(device);
-	}
-
-	private byte convertDeviceType(DeviceType device) {
-		if(device == DeviceType.PC)
-			return 0;
-		else
-			return 1;
+		this.device = device;
 	}
 
 	public String getIp() {
@@ -110,5 +105,4 @@ public class UserCurrentDetail implements Serializable {
 
 		return user;
 	}
-
 }

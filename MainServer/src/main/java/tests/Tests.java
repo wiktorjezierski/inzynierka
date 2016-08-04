@@ -2,7 +2,6 @@ package tests;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -44,13 +43,13 @@ public class Tests {
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
 			ObjectInputStream objectInputStream  = new ObjectInputStream(client.getInputStream());
 			
-//			SignUP rejestracja = new SignUP("wjeziorko" + i, "admin123", "wiktor", "jezierski", true);
-//			objectOutputStream.writeObject(rejestracja);
-//			Response response = (Response)objectInputStream.readObject();
-			
-			SignInSignOut logowanie = new SignInSignOut("wjeziorko1", "admin123", true, DeviceType.PC);
-			objectOutputStream.writeObject(logowanie);
+			SignUP rejestracja = new SignUP("wjeziorko4", "admin123", "wiktor", "jezierski", true);
+			objectOutputStream.writeObject(rejestracja);
 			Response response = (Response)objectInputStream.readObject();
+			
+			SignInSignOut logowanie = new SignInSignOut("wjeziorko4", "admin123", true, DeviceType.PC);
+			objectOutputStream.writeObject(logowanie);
+			 response = (Response)objectInputStream.readObject();
 
 			Thread.sleep(3000);
 			objectOutputStream.close();

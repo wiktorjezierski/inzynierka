@@ -11,12 +11,12 @@ import database.UserCurrentDetail;
 public class SignInSignOut implements Actions {
 
 	private static final long serialVersionUID = -1766433058468964068L;
-	
+
 	private String userLogin;
 	private String userPassword;
 	private boolean direction;
 	private DeviceType device;
-	
+
 	public SignInSignOut(String userLogin, String userPassword, boolean direction, DeviceType device) {
 		this.userLogin = userLogin;
 		this.userPassword = userPassword;
@@ -27,26 +27,23 @@ public class SignInSignOut implements Actions {
 	public Response run() {
 		DataBaseController mController = new DataBaseController();
 		Login login = mController.findByPrimaryKey(Login.class, userLogin);
-		
+
 		if (userPassword != null && login != null && userPassword.equals(login.getPassword())) {
 			User user = mController.findByPrimaryKey(User.class, userLogin);
 			user.setStatus(direction);
-			
+
 			UserCurrentDetail details = user.getUserCurrentDetail();
-			if(details != null){
+			if (details != null) {
 				mController.remove(details);
 			}
-			
-			UserCurrentDetail userCurrentDetail = new UserCurrentDetail(UUID.randomUUID(), device, "ip");
-			userCurrentDetail.setUser(user);
-//			mController.saveToDataBase(userCurrentDetail);
+
+			UserCurrentDetail userCurrentDetail = new UserCurrentDetail(UUID.randomUUID(), device, "ip", user);
 			user.setUserCurrentDetail(userCurrentDetail);
 			mController.saveToDataBase(user);
-			
+
 			List<User> friends = mController.executeNamedQuery(User.class, DataBaseController.FIND_FRIENDS, userLogin);
 			return new Response(friends);
-		} 
-		else {
+		} else {
 			return new Response(false);
 		}
 	}
@@ -58,7 +55,7 @@ public class SignInSignOut implements Actions {
 	public void setLogin(String login) {
 		this.userLogin = login;
 	}
-	
+
 	public String getUserPassword() {
 		return userPassword;
 	}
@@ -72,8 +69,9 @@ public class SignInSignOut implements Actions {
 	}
 
 	/**
-	 * @param direction - true if logIn, false if logOut
-	 * */
+	 * @param direction
+	 *            - true if logIn, false if logOut
+	 */
 	public void setDirection(boolean direction) {
 		this.direction = direction;
 	}

@@ -10,8 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 
 /**
  * The persistent class for the users database table.
@@ -87,5 +85,4 @@ public class User implements Serializable {
 	public void setUserCurrentDetail(UserCurrentDetail userCurrentDetail) {
 		this.userCurrentDetail = userCurrentDetail;
 	}
-
 }
