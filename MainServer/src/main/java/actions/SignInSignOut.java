@@ -32,13 +32,15 @@ public class SignInSignOut implements Actions {
 			User user = mController.findByPrimaryKey(User.class, userLogin);
 			user.setStatus(direction);
 			
-			UserCurrentDetail details = user.getDetailsID();
+			UserCurrentDetail details = user.getUserCurrentDetail();
 			if(details != null){
 				mController.remove(details);
 			}
 			
 			UserCurrentDetail userCurrentDetail = new UserCurrentDetail(UUID.randomUUID(), device, "ip");
-			user.setDetailsID(userCurrentDetail);
+			userCurrentDetail.setUser(user);
+//			mController.saveToDataBase(userCurrentDetail);
+			user.setUserCurrentDetail(userCurrentDetail);
 			mController.saveToDataBase(user);
 			
 			List<User> friends = mController.executeNamedQuery(User.class, DataBaseController.FIND_FRIENDS, userLogin);

@@ -1,20 +1,13 @@
 package database;
 
 import java.io.Serializable;
-import java.util.UUID;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import actions.DeviceType;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -29,40 +22,57 @@ public class UserCurrentDetail implements Serializable {
 
 	@Id
 	@Column(name="SESSION_ID")
-	private UUID sessionId;
+	private String sessionId;
 
-	@Column(name="DEVICE")
-	@Enumerated(EnumType.ORDINAL)
-	private DeviceType device;
+	private String detailid;
+
+	private byte device;
 
 	private String ip;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "detailsID")
-	private User detailid;
+	//bi-directional many-to-one association to User
+	@OneToMany(mappedBy="userCurrentDetail")
+	private List<User> users;
 
 	public UserCurrentDetail() {
 	}
-	
-	public UserCurrentDetail(UUID sessionId, DeviceType device, String ip) {
-		this.sessionId = sessionId;
-		this.device = device;
+
+	public UserCurrentDetail(UUID randomUUID, DeviceType device, String ip) {
+		this.sessionId = randomUUID.toString();
+		this.device = convertDeviceType(device);;
 		this.ip = ip;
 	}
+	
 
 	public UUID getSessionId() {
-		return this.sessionId;
+		return UUID.fromString(this.sessionId);
 	}
 
 	public void setSessionId(UUID sessionId) {
-		this.sessionId = sessionId;
+		this.sessionId = sessionId.toString();
 	}
 
-	public DeviceType getDevice() {
+	public String getDetailid() {
+		return this.detailid;
+	}
+
+	public void setDetailid(String detailid) {
+		this.detailid = detailid;
+	}
+
+	public byte getDevice() {
 		return this.device;
 	}
 
 	public void setDevice(DeviceType device) {
-		this.device = device;
+		this.device = convertDeviceType(device);
+	}
+
+	private byte convertDeviceType(DeviceType device) {
+		if(device == DeviceType.PC)
+			return 0;
+		else
+			return 1;
 	}
 
 	public String getIp() {
@@ -73,11 +83,32 @@ public class UserCurrentDetail implements Serializable {
 		this.ip = ip;
 	}
 
-	public User getDetailid() {
-		return this.detailid;
+	public List<User> getUsers() {
+		return this.users;
 	}
 
-	public void setdetailid(User login) {
-		this.detailid = login;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
+	
+	public void setUser(User user) {
+		List<User> users = new ArrayList<User>();
+		users.add(user);
+		this.users = users;
+	}
+
+	public User addUser(User user) {
+		getUsers().add(user);
+		user.setUserCurrentDetail(this);
+
+		return user;
+	}
+
+	public User removeUser(User user) {
+		getUsers().remove(user);
+		user.setUserCurrentDetail(null);
+
+		return user;
+	}
+
 }
