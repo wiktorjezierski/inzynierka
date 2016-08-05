@@ -12,8 +12,8 @@ import java.util.Date;
 @Entity
 @Table(name="relations")
 @NamedQueries({
-	@NamedQuery(name="Relation.findAll", query="SELECT r FROM Relation r")
-//	@NamedQuery(name="Relation.findFriends", query="SELECT u FROM User u JOIN u.relation1 r WHERE r=?1")	// zweryfikowac to
+	@NamedQuery(name="Relation.findAll", query="SELECT r FROM Relation r"),
+	@NamedQuery(name="Relation.findFriends", query="SELECT r FROM Relation r JOIN r.user1 u1 JOIN r.user2 u2 WHERE u1.login=?1 or u2.login=?1")	// zweryfikowac to
 })
 public class Relation implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -1,10 +1,12 @@
 package actions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import database.DataBaseController;
 import database.Login;
+import database.Relation;
 import database.User;
 import database.UserCurrentDetail;
 
@@ -41,11 +43,25 @@ public class SignInAction implements Actions {
 			user.setUserCurrentDetail(userCurrentDetail);
 			mController.saveToDataBase(user);
 
-			List<User> friends = mController.executeNamedQuery(User.class, DataBaseController.FIND_FRIENDS, userLogin);
+			List<Relation> relations = mController.executeNamedQuery(Relation.class, DataBaseController.FIND_FRIENDS, userLogin);
+			List<User> friends = findFriends(relations);
+			
 			return new Response(friends);
 		} else {
 			return new Response(false);
 		}
+	}
+
+	private List<User> findFriends(List<Relation> relations) {
+		List<User> friends = new ArrayList<User>();
+		for (Relation relation : relations) {
+			if(!relation.getUser1().getLogin().equals(userLogin)){
+				friends.add(relation.getUser1());
+			} else {
+				friends.add(relation.getUser2());
+			}
+		}
+		return friends;
 	}
 
 	public String getLogin() {
