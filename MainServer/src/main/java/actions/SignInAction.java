@@ -8,7 +8,7 @@ import database.Login;
 import database.User;
 import database.UserCurrentDetail;
 
-public class SignInSignOut implements Actions {
+public class SignInAction implements Actions {
 
 	private static final long serialVersionUID = -1766433058468964068L;
 
@@ -17,7 +17,7 @@ public class SignInSignOut implements Actions {
 	private boolean direction;
 	private DeviceType device;
 
-	public SignInSignOut(String userLogin, String userPassword, boolean direction, DeviceType device) {
+	public SignInAction(String userLogin, String userPassword, boolean direction, DeviceType device) {
 		this.userLogin = userLogin;
 		this.userPassword = userPassword;
 		this.direction = direction;

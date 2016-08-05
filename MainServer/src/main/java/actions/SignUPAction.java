@@ -4,7 +4,7 @@ import database.DataBaseController;
 import database.Login;
 import database.User;
 
-public class SignUP implements Actions {
+public class SignUPAction implements Actions {
 	
 	private static final long serialVersionUID = 3307103721179068946L;
 
@@ -18,7 +18,7 @@ public class SignUP implements Actions {
 	
 	private boolean status;
 	
-	public SignUP(String login, String password, String imie, String nazwisko, boolean status) {
+	public SignUPAction(String login, String password, String imie, String nazwisko, boolean status) {
 		super();
 		this.login = login;
 		this.password = password;
