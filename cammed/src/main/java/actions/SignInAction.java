@@ -1,20 +1,22 @@
 package actions;
 
-public class SignInSignOut implements Actions {
+public class SignInAction implements Actions {
 
 	private static final long serialVersionUID = -1766433058468964068L;
-	
+
 	private String userLogin;
 	private String userPassword;
 	private boolean direction;
-	
-	public SignInSignOut(String userLogin, String userPassword, boolean direction) {
+	private DeviceType device;
+
+	public SignInAction(String userLogin, String userPassword, boolean direction, DeviceType device) {
 		this.userLogin = userLogin;
 		this.userPassword = userPassword;
 		this.direction = direction;
+		this.device = device;
 	}
 
-	public Response run() {
+	public Response run(String addressIp) {
 		return null;
 	}
 
@@ -25,7 +27,7 @@ public class SignInSignOut implements Actions {
 	public void setLogin(String login) {
 		this.userLogin = login;
 	}
-	
+
 	public String getUserPassword() {
 		return userPassword;
 	}
@@ -39,8 +41,9 @@ public class SignInSignOut implements Actions {
 	}
 
 	/**
-	 * @param direction - true if logIn, false if logOut
-	 * */
+	 * @param direction
+	 *            - true if logIn, false if logOut
+	 */
 	public void setDirection(boolean direction) {
 		this.direction = direction;
 	}
