@@ -42,7 +42,7 @@ public class ServerAction extends Thread {
 			while (true) {
 				Actions actions = (Actions) objectInputStream.readObject();
 				while(mController.transactionIsActive());
-				Response response = actions.run(server.getInetAddress().toString());
+				Response response = actions.run(findAddressIp(server));
 				objectOutputStream.writeObject(response);
 			}
 			
@@ -51,5 +51,9 @@ public class ServerAction extends Thread {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private String findAddressIp(Socket server) {
+		return server.getInetAddress().toString().substring(1);
 	}
 }
