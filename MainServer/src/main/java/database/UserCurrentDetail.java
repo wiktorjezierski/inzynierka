@@ -1,14 +1,20 @@
 package database;
 
-import java.io.Serializable;
-import javax.persistence.*;
-
-import actions.DeviceType;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import actions.DeviceType;
 
 
 /**
@@ -18,7 +24,7 @@ import java.util.UUID;
 @Entity
 @Table(name="user_current_details")
 @NamedQuery(name="UserCurrentDetail.findAll", query="SELECT u FROM UserCurrentDetail u")
-public class UserCurrentDetail implements Serializable {
+public class UserCurrentDetail implements Entitys {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -104,5 +110,9 @@ public class UserCurrentDetail implements Serializable {
 		user.setUserCurrentDetail(null);
 
 		return user;
+	}
+
+	public String getPrimaryKey() {
+		return getSessionId().toString();
 	}
 }

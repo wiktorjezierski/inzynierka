@@ -102,7 +102,7 @@ public class DataBaseController {
 	/**
 	 * Save object into Data Base, function is template
 	 */
-	public <T> boolean saveToDataBase(T param) {
+	public <T extends Entitys> boolean saveToDataBase(T param) {
 		try {
 			beginTransaction();
 			entityManager.persist(param);
@@ -120,7 +120,7 @@ public class DataBaseController {
 	 * Must to use function beginTransaction() before and commitTransaction() after this function
 	 * function to using in loop
 	 */
-	public <T> boolean saveMoreToDataBase(T param) {
+	public <T extends Entitys> boolean saveMoreToDataBase(T param) {
 		try {
 			entityManager.persist(param);
 			return true;
@@ -133,7 +133,7 @@ public class DataBaseController {
 	/**
 	 * Function remove record from database make tests!!!
 	 */
-	public <T> boolean remove(T obj) {
+	public <T extends Entitys> boolean remove(T obj) {
 		try {
 			beginTransaction();
 			entityManager.remove(obj);
@@ -151,7 +151,7 @@ public class DataBaseController {
 	 * 
 	 * @param <T>
 	 */
-	public <T> List<T> findAll(Class<T> type) {
+	public <T extends Entitys> List<T> findAll(Class<T> type) {
 		try {
 			beginTransaction();
 			Query query = entityManager.createQuery("from " + type.getSimpleName());
@@ -170,7 +170,7 @@ public class DataBaseController {
 	 * 
 	 * @param <T>
 	 */
-	public <T> T findByPrimaryKey(Class<T> type, int primaryKey) {
+	public <T extends Entitys> T findByPrimaryKey(Class<T> type, int primaryKey) {
 		try {
 			beginTransaction();
 			T ob = (T) entityManager.find(type, primaryKey);
@@ -188,7 +188,7 @@ public class DataBaseController {
 	 * 
 	 * @param <T>
 	 */
-	public <T> T findByPrimaryKey(Class<T> type, String primaryKey) {
+	public <T extends Entitys> T findByPrimaryKey(Class<T> type, String primaryKey) {
 		try {
 			beginTransaction();
 			T ob = (T) entityManager.find(type, primaryKey);
@@ -204,7 +204,7 @@ public class DataBaseController {
 	/**
 	 * Execute NamedQuery with char % before and after value in Like
 	 * */
-	public <T> List<T> executeNamedQueryForLike(Class<T> type, String queryName, String... value) {
+	public <T extends Entitys> List<T> executeNamedQueryForLike(Class<T> type, String queryName, String... value) {
 		try {
 			String x = "%"; 
 			
@@ -227,7 +227,7 @@ public class DataBaseController {
 	/**
 	 * 
 	 * */
-	public <T> List<T> executeNamedQuery(Class<T> type, String queryName, String... value) {
+	public <T extends Entitys> List<T> executeNamedQuery(Class<T> type, String queryName, String... value) {
 		try {
 			beginTransaction();
 			Query query = entityManager.createNamedQuery(queryName);
@@ -265,7 +265,7 @@ public class DataBaseController {
 	/**
 	 * 
 	 * */
-	public <T> List<T> executeNamedQuery(Class<T> type, String queryName, int... value) {
+	public <T extends Entitys> List<T> executeNamedQuery(Class<T> type, String queryName, int... value) {
 		try {
 			beginTransaction();
 			Query query = entityManager.createNamedQuery(queryName);
@@ -286,7 +286,7 @@ public class DataBaseController {
 	/**
 	 * was not tested
 	 * */
-	public <T> List<T> executeNamedQuery(Class<T> type, String queryName, Date... value) {
+	public <T extends Entitys> List<T> executeNamedQuery(Class<T> type, String queryName, Date... value) {
 		try {
 			beginTransaction();
 			Query query = entityManager.createNamedQuery(queryName);

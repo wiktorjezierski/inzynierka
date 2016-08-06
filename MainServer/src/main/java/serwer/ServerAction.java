@@ -41,7 +41,7 @@ public class ServerAction extends Thread {
 			
 			while (true) {
 				Actions actions = (Actions) objectInputStream.readObject();
-				while(mController.transactionIsActive());
+				while(mController.transactionIsActive());	// TODO: USER change using transaction
 				Response response = actions.run();			// TODO: USER add ip as parameter
 				objectOutputStream.writeObject(response);
 			}

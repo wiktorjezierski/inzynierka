@@ -1,7 +1,9 @@
 package database;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -11,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="logins")
 @NamedQuery(name="Login.findAll", query="SELECT l FROM Login l")
-public class Login implements Serializable {
+public class Login implements Entitys {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -41,5 +43,9 @@ public class Login implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getPrimaryKey() {
+		return getLogin();
 	}
 }

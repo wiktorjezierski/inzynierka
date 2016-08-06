@@ -1,8 +1,16 @@
 package database;
 
-import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -15,7 +23,7 @@ import java.util.Date;
 	@NamedQuery(name="Relation.findAll", query="SELECT r FROM Relation r"),
 	@NamedQuery(name="Relation.findFriends", query="SELECT r FROM Relation r JOIN r.user1 u1 JOIN r.user2 u2 WHERE u1.login=?1 or u2.login=?1")	// zweryfikowac to
 })
-public class Relation implements Serializable {
+public class Relation implements Entitys {
 	private static final long serialVersionUID = 1L;
 
 	@Temporal(TemporalType.DATE)
@@ -67,5 +75,9 @@ public class Relation implements Serializable {
 
 	public void setUser2(User user2) {
 		this.user2 = user2;
+	}
+
+	public String getPrimaryKey() {
+		return Integer.toString(getId());
 	}
 }

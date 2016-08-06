@@ -1,7 +1,5 @@
 package database;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="users")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
-public class User implements Serializable {
+public class User implements Entitys {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -84,5 +82,9 @@ public class User implements Serializable {
 
 	public void setUserCurrentDetail(UserCurrentDetail userCurrentDetail) {
 		this.userCurrentDetail = userCurrentDetail;
+	}
+
+	public String getPrimaryKey() {
+		return getLogin();
 	}
 }

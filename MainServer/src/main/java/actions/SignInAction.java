@@ -44,7 +44,7 @@ public class SignInAction implements Actions {
 			mController.saveToDataBase(user);
 
 			List<Relation> relations = mController.executeNamedQuery(Relation.class, DataBaseController.FIND_FRIENDS, userLogin);
-			List<User> friends = findFriends(relations);
+			List<User> friends = findActivFriends(relations);
 			
 			return new Response(friends);
 		} else {
@@ -52,12 +52,13 @@ public class SignInAction implements Actions {
 		}
 	}
 
-	private List<User> findFriends(List<Relation> relations) {
+	private List<User> findActivFriends(List<Relation> relations) {
 		List<User> friends = new ArrayList<User>();
 		for (Relation relation : relations) {
-			if(!relation.getUser1().getLogin().equals(userLogin)){
-				friends.add(relation.getUser1());
-			} else {
+			User user1 = relation.getUser1();
+			if(!user1.getLogin().equals(userLogin) && user1.getUserCurrentDetail() != null){
+				friends.add(user1);
+			} else if(relation.getUser2().getUserCurrentDetail() != null){
 				friends.add(relation.getUser2());
 			}
 		}
