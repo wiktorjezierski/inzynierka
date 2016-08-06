@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import database.DataBaseController;
+import database.Entitys;
 import database.Login;
 import database.Relation;
 import database.User;
@@ -43,7 +44,7 @@ public class SignInAction implements Actions {
 			user.setUserCurrentDetail(userCurrentDetail);
 			mController.saveToDataBase(user);
 
-			List<Relation> relations = mController.executeNamedQuery(Relation.class, DataBaseController.FIND_FRIENDS, userLogin);
+			List<Relation> relations = mController.executeNamedQuery(Relation.class, Entitys.FIND_FRIENDS, userLogin);
 			List<User> friends = findActivFriends(relations);
 			
 			return new Response(friends);

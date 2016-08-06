@@ -43,11 +43,11 @@ public class Tests {
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
 			ObjectInputStream objectInputStream  = new ObjectInputStream(client.getInputStream());
 //			
-//			SignUPAction rejestracja = new SignUPAction("wjeziorko5", "admin123", "wiktor", "jezierski", true);
+//			SignUPAction rejestracja = new SignUPAction("wjeziorko6", "admin123", "wiktor", "jezierski", true);
 //			objectOutputStream.writeObject(rejestracja);
 //			Response response = (Response)objectInputStream.readObject();
 			
-			SignInAction logowanie = new SignInAction("wjeziorko1", "admin123", true, DeviceType.PC);
+			SignInAction logowanie = new SignInAction("wjeziorko6", "admin123", true, DeviceType.PC);
 			objectOutputStream.writeObject(logowanie);
 			Response response = (Response)objectInputStream.readObject();
 

@@ -17,6 +17,7 @@ public class Response implements Serializable {
 	}
 
 	public Response(List<User> users) {
+		this.confirmation = true;
 		this.users = users;
 	}
 

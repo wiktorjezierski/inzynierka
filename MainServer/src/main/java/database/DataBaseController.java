@@ -16,11 +16,6 @@ import javax.persistence.Query;
  */
 public class DataBaseController {
 	
-	public final static String FIND_FRIENDS = "Relation.findFriends";
-	public final static String LOG_IN = "User.UpdateStatusLogIn";
-	public final static String LOG_OUT = "User.UpdateStatusLogOut";
-
-
 	private final String PERSISTENCE_NAME = "MainServer";
 
 	private static EntityManagerFactory entityManagerFactory;
