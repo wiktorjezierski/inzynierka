@@ -12,5 +12,5 @@ public interface Actions extends Serializable {
 	/**
 	 * default function for all actions in server application
 	 */
-	public Response run();
+	public Response run(String addressIp);
 }

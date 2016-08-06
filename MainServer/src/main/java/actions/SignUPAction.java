@@ -27,7 +27,7 @@ public class SignUPAction implements Actions {
 		this.status = status;
 	}
 
-	public Response run() {
+	public Response run(String addressIp) {
 		DataBaseController mController = new DataBaseController();
 		try {
 			mController.beginTransaction();

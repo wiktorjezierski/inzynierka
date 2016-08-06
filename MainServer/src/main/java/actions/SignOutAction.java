@@ -13,7 +13,7 @@ public class SignOutAction implements Actions {
 	private String userLogin;
 	private UUID sessionId;
 
-	public Response run() {
+	public Response run(String addressIp) {
 		DataBaseController mController = new DataBaseController();
 		try {
 			mController.beginTransaction();

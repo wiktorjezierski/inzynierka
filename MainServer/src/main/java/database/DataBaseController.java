@@ -130,7 +130,7 @@ public class DataBaseController {
 	 */
 	public <T extends Entitys> void remove(T obj) throws RuntimeException {
 		try {
-			entityManager.remove(obj);
+			entityManager.remove(obj);	// TODO User : take cafe about remove entities
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("remove" + obj.getPrimaryKey());

@@ -27,7 +27,7 @@ public class SignInAction implements Actions {
 		this.device = device;
 	}
 
-	public Response run() {
+	public Response run(String addressIp) {
 		DataBaseController mController = new DataBaseController();
 		try {
 			mController.beginTransaction();
@@ -42,7 +42,7 @@ public class SignInAction implements Actions {
 					mController.remove(details);
 				}
 
-				UserCurrentDetail userCurrentDetail = new UserCurrentDetail(UUID.randomUUID(), device, "ip", user);
+				UserCurrentDetail userCurrentDetail = new UserCurrentDetail(UUID.randomUUID(), device, addressIp, user);
 				user.setUserCurrentDetail(userCurrentDetail);
 				mController.saveToDataBase(user);
 
