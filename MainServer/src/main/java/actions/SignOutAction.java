@@ -14,16 +14,20 @@ public class SignOutAction implements Actions {
 	private UUID sessionId;
 
 	public Response run() {
+		DataBaseController mController = new DataBaseController();
 		try {
-			DataBaseController mController = new DataBaseController();
+			mController.beginTransaction();
 			User user = mController.findByPrimaryKey(User.class, userLogin);
 			UserCurrentDetail userCurrentDetail = user.getUserCurrentDetail();
 			if (userCurrentDetail.getSessionId() == sessionId) {
 				mController.remove(userCurrentDetail);
+				mController.commitTransaction();
 				return new Response(true);
 			}
 		} catch (Exception e) {
+			mController.rollbackTransaction();
 		}
+		mController.commitTransaction();
 		return new Response(false);
 	}
 

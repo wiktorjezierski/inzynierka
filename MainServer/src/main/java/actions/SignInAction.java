@@ -29,28 +29,33 @@ public class SignInAction implements Actions {
 
 	public Response run() {
 		DataBaseController mController = new DataBaseController();
-		Login login = mController.findByPrimaryKey(Login.class, userLogin);
+		try {
+			mController.beginTransaction();
+			Login login = mController.findByPrimaryKey(Login.class, userLogin);
 
-		if (userPassword != null && login != null && userPassword.equals(login.getPassword())) {
-			User user = mController.findByPrimaryKey(User.class, userLogin);
-			user.setStatus(direction);
+			if (userPassword != null && login != null && userPassword.equals(login.getPassword())) {
+				User user = mController.findByPrimaryKey(User.class, userLogin);
+				user.setStatus(direction);
 
-			UserCurrentDetail details = user.getUserCurrentDetail();
-			if (details != null) {
-				mController.remove(details);
+				UserCurrentDetail details = user.getUserCurrentDetail();
+				if (details != null) {
+					mController.remove(details);
+				}
+
+				UserCurrentDetail userCurrentDetail = new UserCurrentDetail(UUID.randomUUID(), device, "ip", user);
+				user.setUserCurrentDetail(userCurrentDetail);
+				mController.saveToDataBase(user);
+
+				List<Relation> relations = mController.executeNamedQuery(Relation.class, Entitys.FIND_FRIENDS,userLogin);
+				List<User> friends = findActivFriends(relations);
+				mController.commitTransaction();
+				
+				return new Response(friends);
 			}
-
-			UserCurrentDetail userCurrentDetail = new UserCurrentDetail(UUID.randomUUID(), device, "ip", user);
-			user.setUserCurrentDetail(userCurrentDetail);
-			mController.saveToDataBase(user);
-
-			List<Relation> relations = mController.executeNamedQuery(Relation.class, Entitys.FIND_FRIENDS, userLogin);
-			List<User> friends = findActivFriends(relations);
-			
-			return new Response(friends);
-		} else {
-			return new Response(false);
+		} catch (RuntimeException e) {
+			mController.rollbackTransaction();
 		}
+		return new Response(false);
 	}
 
 	private List<User> findActivFriends(List<Relation> relations) {

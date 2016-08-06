@@ -93,15 +93,17 @@ public class DataBaseController {
 	public void beginTransaction() {
 		entityManager.getTransaction().begin();
 	}
+	
+	public void rollbackTransaction() {
+		entityManager.getTransaction().rollback();
+	}
 
 	/**
 	 * Save object into Data Base, function is template
 	 */
 	public <T extends Entitys> void saveToDataBase(T param) throws RuntimeException {
 		try {
-			beginTransaction();
 			entityManager.persist(param);
-			commitTransaction();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,9 +130,7 @@ public class DataBaseController {
 	 */
 	public <T extends Entitys> void remove(T obj) throws RuntimeException {
 		try {
-			beginTransaction();
 			entityManager.remove(obj);
-			commitTransaction();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("remove" + obj.getPrimaryKey());
@@ -144,10 +144,8 @@ public class DataBaseController {
 	 */
 	public <T extends Entitys> List<T> findAll(Class<T> type) throws RuntimeException {
 		try {
-			beginTransaction();
 			Query query = entityManager.createQuery("from " + type.getSimpleName());
 			List<T> result = (List<T>) query.getResultList();
-			commitTransaction();
 
 			return result;
 		} catch (Exception e) {
@@ -163,9 +161,7 @@ public class DataBaseController {
 	 */
 	public <T extends Entitys> T findByPrimaryKey(Class<T> type, int primaryKey) throws RuntimeException {
 		try {
-			beginTransaction();
 			T ob = (T) entityManager.find(type, primaryKey);
-			commitTransaction();
 
 			return ob;
 		} catch (Exception e) {
@@ -181,9 +177,7 @@ public class DataBaseController {
 	 */
 	public <T extends Entitys> T findByPrimaryKey(Class<T> type, String primaryKey) throws RuntimeException {
 		try {
-			beginTransaction();
 			T ob = (T) entityManager.find(type, primaryKey);
-			commitTransaction();
 
 			return ob;
 		} catch (Exception e) {
@@ -199,13 +193,11 @@ public class DataBaseController {
 		try {
 			String x = "%"; 
 			
-			beginTransaction();
 			Query query = entityManager.createNamedQuery(queryName);
 			for (int i = 0; i < value.length; i++) {
 				query.setParameter(i + 1, x+value[i]+x);
 			}
 			List<T> result = (List<T>) query.getResultList();
-			commitTransaction();
 
 			return result;
 		} catch (Exception e) {
@@ -219,13 +211,11 @@ public class DataBaseController {
 	 * */
 	public <T extends Entitys> List<T> executeNamedQuery(Class<T> type, String queryName, String... value) throws RuntimeException {
 		try {
-			beginTransaction();
 			Query query = entityManager.createNamedQuery(queryName);
 			for (int i = 0; i < value.length; i++) {
 				query.setParameter(i + 1, value[i]);
 			}
 			List<T> result = (List<T>) query.getResultList();
-			commitTransaction();
 
 			return result;
 		} catch (Exception e) {
@@ -239,12 +229,10 @@ public class DataBaseController {
 	 * */
 	public void executeUpdateNamedQuery(String queryName, String... value) throws RuntimeException {
 		try {
-			beginTransaction();
 			Query query = entityManager.createNamedQuery(queryName);
 			for (int i = 0; i < value.length; i++) {
 				query.setParameter(i + 1, value[i]);
 			}
-			commitTransaction();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -257,13 +245,11 @@ public class DataBaseController {
 	 * */
 	public <T extends Entitys> List<T> executeNamedQuery(Class<T> type, String queryName, int... value) throws RuntimeException {
 		try {
-			beginTransaction();
 			Query query = entityManager.createNamedQuery(queryName);
 			for (int i = 0; i < value.length; i++) {
 				query.setParameter(i + 1, value[i]);
 			}
 			List<T> result = (List<T>) query.getResultList();
-			commitTransaction();
 
 			return result;
 		} catch (Exception e) {
@@ -277,13 +263,11 @@ public class DataBaseController {
 	 * */
 	public <T extends Entitys> List<T> executeNamedQuery(Class<T> type, String queryName, Date... value) throws RuntimeException {
 		try {
-			beginTransaction();
 			Query query = entityManager.createNamedQuery(queryName);
 			for (int i = 0; i < value.length; i++) {
 				query.setParameter(i + 1, value[i]);
 			}
 			List<T> result = (List<T>) query.getResultList();
-			commitTransaction();
 
 			return result;
 		} catch (Exception e) {
@@ -298,10 +282,8 @@ public class DataBaseController {
 	 */
 	public List<?> executeQuery(String sql) throws RuntimeException {
 		try {
-			beginTransaction();
 			Query query = entityManager.createQuery(sql);
 			List<?> result = (List<?>) query.getResultList();
-			commitTransaction();
 
 			return result;
 		} catch (Exception e) {

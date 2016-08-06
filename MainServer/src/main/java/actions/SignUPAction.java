@@ -5,19 +5,19 @@ import database.Login;
 import database.User;
 
 public class SignUPAction implements Actions {
-	
+
 	private static final long serialVersionUID = 3307103721179068946L;
 
 	private String login;
-	
+
 	private String password;
 
 	private String imie;
 
 	private String nazwisko;
-	
+
 	private boolean status;
-	
+
 	public SignUPAction(String login, String password, String imie, String nazwisko, boolean status) {
 		super();
 		this.login = login;
@@ -28,17 +28,22 @@ public class SignUPAction implements Actions {
 	}
 
 	public Response run() {
+		DataBaseController mController = new DataBaseController();
 		try {
+			mController.beginTransaction();
 			
-			DataBaseController dbController = new DataBaseController();
 			User user = new User(login, imie, nazwisko, status);
-			dbController.saveToDataBase(user);
+			mController.saveToDataBase(user);
+			
 			Login login = new Login(this.login, password);
-			dbController.saveToDataBase(login);
+			mController.saveToDataBase(login);
+			
+			mController.commitTransaction();
 			return new Response(true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			mController.rollbackTransaction();
 			return new Response(false);
 		}
 	}
