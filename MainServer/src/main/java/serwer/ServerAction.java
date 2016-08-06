@@ -31,9 +31,10 @@ public class ServerAction extends Thread {
 	}
 	
 	public void openConnection() {
+		Socket server = null;
 		try {
 			System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
-			Socket server = serverSocket.accept();
+			server = serverSocket.accept();
 			System.out.println("Just connected to " + server.getRemoteSocketAddress());
 			
 			objectInputStream = new ObjectInputStream(server.getInputStream());
@@ -48,6 +49,12 @@ public class ServerAction extends Thread {
 			
 		} catch (SocketTimeoutException s) {
 			System.out.println("Socket timed out!");
+		} catch (Exception e) {
+		}
+		
+		try {
+			server.close();
+			serverSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
