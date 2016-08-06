@@ -18,11 +18,11 @@ public class Logowanie {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		Logowanie frame = new Logowanie();
-		frame.somemethod(JOptionPaneDoubleInput.showMultipleInputDialog());
+		Logowanie logowanie = new Logowanie();
+		logowanie.validate(JOptionPaneDoubleInput.showMultipleInputDialog());
 	}
 
-	private void somemethod(GuiTO guiTO) {
+	private void validate(GuiTO guiTO) {
 		try {
 			Socket socket = openConnection();
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
