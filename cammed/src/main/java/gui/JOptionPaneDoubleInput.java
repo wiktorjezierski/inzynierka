@@ -10,6 +10,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class JOptionPaneDoubleInput {
+	
+	private static int sIterator = 0;
 
 	@SuppressWarnings("deprecation")
 	public static GuiTO showMultipleInputDialog() {
@@ -21,6 +23,10 @@ public class JOptionPaneDoubleInput {
 		JPanel myPanel2 = new JPanel();
 
 		myPanel.setLayout((LayoutManager) new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+		
+		if(sIterator++ > 0)
+			myPanel.add(new JLabel("<html><font color='red'>wprowadź poprawne dane logowania</font></html>"));
+
 		myPanel.add(myPanel1);
 		myPanel.add(myPanel2);
 
@@ -33,7 +39,8 @@ public class JOptionPaneDoubleInput {
 		if (result == JOptionPane.OK_OPTION) {
 			return new GuiTO(login.getText(), password.getText());
 		} else {
-			return null;
+			System.exit(0);	// TODO: check this place - or throw exception
 		}
+		return null;
 	}
 }
