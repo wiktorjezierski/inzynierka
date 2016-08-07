@@ -1,5 +1,5 @@
 package usecases;
 
-public class LogIn {
+public class LogInUC {
 
 }
