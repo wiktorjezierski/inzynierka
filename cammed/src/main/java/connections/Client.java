@@ -38,6 +38,12 @@ public class Client {
 		client.openConnection(true);
 		return client;
 	}
+	
+	public static Client connectWithAnotherUser(String serwerAddress, int port) {
+		Client client = new Client(serwerAddress, port);
+		client.openConnection(false);
+		return client;
+	}
 
 	public void openConnection(boolean mainSerwer) {
 		try {
