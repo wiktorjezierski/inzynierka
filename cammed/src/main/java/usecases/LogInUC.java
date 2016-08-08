@@ -4,7 +4,6 @@ import actions.DeviceType;
 import actions.Response;
 import actions.SignInAction;
 import connections.Client;
-import connections.DataHelper;
 import gui.GuiTO;
 import gui.JOptionPaneDoubleInput;
 
@@ -14,8 +13,7 @@ public class LogInUC implements UseCase {
 		Response response = new Response(false);
 		try {
 
-			Client client = new Client(DataHelper.MAIN_SERVER_ADDRESS, DataHelper.MAIN_SERVER_PORT);
-			client.openConnection();
+			Client client = Client.connectWithMainSerwer();
 
 			do {
 				GuiTO guiTO = JOptionPaneDoubleInput.showMultipleInputDialog();
