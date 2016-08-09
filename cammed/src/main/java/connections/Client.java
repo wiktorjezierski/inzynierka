@@ -28,7 +28,7 @@ public class Client {
 	private ObjectInputStream objectInputStream;
 	private ObjectOutputStream objectOutputStream;
 	
-	public Client(String serverAddress, int port) {
+	private Client(String serverAddress, int port) {
 		this.serverAddress = serverAddress;
 		this.port = port;
 	}
@@ -45,7 +45,7 @@ public class Client {
 		return client;
 	}
 
-	public void openConnection(boolean mainSerwer) {
+	private void openConnection(boolean mainSerwer) {
 		try {
 			System.out.println("Connecting to " + serverAddress + " on port " + port);
 			client = new Socket(serverAddress, port);
@@ -66,8 +66,8 @@ public class Client {
 				objectOutputStream = new ObjectOutputStream(clientAction.getOutputStream());
 				objectInputStream = new ObjectInputStream(clientAction.getInputStream());
 			} else {
-				objectOutputStream = new ObjectOutputStream(client.getOutputStream());
 				objectInputStream = new ObjectInputStream(client.getInputStream());
+				objectOutputStream = new ObjectOutputStream(client.getOutputStream());
 			}
 			
 		} catch(Exception e) {
