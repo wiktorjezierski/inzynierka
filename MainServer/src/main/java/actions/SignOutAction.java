@@ -3,6 +3,7 @@ package actions;
 import java.util.UUID;
 
 import database.DataBaseController;
+import database.Entitys;
 import database.User;
 import database.UserCurrentDetail;
 
@@ -17,7 +18,7 @@ public class SignOutAction implements Actions {
 		DataBaseController mController = new DataBaseController();
 		try {
 			mController.beginTransaction();
-			User user = mController.findByPrimaryKey(User.class, userLogin);
+			User user = mController.executeNamedQuery(User.class, Entitys.FIND_USER_BY_LOGIN, userLogin).get(0);
 			UserCurrentDetail userCurrentDetail = user.getUserCurrentDetail();
 			if (userCurrentDetail.getSessionId() == sessionId) {
 				mController.remove(userCurrentDetail);
