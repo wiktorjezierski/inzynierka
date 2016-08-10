@@ -31,10 +31,10 @@ public class SignInAction implements Actions {
 		DataBaseController mController = new DataBaseController();
 		try {
 			mController.beginTransaction();
-			Login login = mController.findByPrimaryKey(Login.class, userLogin);
+			Login login = mController.executeNamedQuery(Login.class, Entitys.FIND_LOGIN_BY_LOGIN, userLogin).get(0);
 
 			if (userPassword != null && login != null && userPassword.equals(login.getPassword())) {
-				User user = mController.findByPrimaryKey(User.class, userLogin);
+				User user = mController.executeNamedQuery(User.class, Entitys.FIND_USER_BY_LOGIN, userLogin).get(0);
 				user.setStatus(direction);
 
 				UserCurrentDetail details = user.getUserCurrentDetail();

@@ -175,7 +175,7 @@ public class DataBaseController {
 	 * 
 	 * @param <T>
 	 */
-	public <T extends Entitys> T findByPrimaryKey(Class<T> type, String primaryKey) throws RuntimeException {
+	public <T extends Entitys> T findByPrimaryKey(Class<T> type, String primaryKey) throws RuntimeException { // TODO check usings this function
 		try {
 			T ob = (T) entityManager.find(type, primaryKey);
 

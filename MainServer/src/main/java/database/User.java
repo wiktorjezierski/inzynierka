@@ -1,10 +1,13 @@
 package database;
 
+import java.util.UUID;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -15,11 +18,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="users")
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@NamedQueries({
+	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
+	@NamedQuery(name="User.FindUserByLogin", query="SELECT u FROM User u where u.login=?1")
+})
 public class User implements Entitys {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	private String uuid;
+	
 	private String login;
 
 	private String imie;
@@ -30,7 +38,7 @@ public class User implements Entitys {
 
 	//bi-directional many-to-one association to UserCurrentDetail
 	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="DETAILS_ID")
+	@JoinColumn(name="OR_USER_DETAIL")
 	private UserCurrentDetail userCurrentDetail;
 
 	public User() {
@@ -38,10 +46,19 @@ public class User implements Entitys {
 	
 	public User(String login, String imie, String nazwisko, boolean status) {
 		super();
+		this.uuid = UUID.randomUUID().toString();
 		this.login = login;
 		this.imie = imie;
 		this.nazwisko = nazwisko;
 		this.status = status;
+	}
+	
+	public UUID getUuid() {
+		return UUID.fromString(uuid);
+	}
+
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid.toString();
 	}
 
 	public String getLogin() {

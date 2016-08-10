@@ -28,10 +28,10 @@ public class UserCurrentDetail implements Entitys {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	private String uuid;
+	
 	@Column(name="SESSION_ID")
 	private String sessionId;
-
-	private String detailid;
 
 	@Enumerated(EnumType.ORDINAL)
 	private DeviceType device;
@@ -46,10 +46,19 @@ public class UserCurrentDetail implements Entitys {
 	}
 
 	public UserCurrentDetail(UUID randomUUID, DeviceType device, String ip, User user) {
+		this.uuid = UUID.randomUUID().toString();
 		this.sessionId = randomUUID.toString();
 		this.device = device;
 		this.ip = ip;
 		users = new ArrayList<User>(Arrays.asList(user));
+	}
+	
+	public UUID getUuid() {
+		return UUID.fromString(uuid);
+	}
+
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid.toString();
 	}
 
 	public UUID getSessionId() {
@@ -58,14 +67,6 @@ public class UserCurrentDetail implements Entitys {
 
 	public void setSessionId(UUID sessionId) {
 		this.sessionId = sessionId.toString();
-	}
-
-	public String getDetailid() {
-		return this.detailid;
-	}
-
-	public void setDetailid(String detailid) {
-		this.detailid = detailid;
 	}
 
 	public DeviceType getDevice() {

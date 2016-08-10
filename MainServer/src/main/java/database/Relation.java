@@ -1,6 +1,7 @@
 package database;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class Relation implements Entitys {
 	private Date date;
 
 	@Id
-	private int id;
+	private String uuid;
 
 	//bi-directional one-to-one association to User
 	@OneToOne
@@ -43,6 +44,7 @@ public class Relation implements Entitys {
 	private User user2;
 
 	public Relation() {
+		this.uuid = UUID.randomUUID().toString();
 	}
 
 	public Date getDate() {
@@ -53,12 +55,12 @@ public class Relation implements Entitys {
 		this.date = date;
 	}
 
-	public int getId() {
-		return this.id;
+	public UUID getId() {
+		return UUID.fromString(uuid);
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(UUID uuid) {
+		this.uuid = uuid.toString();
 	}
 
 	public User getUser1() {
@@ -78,6 +80,6 @@ public class Relation implements Entitys {
 	}
 
 	public String getPrimaryKey() {
-		return Integer.toString(getId());
+		return uuid;
 	}
 }

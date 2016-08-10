@@ -47,7 +47,7 @@ public class Tests {
 //			objectOutputStream.writeObject(rejestracja);
 //			Response response = (Response)objectInputStream.readObject();
 			
-			SignInAction logowanie = new SignInAction("wjeziorko2", "admin123", true, DeviceType.PC);
+			SignInAction logowanie = new SignInAction("wjeziorko6", "admin123", true, DeviceType.PC);
 			objectOutputStream.writeObject(logowanie);
 			Response response = (Response)objectInputStream.readObject();
 

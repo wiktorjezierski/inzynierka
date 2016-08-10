@@ -1,7 +1,10 @@
 package database;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -12,11 +15,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="logins")
-@NamedQuery(name="Login.findAll", query="SELECT l FROM Login l")
+@NamedQueries({
+	@NamedQuery(name="Login.findAll", query="SELECT l FROM Login l"),
+	@NamedQuery(name="Login.FindLoginByLogin", query="SELECT l FROM Login l where l.login=?1")
+})
 public class Login implements Entitys {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	private String uuid;
+	
 	private String login;
 
 	private String password;
@@ -25,8 +33,17 @@ public class Login implements Entitys {
 	}
 	
 	public Login(String login, String password) {
+		this.uuid = UUID.randomUUID().toString();
 		this.login = login;
 		this.password = password;
+	}
+	
+	public UUID getUuid() {
+		return UUID.fromString(uuid);
+	}
+
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid.toString();
 	}
 
 	public String getLogin() {
@@ -46,6 +63,6 @@ public class Login implements Entitys {
 	}
 
 	public String getPrimaryKey() {
-		return getLogin();
+		return uuid;
 	}
 }
