@@ -10,54 +10,41 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamResolution;
 
 import actions.DeviceType;
-import connections.Client;
+import connections.Serwer;
 
-public class DisplayVideo extends Thread {
+public class RecordVideo extends Thread {
 
-	private DeviceType deviceType;
+	private Serwer serwer;
+	private Webcam webcam;
 	
 	private CanvasFrame canvas;
-	private Client client;
 	
-	private Webcam webcam;
+	private DeviceType deviceType;
 
-	public DisplayVideo(Client client, DeviceType device) {
-		this.client = client;
-		this.deviceType = device;
+	public RecordVideo(Serwer serwer, DeviceType deviceType) {
+		this.serwer = serwer;
+		this.deviceType = deviceType;
 		
-		canvas = new CanvasFrame("Web Cam");
+		canvas = new CanvasFrame("Web Cam2");
 		canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	}
 
 	public void run() {
-		if (deviceType == DeviceType.PC) {
-			clientPC();
-		}
-	}
-
-	public void clientPC() {
 		Thread t = new Thread() {
 			public void run() {
-				displayImage();
+				captureImage();
 			}
 		};
 		t.start();
 		
 		Thread t2 = new Thread() {
 			public void run() {
-				captureImage();
+				displayImage();
 			}
 		};
 		t2.start();
 	}
 
-	public void displayImage() {
-		while (true) {
-			Image image = client.receiveImage();
-			canvas.showImage(image);
-		}
-	}
-	
 	private void captureImage() {
 		try {
 			Dimension[] nonStandardResolutions = new Dimension[] { 
@@ -75,10 +62,17 @@ public class DisplayVideo extends Thread {
 			while (true) {
 				image = webcam.getImage();
 				ImageBuffer imageToSend = new ImageBuffer(image);
-				client.sendImage(imageToSend);
+				serwer.sendImage(imageToSend);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void displayImage() {
+		while (true) {
+			Image image = serwer.receiveImage();
+			canvas.showImage(image);
 		}
 	}
 }

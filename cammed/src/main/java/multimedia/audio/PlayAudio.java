@@ -6,26 +6,32 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
+import actions.DeviceType;
 import connections.Client;
 import connections.DataHelper;
 
 public class PlayAudio extends Thread {
+	
+	private DeviceType deviceType;
 
 	private Client client;
 	private SourceDataLine sourceDataLine;
 
 	private AudioFormat audioFormat;
 	
-	public PlayAudio(Client client) {
+	public PlayAudio(Client client, DeviceType device) {
 		this.client = client;
+		this.deviceType = device;
 		audioFormat = new AudioFormat(16000, 16, 1, true, false);
 	}
 
 	public void run() {
-		 clientStreamPC();
+		if (deviceType == DeviceType.PC) {
+			clientStreamPC();
+		}
 	}
 
-	public void clientStreamPC() {
+	private void clientStreamPC() {
 		try {
 			Thread t2 = new Thread() {	// odebranie danych od klienta
 				public void run() {

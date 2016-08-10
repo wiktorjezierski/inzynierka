@@ -25,7 +25,7 @@ public class Serwer extends Thread {
 	private ObjectInput objectInput;
 	private static int port;
 
-	public Serwer(int port){
+	private Serwer(int port){
 		try {
 			this.port = port;
 			serverSocket = new ServerSocket(port);
@@ -34,8 +34,14 @@ public class Serwer extends Thread {
 		}
 		// serverSocket.setSoTimeout(1000);
 	}
+	
+	public static Serwer establishSerwer(int port) {
+		Serwer serwer = new Serwer(port);
+		serwer.openConnection();
+		return serwer;
+	}
 
-	public void openConnection() {
+	private void openConnection() {
 		try {
 			System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
 			serwer = serverSocket.accept();
