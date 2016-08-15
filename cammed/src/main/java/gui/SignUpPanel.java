@@ -141,7 +141,7 @@ public class SignUpPanel extends MainPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (!passwordOk) {
-					JOptionPane.showMessageDialog(null, "not matched password password");
+					JOptionPane.showMessageDialog(null, "not matched password");
 					return;
 				}
 
