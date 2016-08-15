@@ -1,4 +1,5 @@
 package gui;
+import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -20,6 +21,8 @@ public class SignUpPanel extends MainPanel {
 	private JPasswordField password2;
 	private JTextField name;
 	private JTextField surname;
+	
+	private boolean passwordOk;
 	
 	private JLabel info;
 
@@ -99,16 +102,20 @@ public class SignUpPanel extends MainPanel {
 				char[] pass2 = password2.getPassword();
 				
 				if(pass1.length != pass2.length) {
+					info.setText(BAD_MESSAGE);
+					passwordOk = false;
 					return;
 				}
 				
 				for (int i = 0; i < pass2.length; i++) {
 					if(pass1[i] != pass2[i]) {
 						info.setText(BAD_MESSAGE);
+						passwordOk = false;
 						return;
 					}
 				}
 				info.setText(OK_MESSAGE);
+				passwordOk = true;
 			}
 		};
 	}
@@ -117,6 +124,7 @@ public class SignUpPanel extends MainPanel {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				mainFrame.displayJPanel(MainFrame.SIGN_UP, MainFrame.LOGIN, BorderLayout.CENTER);
 			}
 		};
 	}
@@ -125,6 +133,7 @@ public class SignUpPanel extends MainPanel {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				
 			}
 		};
 	}

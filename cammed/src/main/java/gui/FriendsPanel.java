@@ -1,16 +1,14 @@
 package gui;
 
-import javax.swing.JPanel;
-
-public class FriendsPanel extends JPanel {
+public class FriendsPanel extends MainPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
-	public FriendsPanel() {
-
+	public FriendsPanel(MainFrame mainFrame) {
+		super(mainFrame);
 	}
 
 }

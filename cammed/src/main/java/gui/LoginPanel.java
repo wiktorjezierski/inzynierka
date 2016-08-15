@@ -22,7 +22,6 @@ public class LoginPanel extends MainPanel {
 	private JTextField loginField;
 	private JPasswordField passwordField;
 	
-	private LoginPanel loginPanel;
 
 	/**
 	 * Create the panel.
@@ -31,7 +30,6 @@ public class LoginPanel extends MainPanel {
 		super(frame);
 		setLayout(null);
 		
-		loginPanel = this;
 		loginField = new JTextField();
 		loginField.setText("");
 		loginField.setBounds(210, 71, 123, 20);
@@ -67,7 +65,7 @@ public class LoginPanel extends MainPanel {
 	MouseAdapter mouseRejestracja = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			mainFrame.displayJPanel(loginPanel, new SignUpPanel(mainFrame), BorderLayout.CENTER);
+			mainFrame.displayJPanel(MainFrame.LOGIN, MainFrame.SIGN_UP, BorderLayout.CENTER);
 		}
 	};
 
