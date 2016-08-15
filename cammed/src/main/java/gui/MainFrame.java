@@ -1,7 +1,11 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,12 +16,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class MainFrame extends JFrame {
 	
@@ -105,9 +103,14 @@ public class MainFrame extends JFrame {
 		loginPanel.setVisible(false);
 		contentPane.add(maping.get(TOP), BorderLayout.NORTH);
 		contentPane.add(maping.get(BOTTOM), BorderLayout.SOUTH);
+		maximizeScreen();
 		this.repaint();
 	}
 	
+	private void maximizeScreen() {
+		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+	}
+
 	public void displayJPanel(int oldPanel, int newPanel, String position) {
 		JPanel jPanelOld = maping.get(oldPanel);
 		jPanelOld.setVisible(false);
