@@ -12,11 +12,11 @@ import javax.swing.border.EmptyBorder;
 public class MainFrame extends JFrame {
 	
 	public static final int LOGIN = 0;
-	public static final int BOTTON = 1;
+	public static final int BOTTOM = 1;
 	public static final int TOP = 2;
 	public static final int FRIENDS = 3;
 	public static final int SIGN_UP = 4;
-
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Map<Integer, JPanel> maping;
@@ -62,8 +62,8 @@ public class MainFrame extends JFrame {
 		JPanel loginPanel = maping.get(LOGIN);
 		contentPane.remove(loginPanel);
 		loginPanel.setVisible(false);
-		contentPane.add(new TopPanel(this), BorderLayout.NORTH);
-		contentPane.add(new BottonPanel(this), BorderLayout.SOUTH);
+		contentPane.add(maping.get(TOP), BorderLayout.NORTH);
+		contentPane.add(maping.get(BOTTOM), BorderLayout.SOUTH);
 		this.repaint();
 	}
 	
@@ -81,12 +81,10 @@ public class MainFrame extends JFrame {
 		maping = new HashMap<Integer, JPanel>();
 		
 		maping.put(LOGIN, new LoginPanel(this));
-		maping.put(BOTTON, new BottonPanel(this));
+		maping.put(BOTTOM, new BottonPanel(this));
 		maping.put(TOP, new TopPanel(this));
 		maping.put(FRIENDS, new FriendsPanel(this));
 		maping.put(SIGN_UP, new SignUpPanel(this));
-		
-		
 	}
 
 }
