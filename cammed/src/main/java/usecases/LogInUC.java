@@ -4,29 +4,20 @@ import actions.DeviceType;
 import actions.Response;
 import actions.SignInAction;
 import connections.Client;
-import gui.GuiTO;
-import gui.JOptionPaneDoubleInput;
 
-public class LogInUC implements UseCase {
+public class LogInUC {
 
-	public void execute() {
-		Response response = new Response(false);
+	public Response execute(String login, String password) {
 		try {
-
 			Client client = Client.connectWithMainSerwer();
 
-			do {
-				GuiTO guiTO = JOptionPaneDoubleInput.showMultipleInputDialog();
-				if (guiTO.getValue1().length() == 0 || guiTO.getValue2().length() == 0)
-					continue;
-
-				SignInAction logowanie = new SignInAction(guiTO.getValue1(), guiTO.getValue2(), true, DeviceType.PC);
-				client.writeObject(logowanie);
-				response = (Response) client.readObject();
-			} while (!response.isConfirmation());
-
-			return;
+			SignInAction logowanie = new SignInAction(login, password, true, DeviceType.PC);
+			client.writeObject(logowanie);
+			Response response = (Response) client.readObject();
+			client.closeConnection();
+			return response;
 		} catch (Exception e) {
+			return new Response(false);
 		}
 	}
 }

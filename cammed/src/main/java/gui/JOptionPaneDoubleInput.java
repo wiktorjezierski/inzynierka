@@ -39,7 +39,7 @@ public class JOptionPaneDoubleInput {
 		if (result == JOptionPane.OK_OPTION) {
 			return new GuiTO(login.getText(), password.getText());
 		} else {
-			System.exit(0);	// TODO: check this place - or throw exception
+			System.exit(0);
 		}
 		return null;
 	}

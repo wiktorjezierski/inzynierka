@@ -75,6 +75,15 @@ public class Client {
 		}
 	}
 	
+	public void closeConnection() {
+		try {
+			client.close();
+			clientAction.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void writeObject(Actions object) throws IOException {
 		objectOutputStream.writeObject(object);
 	}
