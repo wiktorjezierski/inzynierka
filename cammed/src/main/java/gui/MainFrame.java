@@ -100,7 +100,7 @@ public class MainFrame extends JFrame {
 	public void generateMainGuiDesign() {
 		JPanel loginPanel = maping.get(LOGIN);
 		contentPane.remove(loginPanel);
-		loginPanel.setVisible(false);
+		contentPane.add(maping.get(FRIENDS), BorderLayout.WEST); // powinno byc WEST
 		contentPane.add(maping.get(TOP), BorderLayout.NORTH);
 		contentPane.add(maping.get(BOTTOM), BorderLayout.SOUTH);
 		maximizeScreen();
