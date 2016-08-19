@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
+import javax.swing.BoxLayout;
 
 public class Friend extends JPanel {
 
@@ -22,6 +23,7 @@ public class Friend extends JPanel {
 	 * Create the panel.
 	 */
 	public Friend() {
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		add(horizontalStrut);

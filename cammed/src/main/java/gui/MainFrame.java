@@ -3,18 +3,25 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Toolkit;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.ScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 
 public class MainFrame extends JFrame {
@@ -82,7 +89,7 @@ public class MainFrame extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(new BorderLayout(5, 5));
 		
 		contentPane.add(maping.get(LOGIN), BorderLayout.CENTER);
 		
@@ -100,13 +107,58 @@ public class MainFrame extends JFrame {
 	public void generateMainGuiDesign() {
 		JPanel loginPanel = maping.get(LOGIN);
 		contentPane.remove(loginPanel);
-		contentPane.add(maping.get(FRIENDS), BorderLayout.WEST); // powinno byc WEST
-		contentPane.add(maping.get(TOP), BorderLayout.NORTH);
-		contentPane.add(maping.get(BOTTOM), BorderLayout.SOUTH);
+		createContent();
 		maximizeScreen();
 		this.repaint();
 	}
 	
+	private void createContent() {
+		JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panel.setLayout(new BorderLayout(5, 5));
+        JPanel centerPanel = new JPanel();
+        GridBagLayout gbl_centerPanel = new GridBagLayout();
+        gbl_centerPanel.rowWeights = new double[]{1.0};
+        gbl_centerPanel.columnWeights = new double[]{1.0};
+        centerPanel.setLayout(gbl_centerPanel);        
+
+        JScrollPane scrollpane = new JScrollPane();
+        scrollpane.setEnabled(false);
+        
+        JSplitPane splitPane = new JSplitPane();
+        GridBagConstraints gbc_splitPane = new GridBagConstraints();
+        gbc_splitPane.insets = new Insets(0, 0, 5, 0);
+        gbc_splitPane.fill = GridBagConstraints.BOTH;
+        gbc_splitPane.gridx = 0;
+        gbc_splitPane.gridy = 0;
+        centerPanel.add(splitPane, gbc_splitPane);
+        
+        JSplitPane splitPane_1 = new JSplitPane();
+        splitPane.setRightComponent(splitPane_1);
+        
+        JPanel srodek = new JPanel();
+        srodek.setMinimumSize(new Dimension(200, 100));
+        splitPane_1.setLeftComponent(srodek);
+        
+        JPanel prawa = new JPanel();
+        splitPane_1.setRightComponent(prawa);
+        
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setMinimumSize(new Dimension(200, 100));
+        splitPane.setLeftComponent(scrollPane);
+        
+        scrollPane.add(maping.get(FRIENDS));
+
+        panel.add(centerPanel, BorderLayout.CENTER);
+
+        getContentPane().add(panel);
+        
+        panel.add(maping.get(TOP), BorderLayout.NORTH);
+        
+        panel.add(maping.get(BOTTOM), BorderLayout.SOUTH);
+        setVisible(true);
+	}
+
 	private void maximizeScreen() {
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 	}
