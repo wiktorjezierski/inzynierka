@@ -84,7 +84,7 @@ public class LoginPanel extends MainPanel {
 			
 			Response result = loginUC.execute(login, password);
 			if (result.isConfirmation()) {
-				mainFrame.generateMainGuiDesign();
+				mainFrame.generateMainGuiDesign(result.getUsers());
 			} else {
 				JOptionPane.showMessageDialog(null, BAD_MESSAGE);
 			}

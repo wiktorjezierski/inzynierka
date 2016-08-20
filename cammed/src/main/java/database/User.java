@@ -1,18 +1,18 @@
 package database;
 
+import java.util.UUID;
+
 /**
  * The persistent class for the users database table.
  * 
  */
 public class User implements Entitys {
 	private static final long serialVersionUID = 1L;
-
+	
+	private String uuid;
 	private String login;
-
 	private String imie;
-
 	private String nazwisko;
-
 	private boolean status;
 
 	private UserCurrentDetail userCurrentDetail;
@@ -20,8 +20,9 @@ public class User implements Entitys {
 	public User() {
 	}
 	
-	public User(String login, String imie, String nazwisko, boolean status) {
+	public User(String uuid, String login, String imie, String nazwisko, boolean status) {
 		super();
+		this.uuid = uuid;
 		this.login = login;
 		this.imie = imie;
 		this.nazwisko = nazwisko;
@@ -66,6 +67,14 @@ public class User implements Entitys {
 
 	public void setUserCurrentDetail(UserCurrentDetail userCurrentDetail) {
 		this.userCurrentDetail = userCurrentDetail;
+	}
+	
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	public String getPrimaryKey() {

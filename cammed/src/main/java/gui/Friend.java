@@ -1,28 +1,31 @@
 package gui;
 
-import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.UUID;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.Dimension;
-import javax.swing.BoxLayout;
+
+import database.User;
 
 public class Friend extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private boolean check = false;
+	private UUID uuid;
+	private User user;
 
 	/**
 	 * Create the panel.
 	 */
-	public Friend() {
+	public Friend(User user) {
+		this.user = user;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
@@ -35,10 +38,10 @@ public class Friend extends JPanel {
 		btnNick.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				check = true;
 				repaint();
 			}
 		});
+		repaint();
 		add(btnNick);
 
 	}
@@ -46,10 +49,12 @@ public class Friend extends JPanel {
 	public void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
 
-		if (check) {
+		if (user.getStatus()) {
+			graphics.setColor(Color.GREEN);
+		} else {
 			graphics.setColor(Color.RED);
-			graphics.fillOval(0, 15, 10, 10);
 		}
+		graphics.fillOval(0, 15, 10, 10);
 	}
 
 }

@@ -10,6 +10,7 @@ import java.awt.ScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -23,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
+
+import database.User;
 
 public class MainFrame extends JFrame {
 	
@@ -104,9 +107,13 @@ public class MainFrame extends JFrame {
 		};
 	}
 
-	public void generateMainGuiDesign() {
+	public void generateMainGuiDesign(List<User> users) {
 		JPanel loginPanel = maping.get(LOGIN);
 		contentPane.remove(loginPanel);
+		
+		FriendsPanel friendsPanel = (FriendsPanel) maping.get(FRIENDS);
+		friendsPanel.generateFriendList(users);
+		
 		createContent();
 		maximizeScreen();
 		this.repaint();
@@ -141,6 +148,7 @@ public class MainFrame extends JFrame {
         splitPane_1.setLeftComponent(srodek);
         
         JPanel prawa = new JPanel();
+        prawa.setMaximumSize(new Dimension(100, 1080));
         splitPane_1.setRightComponent(prawa);
         
         ScrollPane scrollPane = new ScrollPane();
