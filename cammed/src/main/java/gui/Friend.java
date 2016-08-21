@@ -5,27 +5,30 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.UUID;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import database.User;
+import javax.swing.ImageIcon;
 
-public class Friend extends JPanel {
+public class Friend extends MainPanel {
 
 	private static final long serialVersionUID = 1L;
-	private UUID uuid;
 	private User user;
+	
+	private JButton name;
+	private JButton call;
 
 	/**
 	 * Create the panel.
 	 */
-	public Friend(User user) {
+	public Friend(User user, MainFrame mainFrame) {
+		super(mainFrame);
 		this.user = user;
+		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
@@ -34,15 +37,19 @@ public class Friend extends JPanel {
 		JLabel lblImage = new JLabel("image");
 		add(lblImage);
 
-		JButton btnNick = new JButton("nick");
-		btnNick.addMouseListener(new MouseAdapter() {
+		name = new JButton("nick");
+		name.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				repaint();
 			}
 		});
 		repaint();
-		add(btnNick);
+		add(name);
+		
+		call = new JButton("");
+		call.setIcon(new ImageIcon("C:\\Projekty\\inzynierka\\cammed\\icons\\call.png"));
+		add(call);
 
 	}
 
@@ -51,10 +58,15 @@ public class Friend extends JPanel {
 
 		if (user.getStatus()) {
 			graphics.setColor(Color.GREEN);
+			call.setEnabled(true);
 		} else {
 			graphics.setColor(Color.RED);
+			call.setEnabled(false);
 		}
-		graphics.fillOval(0, 15, 10, 10);
+		graphics.fillOval(0, 10, 10, 10);
+		
+		name.setText(user.getImie() + " " + user.getNazwisko());
+		
 	}
 
 }

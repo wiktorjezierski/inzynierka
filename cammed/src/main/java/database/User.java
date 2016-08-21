@@ -69,12 +69,12 @@ public class User implements Entitys {
 		this.userCurrentDetail = userCurrentDetail;
 	}
 	
-	public String getUuid() {
-		return uuid;
+	public UUID getUuid() {
+		return UUID.fromString(uuid);
 	}
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid.toString();
 	}
 
 	public String getPrimaryKey() {
