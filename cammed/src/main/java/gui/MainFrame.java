@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -152,7 +151,7 @@ public class MainFrame extends JFrame {
         splitPane_1.setRightComponent(prawa);
         
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setMinimumSize(new Dimension(200, 100));
+        scrollPane.setMinimumSize(new Dimension(250, 100));
         splitPane.setLeftComponent(scrollPane);
         
         scrollPane.add(maping.get(FRIENDS));

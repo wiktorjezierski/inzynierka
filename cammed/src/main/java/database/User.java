@@ -80,4 +80,12 @@ public class User implements Entitys {
 	public String getPrimaryKey() {
 		return getLogin();
 	}
+
+	@Override
+	public String toString() {
+		return "User [uuid=" + uuid + ", login=" + login + ", imie=" + imie + ", nazwisko=" + nazwisko + ", status="
+				+ status + ", userCurrentDetail=" + userCurrentDetail + "]";
+	}
+	
+	
 }

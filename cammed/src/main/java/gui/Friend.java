@@ -10,6 +10,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import database.User;
 import javax.swing.ImageIcon;
@@ -19,31 +20,29 @@ public class Friend extends MainPanel {
 	private static final long serialVersionUID = 1L;
 	private User user;
 	
-	private JButton name;
+	private JLabel name;
 	private JButton call;
 
 	/**
 	 * Create the panel.
 	 */
-	public Friend(User user, MainFrame mainFrame) {
+	public Friend(User userLocal, MainFrame mainFrame) {
 		super(mainFrame);
-		this.user = user;
+		this.user = userLocal;
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		add(horizontalStrut);
 
-		JLabel lblImage = new JLabel("image");
+		JLabel lblImage = new JLabel("");
+		lblImage.setIcon(new ImageIcon("C:\\Projekty\\inzynierka\\cammed\\icons\\DefaultUserIcon.png"));
 		add(lblImage);
 
-		name = new JButton("nick");
-		name.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				repaint();
-			}
-		});
+		name = new JLabel("nick");
+		name.setText(" " + user.getImie() + " " + user.getNazwisko() + " ");
+		name.addMouseListener(showDetails());
+		name.addMouseListener(mouseActions());
 		repaint();
 		add(name);
 		
@@ -51,6 +50,32 @@ public class Friend extends MainPanel {
 		call.setIcon(new ImageIcon("C:\\Projekty\\inzynierka\\cammed\\icons\\call.png"));
 		add(call);
 
+	}
+
+	private MouseAdapter mouseActions() {
+		return new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				String setColor = setColor(name.getText(), Colors.GREEN);
+				name.setText(setColor);
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				String text = name.getText();
+				String setColor = setColor(text, Colors.BLACK);
+				name.setText(setColor);
+			}
+		};
+	}
+
+	private MouseAdapter showDetails() {
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				JOptionPane.showMessageDialog(null, user.toString());
+			}
+		};
 	}
 
 	public void paintComponent(Graphics graphics) {
@@ -63,10 +88,7 @@ public class Friend extends MainPanel {
 			graphics.setColor(Color.RED);
 			call.setEnabled(false);
 		}
-		graphics.fillOval(0, 10, 10, 10);
-		
-		name.setText(user.getImie() + " " + user.getNazwisko());
-		
+		graphics.fillOval(10, 10, 10, 10);
 	}
-
+	
 }
