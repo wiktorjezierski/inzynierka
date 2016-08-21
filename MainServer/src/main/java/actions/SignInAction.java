@@ -63,9 +63,9 @@ public class SignInAction implements Actions {
 		List<User> friends = new ArrayList<User>();
 		for (Relation relation : relations) {
 			User user1 = relation.getUser1();
-			if(!user1.getLogin().equals(userLogin) && user1.getUserCurrentDetail() != null){
+			if(!user1.getLogin().equals(userLogin)){
 				friends.add(user1);
-			} else if(relation.getUser2().getUserCurrentDetail() != null){
+			} else {
 				friends.add(relation.getUser2());
 			}
 		}
