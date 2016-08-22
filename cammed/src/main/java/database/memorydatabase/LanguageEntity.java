@@ -1,7 +1,11 @@
 package database.memorydatabase;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import database.Entitys;
 
 
 /**
@@ -9,8 +13,9 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="Language.findAll", query="SELECT l FROM Language l")
-public class Language implements Serializable {
+@Table(name="LANGUAGE")
+@NamedQuery(name="Language.findAll", query="SELECT l FROM LanguageEntity l")
+public class LanguageEntity implements Entitys {
 	private static final long serialVersionUID = 1L;
 
 	private Object de;
@@ -22,7 +27,7 @@ public class Language implements Serializable {
 	@Id
 	private Object uuid;
 
-	public Language() {
+	public LanguageEntity() {
 	}
 
 	public Object getDe() {
@@ -55,6 +60,12 @@ public class Language implements Serializable {
 
 	public void setUuid(Object uuid) {
 		this.uuid = uuid;
+	}
+
+	@Override
+	public String getPrimaryKey() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

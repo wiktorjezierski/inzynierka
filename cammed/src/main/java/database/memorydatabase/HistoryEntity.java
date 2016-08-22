@@ -1,7 +1,14 @@
 package database.memorydatabase;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import database.Entitys;
 
 
 /**
@@ -9,8 +16,9 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="History.findAll", query="SELECT h FROM History h")
-public class History implements Serializable {
+@Table(name="HISTORY")
+@NamedQuery(name="History.findAll", query="SELECT h FROM HistoryEntity h")
+public class HistoryEntity implements Entitys {
 	private static final long serialVersionUID = 1L;
 
 	private Object content;
@@ -21,9 +29,9 @@ public class History implements Serializable {
 	//bi-directional many-to-one association to User
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USER", referencedColumnName="UUID")
-	private User userBean;
+	private UserEntity userBean;
 
-	public History() {
+	public HistoryEntity() {
 	}
 
 	public Object getContent() {
@@ -42,12 +50,18 @@ public class History implements Serializable {
 		this.uuid = uuid;
 	}
 
-	public User getUserBean() {
+	public UserEntity getUserBean() {
 		return this.userBean;
 	}
 
-	public void setUserBean(User userBean) {
+	public void setUserBean(UserEntity userBean) {
 		this.userBean = userBean;
+	}
+
+	@Override
+	public String getPrimaryKey() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
