@@ -26,7 +26,6 @@ public class FriendsPanel extends MainPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		panel = new Panel();
-//		panel.setLayout(new GridLayout(100, 0, 0, 0));
 		panel.addComponentListener(new ComponentAdapter() {
         	@Override
         	public void componentResized(ComponentEvent arg0) {
@@ -44,11 +43,36 @@ public class FriendsPanel extends MainPanel {
 	}
 	
 	public void generateFriendList(List<User> users) {
+		sortByActiv(users);
 		for (User user : users) {
 			panel.add(new Friend(user, mainFrame));
 		}
 	}
 	
+	public void sortByActiv(List<User> users) {
+		int i, j;
+		for (i = 0; i < users.size(); i++) {
+			if(!users.get(i).getStatus()){
+				break;
+			}
+		}
+		
+		for (j = users.size() - 1; j >= 0; j--) {
+			if(users.get(j).getStatus()){
+				break;
+			}
+		}
+		
+		if(i < j) {
+			User temp = users.get(i);
+			users.set(i, users.get(j));
+			users.set(j, temp);
+			sortByActiv(users);
+		} else {
+			return;
+		}
+	}
+
 	private void regenerateLayoutSize() {
 		int heightFriends = this.getHeight();
 		Component[] components = panel.getComponents();

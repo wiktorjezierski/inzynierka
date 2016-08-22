@@ -26,7 +26,7 @@ public abstract class MainPanel extends JPanel {
 		case GREEN:
 			return "<html><font color='green'>" + text + "</font></html>";
 		case BLACK:
-			return "<html><font color='black'>" + text + "</font></html>";
+			return text;
 		}
 		return text;
 	}

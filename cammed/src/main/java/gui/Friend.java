@@ -56,15 +56,12 @@ public class Friend extends MainPanel {
 		return new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				String setColor = setColor(name.getText(), Colors.GREEN);
-				name.setText(setColor);
+				name.setText(setColor(name.getText(), Colors.GREEN));
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				String text = name.getText();
-				String setColor = setColor(text, Colors.BLACK);
-				name.setText(setColor);
+				name.setText(setColor(name.getText(), Colors.BLACK));
 			}
 		};
 	}
@@ -90,5 +87,12 @@ public class Friend extends MainPanel {
 		}
 		graphics.fillOval(10, 10, 10, 10);
 	}
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }
