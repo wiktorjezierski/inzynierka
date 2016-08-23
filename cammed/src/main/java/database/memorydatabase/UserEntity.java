@@ -24,13 +24,13 @@ public class UserEntity implements Entitys {
 	@Id
 	private String uuid;
 
-	private Object imie;
+	private String imie;
 
-	private Object login;
+	private String login;
 
-	private Object nazwisko;
+	private String nazwisko;
 
-	private Object status;
+	private boolean status;
 
 	//bi-directional many-to-one association to History
 	@OneToMany(mappedBy="userBean")
@@ -39,35 +39,35 @@ public class UserEntity implements Entitys {
 	public UserEntity() {
 	}
 
-	public Object getImie() {
+	public String getImie() {
 		return this.imie;
 	}
 
-	public void setImie(Object imie) {
+	public void setImie(String imie) {
 		this.imie = imie;
 	}
 
-	public Object getLogin() {
+	public String getLogin() {
 		return this.login;
 	}
 
-	public void setLogin(Object login) {
+	public void setLogin(String login) {
 		this.login = login;
 	}
 
-	public Object getNazwisko() {
+	public String getNazwisko() {
 		return this.nazwisko;
 	}
 
-	public void setNazwisko(Object nazwisko) {
+	public void setNazwisko(String nazwisko) {
 		this.nazwisko = nazwisko;
 	}
 
-	public Object getStatus() {
+	public boolean getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Object status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 

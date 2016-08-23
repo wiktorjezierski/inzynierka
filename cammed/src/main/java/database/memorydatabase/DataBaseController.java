@@ -18,7 +18,7 @@ import database.Entitys;
  */
 public class DataBaseController {
 	
-	private final String PERSISTENCE_NAME = "MainServer";
+	private final String PERSISTENCE_NAME = "cammed";
 
 	private static EntityManagerFactory entityManagerFactory;
 	private static EntityManager entityManager;

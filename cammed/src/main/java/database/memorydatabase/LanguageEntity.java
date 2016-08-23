@@ -1,5 +1,7 @@
 package database.memorydatabase;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
@@ -18,48 +20,56 @@ import database.Entitys;
 public class LanguageEntity implements Entitys {
 	private static final long serialVersionUID = 1L;
 
-	private Object de;
-
-	private Object en;
-
-	private Object pl;
-
 	@Id
-	private Object uuid;
+	private String uuid;
+
+	private String de;
+
+	private String en;
+
+	private String pl;
+
+	public LanguageEntity(UUID uuid, String de, String en, String pl) {
+		super();
+		this.de = de;
+		this.en = en;
+		this.pl = pl;
+		this.uuid = uuid.toString();
+	}
 
 	public LanguageEntity() {
 	}
 
-	public Object getDe() {
+	public String getDe() {
 		return this.de;
 	}
 
-	public void setDe(Object de) {
+	public void setDe(String de) {
 		this.de = de;
 	}
 
-	public Object getEn() {
+	public String getEn() {
 		return this.en;
 	}
 
-	public void setEn(Object en) {
+	public void setEn(String en) {
 		this.en = en;
 	}
 
-	public Object getPl() {
+	public String getPl() {
 		return this.pl;
 	}
 
-	public void setPl(Object pl) {
+	public void setPl(String pl) {
 		this.pl = pl;
 	}
 
-	public Object getUuid() {
-		return this.uuid;
+	public UUID getUuid() {
+		return UUID.fromString(uuid);
 	}
 
-	public void setUuid(Object uuid) {
-		this.uuid = uuid;
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid.toString();
 	}
 
 	@Override

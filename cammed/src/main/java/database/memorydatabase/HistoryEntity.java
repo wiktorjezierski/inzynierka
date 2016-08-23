@@ -21,10 +21,10 @@ import database.Entitys;
 public class HistoryEntity implements Entitys {
 	private static final long serialVersionUID = 1L;
 
-	private Object content;
+	private String content;
 
 	@Id
-	private Object uuid;
+	private String uuid;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -34,19 +34,19 @@ public class HistoryEntity implements Entitys {
 	public HistoryEntity() {
 	}
 
-	public Object getContent() {
+	public String getContent() {
 		return this.content;
 	}
 
-	public void setContent(Object content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 
-	public Object getUuid() {
+	public String getUuid() {
 		return this.uuid;
 	}
 
-	public void setUuid(Object uuid) {
+	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
 
