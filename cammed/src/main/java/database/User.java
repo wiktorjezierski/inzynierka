@@ -14,6 +14,7 @@ public class User implements Entitys {
 	private String imie;
 	private String nazwisko;
 	private boolean status;
+	private int amountFriends;
 
 	private UserCurrentDetail userCurrentDetail;
 
@@ -80,12 +81,18 @@ public class User implements Entitys {
 	public String getPrimaryKey() {
 		return getLogin();
 	}
+	
+	public int getAmountFriends() {
+		return amountFriends;
+	}
+
+	public void setAmountFriends(int amountFriends) {
+		this.amountFriends = amountFriends;
+	}
 
 	@Override
 	public String toString() {
 		return "User [uuid=" + uuid + ", login=" + login + ", imie=" + imie + ", nazwisko=" + nazwisko + ", status="
 				+ status + ", userCurrentDetail=" + userCurrentDetail + "]";
 	}
-	
-	
 }

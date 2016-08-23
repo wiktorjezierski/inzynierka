@@ -35,6 +35,8 @@ public class User implements Entitys {
 	private String nazwisko;
 
 	private boolean status;
+	
+	private int amountFriends;
 
 	//bi-directional many-to-one association to UserCurrentDetail
 	@ManyToOne(cascade=CascadeType.ALL)
@@ -99,6 +101,14 @@ public class User implements Entitys {
 
 	public void setUserCurrentDetail(UserCurrentDetail userCurrentDetail) {
 		this.userCurrentDetail = userCurrentDetail;
+	}
+
+	public int getAmountFriends() {
+		return amountFriends;
+	}
+
+	public void setAmountFriends(int amountFriends) {
+		this.amountFriends = amountFriends;
 	}
 
 	public String getPrimaryKey() {
