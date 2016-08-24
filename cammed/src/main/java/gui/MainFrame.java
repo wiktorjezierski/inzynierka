@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.ScrollPane;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -143,7 +145,13 @@ public class MainFrame extends JFrame {
         splitPane.setRightComponent(splitPane_1);
         
         JPanel srodek = new JPanel();
-        srodek.setMinimumSize(new Dimension(200, 100));
+        srodek.addComponentListener(new ComponentAdapter() {
+        	@Override
+        	public void componentResized(ComponentEvent arg0) {
+        		srodek.setMinimumSize(new Dimension((int) (contentPane.getWidth() * 0.55), 1000));
+        	}
+        });
+//        srodek.setMinimumSize(new Dimension(200, 100));
         splitPane_1.setLeftComponent(srodek);
         
         JPanel prawa = new JPanel();

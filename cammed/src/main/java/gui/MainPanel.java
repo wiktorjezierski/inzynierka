@@ -20,15 +20,7 @@ public abstract class MainPanel extends JPanel {
 	
 	protected String setColor(String text, Colors color) {
 		text = clearText(text);
-		switch (color) {
-		case RED:
-			return "<html><font color='red'>" + text + "</font></html>";
-		case GREEN:
-			return "<html><font color='green'>" + text + "</font></html>";
-		case BLACK:
-			return text;
-		}
-		return text;
+		return "<html><font color='"+ color.getValue() +"'>" + text + "</font></html>";
 	}
 	
 	private String clearText(String text) {
