@@ -70,7 +70,11 @@ public class Friend extends MainPanel {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				JOptionPane.showMessageDialog(null, user.toString());
+//				JOptionPane.showMessageDialog(null, user.toString());
+				UserDescription userDescription = (UserDescription) mainFrame.getPanel(MainFrame.USER_DETAILS);
+				userDescription.setValue(user);
+				
+				mainFrame.changeCenterPanel(MainFrame.USER_DETAILS);
 			}
 		};
 	}

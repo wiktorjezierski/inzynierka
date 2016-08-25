@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
@@ -35,6 +36,7 @@ public class MainFrame extends JFrame {
 	public static final int TOP = 2;
 	public static final int FRIENDS = 3;
 	public static final int SIGN_UP = 4;
+	public static final int USER_DETAILS = 5;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -42,6 +44,8 @@ public class MainFrame extends JFrame {
 	
 	private JPanel contentPane;
 //	private JPanel loginPanel;
+	
+	private JSplitPane splitPane_1;
 
 	/**
 	 * Launch the application.
@@ -117,7 +121,7 @@ public class MainFrame extends JFrame {
 		
 		createContent();
 		maximizeScreen();
-		this.repaint();
+		repaint();
 	}
 	
 	private void createContent() {
@@ -141,7 +145,7 @@ public class MainFrame extends JFrame {
         gbc_splitPane.gridy = 0;
         centerPanel.add(splitPane, gbc_splitPane);
         
-        JSplitPane splitPane_1 = new JSplitPane();
+        splitPane_1 = new JSplitPane();
         splitPane.setRightComponent(splitPane_1);
         
         JPanel srodek = new JPanel();
@@ -151,7 +155,6 @@ public class MainFrame extends JFrame {
         		srodek.setMinimumSize(new Dimension((int) (contentPane.getWidth() * 0.55), 1000));
         	}
         });
-//        srodek.setMinimumSize(new Dimension(200, 100));
         splitPane_1.setLeftComponent(srodek);
         
         JPanel prawa = new JPanel();
@@ -163,16 +166,13 @@ public class MainFrame extends JFrame {
         splitPane.setLeftComponent(scrollPane);
         
         scrollPane.add(maping.get(FRIENDS));
-
         panel.add(centerPanel, BorderLayout.CENTER);
-
-        getContentPane().add(panel);
-        
         panel.add(maping.get(TOP), BorderLayout.NORTH);
-        
         panel.add(maping.get(BOTTOM), BorderLayout.SOUTH);
+        getContentPane().add(panel);
         setVisible(true);
 	}
+
 
 	private void maximizeScreen() {
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
@@ -188,6 +188,16 @@ public class MainFrame extends JFrame {
 		repaint();
 	}
 	
+	
+	
+	public void changeCenterPanel(int newPanel) {
+		Component leftComponent = splitPane_1.getLeftComponent();
+		splitPane_1.remove(leftComponent);
+		
+		MainPanel panel = getPanel(newPanel);
+		splitPane_1.setLeftComponent(panel);
+	}
+	
 	private void createJPanels() {
 		maping = new HashMap<Integer, JPanel>();
 		
@@ -196,5 +206,10 @@ public class MainFrame extends JFrame {
 		maping.put(TOP, new TopPanel(this));
 		maping.put(FRIENDS, new FriendsPanel(this));
 		maping.put(SIGN_UP, new SignUpPanel(this));
+		maping.put(USER_DETAILS, new UserDescription(this));
+	}
+	
+	public MainPanel getPanel(int name) {
+		return (MainPanel) maping.get(name);
 	}
 }
