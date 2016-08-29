@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -59,7 +60,14 @@ public class LoginPanel extends MainPanel {
 		zarejestruj.addMouseListener(mouseRejestracja);
 		zarejestruj.setBounds(210, 200, 123, 23);
 		add(zarejestruj);
+		
+		clear();
 
+	}
+
+	private void clear() {
+		loginField.setText("");
+		passwordField.setText("");
 	}
 
 	MouseAdapter mouseRejestracja = new MouseAdapter() {
@@ -90,4 +98,9 @@ public class LoginPanel extends MainPanel {
 			}
 		}
 	};
+	
+	public void paintComponent(Graphics graphics) {
+		super.paintComponent(graphics);
+//		clear();
+	}
 }

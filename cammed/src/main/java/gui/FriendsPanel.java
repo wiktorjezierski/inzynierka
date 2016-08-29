@@ -44,6 +44,7 @@ public class FriendsPanel extends MainPanel {
 	
 	public void generateFriendList(List<User> users) {
 		sortByActiv(users);
+		panel.removeAll();
 		for (User user : users) {
 			panel.add(new Friend(user, mainFrame));
 		}

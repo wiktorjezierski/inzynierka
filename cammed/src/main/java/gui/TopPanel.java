@@ -1,12 +1,15 @@
 package gui;
-import javax.swing.JButton;
 import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
+
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TopPanel extends MainPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	private JButton btnWyloguj;
 	/**
 	 * Create the panel.
 	 */
@@ -14,11 +17,18 @@ public class TopPanel extends MainPanel {
 		super(mainFrame);
 		setLayout(new BorderLayout(0, 0));
 		
-		JButton btnNewButton = new JButton("New button");
-		add(btnNewButton, BorderLayout.NORTH);
-		
-		JButton button = new JButton("New button");
-		add(button, BorderLayout.SOUTH);
+		btnWyloguj = new JButton("Wyloguj");
+		btnWyloguj.addMouseListener(mouseEvents());
+		add(btnWyloguj, BorderLayout.EAST);
+	}
+	
+	private MouseAdapter mouseEvents() {
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mainFrame.displayJPanel(MainFrame.LOGIN);
+			}
+		};
 	}
 
 }

@@ -188,6 +188,12 @@ public class MainFrame extends JFrame {
 		repaint();
 	}
 	
+	public void displayJPanel(int newPanel) {
+		getContentPane().removeAll();
+		getContentPane().add(getPanel(newPanel));
+		repaint();
+	}
+	
 	
 	
 	public void changeCenterPanel(int newPanel) {
