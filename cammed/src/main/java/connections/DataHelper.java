@@ -9,4 +9,6 @@ public interface DataHelper {
 	public final static int AUDIO_PORT = 6067;
 	
 	public final static int AUDIO_CHUNK_SIZE = 4096;
+	
+	public final static int TIME_DELAY = 5000;
 }
