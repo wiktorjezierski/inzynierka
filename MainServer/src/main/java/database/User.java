@@ -3,6 +3,7 @@ package database;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -36,6 +37,7 @@ public class User implements Entitys {
 
 	private boolean status;
 	
+	@Column(name="amount_friends")
 	private int amountFriends;
 
 	//bi-directional many-to-one association to UserCurrentDetail

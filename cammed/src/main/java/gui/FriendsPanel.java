@@ -48,7 +48,9 @@ public class FriendsPanel extends MainPanel {
 	}
 	
 	public void generateFriendList(List<User> users) {
-		new Refresh(users, this).start();
+		Thread refresh = new Refresh(users, this);
+		refresh.start();
+		
 		generateFriendsList(users);
 	}
 
@@ -58,6 +60,8 @@ public class FriendsPanel extends MainPanel {
 		for (User user : users) {
 			panel.add(new Friend(user, mainFrame));
 		}
+		repaint();
+		revalidate();
 	}
 	
 	public void sortByActiv(List<User> users) {
@@ -116,11 +120,7 @@ class Refresh extends Thread {
 				Response response = (Response) connection.readObject();
 				friendsPanel.generateFriendsList(response.getUsers());
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
+		} catch (IOException | ClassNotFoundException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
