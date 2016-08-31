@@ -11,6 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
 import database.User;
+import javax.swing.JPanel;
 
 public class UserDescription extends MainPanel {
 
@@ -84,9 +85,7 @@ public class UserDescription extends MainPanel {
 		lastAccessDate = new JLabel("data");
 		panel_3.add(lastAccessDate);
 		
-		Panel panel_1 = new Panel();
-		add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+		
 	}
 	
 	public void setValue(User user) {
@@ -97,5 +96,13 @@ public class UserDescription extends MainPanel {
 		name.setText(user.getImie());
 		surname.setText(user.getNazwisko());
 		lastAccessDate.setText("NEXT VERSION");
+		
+		createHistoryDescription();
+	}
+	
+	private void createHistoryDescription() {
+		UserHistory userHistory = new UserHistory();
+		add(userHistory, BorderLayout.CENTER);
+		userHistory.generateHistory(user);
 	}
 }

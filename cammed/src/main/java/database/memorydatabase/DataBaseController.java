@@ -30,13 +30,10 @@ public class DataBaseController {
 	 * standard constructor
 	 */
 	public DataBaseController() {
-//		if (entityManagerFactory == null || entityManager == null) {
-//			Map<String, String> properties = new HashMap<String, String>();
-//			properties.put("javax.persistence.jdbc.user", "stuntman_wiktor");
-//			properties.put("javax.persistence.jdbc.password", "baza1234");			
-//			entityManagerFactory = Persistence.createEntityManagerFactory(persistenceName, properties);
-//			entityManager = entityManagerFactory.createEntityManager();			
-//		}
+		if (entityManagerFactory == null || entityManager == null) {
+			entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_NAME);
+			entityManager = entityManagerFactory.createEntityManager();			
+		}
 	}
 
 	/**
