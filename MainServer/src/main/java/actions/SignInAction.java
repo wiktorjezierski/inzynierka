@@ -51,7 +51,7 @@ public class SignInAction implements Actions {
 				friends.stream().forEach( f -> f.setUserCurrentDetail(null));
 				mController.commitTransaction();
 				
-				return new Response(friends);
+				return new Response(friends, userCurrentDetail.getSessionId().toString());
 			}
 		} catch (RuntimeException e) {
 			mController.rollbackTransaction();

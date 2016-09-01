@@ -21,8 +21,8 @@ public class EstablishConnectionUC implements UseCase {
 
 	public void execute(){
 		try {
-			Client.connectWithAnotherUser(findLocalAddress(), DataHelper.AUDIO_PORT);
-			Client.connectWithAnotherUser(findLocalAddress(), DataHelper.VIDEO_PORT);
+			Client.connectWithAnotherUser(findLocalAddress(), DataHelper.AUDIO_PORT).closeConnection();
+			Client.connectWithAnotherUser(findLocalAddress(), DataHelper.VIDEO_PORT).closeConnection();
 		} catch (RuntimeException e) {
 			return;
 		}

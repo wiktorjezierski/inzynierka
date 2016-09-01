@@ -20,8 +20,10 @@ public class SignOutAction implements Actions {
 			mController.beginTransaction();
 			User user = mController.executeNamedQuery(User.class, Entitys.FIND_USER_BY_LOGIN, userLogin).get(0);
 			UserCurrentDetail userCurrentDetail = user.getUserCurrentDetail();
-			if (userCurrentDetail.getSessionId() == sessionId) {
+			if (sessionId.equals(userCurrentDetail.getSessionId())) {
 				mController.remove(userCurrentDetail);
+				user.setUserCurrentDetail(null);
+				user.setStatus(false);
 				mController.commitTransaction();
 				return new Response(true);
 			}

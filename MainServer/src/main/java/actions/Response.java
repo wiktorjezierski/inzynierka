@@ -11,6 +11,8 @@ public class Response implements Serializable {
 	
 	private List<User> users;
 	private boolean confirmation;
+	private String value;
+	private DeviceType deviceType;
 
 	public Response(boolean confirmation) {
 		this.confirmation = confirmation;
@@ -19,6 +21,16 @@ public class Response implements Serializable {
 	public Response(List<User> users) {
 		this.confirmation = true;
 		this.users = users;
+	}
+	public Response(List<User> users, String sessionID) {
+		this.confirmation = true;
+		this.users = users;
+		value = sessionID;
+	}
+	
+	public Response(String addressIP, DeviceType deviceType) {
+		this.value = addressIP;
+		this.deviceType = deviceType;
 	}
 
 	public List<User> getUsers() {
@@ -36,4 +48,13 @@ public class Response implements Serializable {
 	public void setConfirmation(boolean confirmation) {
 		this.confirmation = confirmation;
 	}
+
+	public String getAddressIP() {
+		return value;
+	}
+
+	public DeviceType getDeviceType() {
+		return deviceType;
+	}
+	
 }

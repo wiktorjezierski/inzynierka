@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -12,7 +13,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import actions.CallAction;
+import actions.Response;
+import connections.Client;
 import database.User;
+import usecases.EstablishConnectionUC;
+import usecases.UseCase;
 
 public class Friend extends MainPanel {
 
@@ -46,6 +52,8 @@ public class Friend extends MainPanel {
 		add(name);
 		
 		call = new JButton("");
+
+		call.addMouseListener(mouseEvents);
 		call.setIcon(new ImageIcon("C:\\Projekty\\inzynierka\\cammed\\icons\\call.png"));
 		add(call);
 
@@ -64,6 +72,24 @@ public class Friend extends MainPanel {
 			}
 		};
 	}
+	
+	MouseAdapter mouseEvents = new MouseAdapter() {	// przeniesc to do oddzielnej klasy
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			try {
+				CallAction callAction = new CallAction(user.getUuid());
+
+				Client client = Client.connectWithMainSerwer();
+				client.writeObject(callAction);
+				Response response = client.readObject();
+				
+				UseCase establishConnection = new EstablishConnectionUC(response.getValue(), response.getDeviceType());
+				establishConnection.execute();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+		}
+	};
 
 	private MouseAdapter showDetails() {
 		return new MouseAdapter() {

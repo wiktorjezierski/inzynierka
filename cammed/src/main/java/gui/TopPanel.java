@@ -1,9 +1,12 @@
 package gui;
 import java.awt.BorderLayout;
-
-import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
+
+import usecases.SignOutUC;
+import usecases.UseCase;
 
 public class TopPanel extends MainPanel {
 
@@ -26,7 +29,13 @@ public class TopPanel extends MainPanel {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				mainFrame.displayJPanel(MainFrame.LOGIN);
+				try {
+					UseCase signOut = new SignOutUC();
+					signOut.execute();
+					mainFrame.displayJPanel(MainFrame.LOGIN);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		};
 	}

@@ -30,10 +30,10 @@ public class DataBaseController {
 	 * standard constructor
 	 */
 	public DataBaseController() {
-		if (entityManagerFactory == null || entityManager == null) {
-			entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_NAME);
-			entityManager = entityManagerFactory.createEntityManager();			
-		}
+//		if (entityManagerFactory == null || entityManager == null) {
+//			entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_NAME);
+//			entityManager = entityManagerFactory.createEntityManager();			
+//		}
 	}
 
 	/**
