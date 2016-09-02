@@ -19,7 +19,7 @@ public class LogInUC {
 			Response response = (Response) client.readObject();
 			client.closeConnection();
 			
-			SystemParameter.put(SystemParameter.MY_LOGIN, login);	// tutaj jest blad login = wjeziorko
+			SystemParameter.put(SystemParameter.MY_LOGIN, login);
 			SystemParameter.put(SystemParameter.SESSION_ID, UUID.fromString(response.getValue()));
 			
 			return response;

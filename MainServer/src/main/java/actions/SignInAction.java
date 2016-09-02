@@ -48,8 +48,8 @@ public class SignInAction implements Actions {
 
 				List<Relation> relations = mController.executeNamedQuery(Relation.class, Entitys.FIND_FRIENDS,userLogin);
 				List<User> friends = findActivFriends(relations);
-				friends.stream().forEach( f -> f.setUserCurrentDetail(null));
 				mController.commitTransaction();
+				friends.stream().forEach( f -> f.setUserCurrentDetail(null));
 				
 				return new Response(friends, userCurrentDetail.getSessionId().toString());
 			}
