@@ -38,7 +38,7 @@ public class UserHistory extends JPanel {
 	public void generateHistory(User user) {
 		DataBaseController mController = new DataBaseController();
 		mController.beginTransaction();
-		List<HistoryEntity> historyList = mController.findAll(HistoryEntity.class);
+		List<HistoryEntity> historyList = mController.executeNamedQuery(HistoryEntity.class, Entitys.HISTORY, user.getUuid().toString());
 		mController.commitTransaction();
 		
 		for (HistoryEntity history : historyList) {

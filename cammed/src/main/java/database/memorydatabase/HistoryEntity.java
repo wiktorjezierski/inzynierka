@@ -23,7 +23,7 @@ import database.Entitys;
 @Table(name="HISTORY")
 @NamedQueries({
 	@NamedQuery(name="History.findAll", query="SELECT h FROM HistoryEntity h"),
-	@NamedQuery(name="History.findHistoryByUser", query="SELECT h FROM HistoryEntity h WHERE h.userBean.uuid=?1")
+	@NamedQuery(name="History.findHistoryByUser", query="SELECT h FROM HistoryEntity h WHERE h.userBean.uuid=?1 ORDER BY h.date ASC")
 })
 public class HistoryEntity implements Entitys {
 	private static final long serialVersionUID = 1L;
