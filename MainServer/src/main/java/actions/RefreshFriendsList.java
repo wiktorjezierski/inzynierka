@@ -30,7 +30,7 @@ public class RefreshFriendsList implements Actions {
 		
 		mController.beginTransaction();
 		List<User> result = (List<User>) mController.executeQuery(sql);
-		mController.commitTransaction();
+		mController.rollbackTransaction();
 		
 		return new Response(result);
 	}
