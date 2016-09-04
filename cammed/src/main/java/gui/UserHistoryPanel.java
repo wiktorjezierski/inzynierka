@@ -15,7 +15,7 @@ import database.memorydatabase.DataBaseController;
 import database.memorydatabase.HistoryEntity;
 import database.memorydatabase.UserEntity;
 
-public class UserHistory extends JPanel {
+public class UserHistoryPanel extends JPanel {
 
 	private static final long serialVersionUID = -5915173622961906936L;
 
@@ -24,7 +24,7 @@ public class UserHistory extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public UserHistory() {
+	public UserHistoryPanel() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		ScrollPane scrollPane = new ScrollPane();

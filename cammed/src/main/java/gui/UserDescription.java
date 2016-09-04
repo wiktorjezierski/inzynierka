@@ -20,7 +20,7 @@ public class UserDescription extends MainPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private User user;
-	private UserHistory userHistory;
+	private UserHistoryPanel userHistory;
 	
 	private Label picture;
 	private Label login;
@@ -106,7 +106,7 @@ public class UserDescription extends MainPanel {
 	}
 	
 	private void createHistoryDescription(User user) {
-		userHistory = new UserHistory();
+		userHistory = new UserHistoryPanel();
 		add(userHistory, BorderLayout.CENTER);
 		userHistory.generateHistory(user);
 	}
