@@ -2,7 +2,9 @@ package database.memorydatabase;
 
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -36,16 +38,24 @@ public class HistoryEntity implements Entitys {
 	private LocalDateTime date;
 	
 	//bi-directional many-to-one association to User
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="USER", referencedColumnName="UUID")
 	private UserEntity userBean;
 
 	public HistoryEntity() {
+		uuid = UUID.randomUUID().toString();
 		date = LocalDateTime.now();
 	}
 	
 	public HistoryEntity(String uuid, String content, UserEntity userBean) {
 		this.uuid = uuid;
+		this.content = content;
+		this.userBean = userBean;
+		date = LocalDateTime.now();
+	}
+	
+	public HistoryEntity(String content, UserEntity userBean) {
+		this.uuid = UUID.randomUUID().toString();
 		this.content = content;
 		this.userBean = userBean;
 		date = LocalDateTime.now();

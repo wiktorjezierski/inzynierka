@@ -1,8 +1,11 @@
 package database.memorydatabase;
 
 import java.util.List;
+import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -33,10 +36,11 @@ public class UserEntity implements Entitys {
 	private boolean status;
 
 	//bi-directional many-to-one association to History
-	@OneToMany(mappedBy="userBean")
+	@OneToMany(mappedBy="userBean", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<HistoryEntity> histories;
 
 	public UserEntity() {
+		uuid = UUID.randomUUID().toString();
 	}
 
 	public String getImie() {

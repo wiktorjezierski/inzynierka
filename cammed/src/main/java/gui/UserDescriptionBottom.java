@@ -1,26 +1,35 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.UUID;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
+import database.User;
+import database.memorydatabase.DataBaseController;
+import database.memorydatabase.HistoryEntity;
+import database.memorydatabase.UserEntity;
 
 public class UserDescriptionBottom extends JPanel {
 
 	private static final long serialVersionUID = -441887018410088046L;
 	
+	private User user;
+	private DataBaseController mController;
+	
 	private JTextField input;
 	private JButton send;
-	private UserDescription userDescription;
+	private UserHistoryPanel userHistory;
 	
 	/**
 	 * Create the panel.
 	 */
-	public UserDescriptionBottom(UserDescription userDescription) {
-		this.userDescription = userDescription;
+	public UserDescriptionBottom(UserHistoryPanel userHistory) {
+		this.userHistory = userHistory;
 		setLayout(new BorderLayout(0, 0));
 
 		input = new JTextField();
@@ -30,6 +39,13 @@ public class UserDescriptionBottom extends JPanel {
 		send = new JButton("   Send   ");
 		send.addMouseListener(mouseEvent());
 		add(send, BorderLayout.EAST);
+		
+		
+		mController = new DataBaseController();
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	private MouseAdapter mouseEvent() {
@@ -37,9 +53,29 @@ public class UserDescriptionBottom extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				String enteredText = input.getText();
+				
+				UserEntity userEntity = convertUser(user);
+				HistoryEntity history = new HistoryEntity(enteredText, userEntity);
+				userHistory.addElement(history, BorderLayout.EAST);
+				
+				mController.beginTransaction();
+				mController.saveToDataBase(history);
+				mController.commitTransaction();
+				
 				input.setText("");
+				// User 4 wrz 2016 dodac tutaj wrzucenie na serwer jesli user jest niezalogowany - wspolna czesc z sygnalizacja plikow
 			}
 		};
 	}
 
+	private UserEntity convertUser(User user) {
+//		UserEntity userEntity = new UserEntity();
+//		userEntity.setImie(user.getImie());
+//		userEntity.setLogin(user.getLogin());
+//		userEntity.setNazwisko(user.getNazwisko());
+//		userEntity.setStatus(user.getStatus());
+		
+		UserEntity userEntity = mController.findByPrimaryKey(UserEntity.class, user.getUuid().toString());
+		return userEntity;
+	}
 }

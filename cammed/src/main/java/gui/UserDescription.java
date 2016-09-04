@@ -21,6 +21,7 @@ public class UserDescription extends MainPanel {
 	
 	private User user;
 	private UserHistoryPanel userHistory;
+	private UserDescriptionBottom userDescriptionBottom;
 	
 	private Label picture;
 	private Label login;
@@ -89,7 +90,8 @@ public class UserDescription extends MainPanel {
 		lastAccessDate = new JLabel("data");
 		panel_3.add(lastAccessDate);
 		
-		UserDescriptionBottom userDescriptionBottom = new UserDescriptionBottom(this);
+		userHistory = new UserHistoryPanel();
+		userDescriptionBottom = new UserDescriptionBottom(userHistory);
 		add(userDescriptionBottom, BorderLayout.SOUTH);
 	}
 
@@ -103,10 +105,10 @@ public class UserDescription extends MainPanel {
 		lastAccessDate.setText("NEXT VERSION");
 		
 		createHistoryDescription(user);
+		userDescriptionBottom.setUser(user);
 	}
 	
 	private void createHistoryDescription(User user) {
-		userHistory = new UserHistoryPanel();
 		add(userHistory, BorderLayout.CENTER);
 		userHistory.generateHistory(user);
 	}

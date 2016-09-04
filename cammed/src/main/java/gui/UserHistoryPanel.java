@@ -49,6 +49,8 @@ public class UserHistoryPanel extends JPanel {
 
 	public synchronized void addElement(HistoryEntity history, String position) {
 		panel.add(new Detail(history, position));
+		panel.repaint();
+		panel.revalidate();
 	}
 	
 }
