@@ -12,18 +12,22 @@ import javax.swing.JLabel;
 
 import database.User;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class UserDescription extends MainPanel {
 
 	private static final long serialVersionUID = 1L;
 	
 	private User user;
+	private UserHistory userHistory;
 	
 	private Label picture;
 	private Label login;
 	private JLabel name;
 	private JLabel surname;
 	private JLabel lastAccessDate;
+	private JTextField input;
 
 	/**
 	 * Create the panel.
@@ -34,7 +38,7 @@ public class UserDescription extends MainPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		Panel panel = new Panel();
-		panel.setMinimumSize(new Dimension(100, 100));
+		panel.setMinimumSize(new Dimension(100, 50));
 		add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BorderLayout(0, 0));
 		
@@ -85,9 +89,10 @@ public class UserDescription extends MainPanel {
 		lastAccessDate = new JLabel("data");
 		panel_3.add(lastAccessDate);
 		
-		
+		UserDescriptionBottom userDescriptionBottom = new UserDescriptionBottom(this);
+		add(userDescriptionBottom, BorderLayout.SOUTH);
 	}
-	
+
 	public void setValue(User user) {
 		this.user = user;
 		
@@ -97,12 +102,13 @@ public class UserDescription extends MainPanel {
 		surname.setText(user.getNazwisko());
 		lastAccessDate.setText("NEXT VERSION");
 		
-		createHistoryDescription();
+		createHistoryDescription(user);
 	}
 	
-	private void createHistoryDescription() {
-		UserHistory userHistory = new UserHistory();
+	private void createHistoryDescription(User user) {
+		userHistory = new UserHistory();
 		add(userHistory, BorderLayout.CENTER);
 		userHistory.generateHistory(user);
 	}
+	
 }

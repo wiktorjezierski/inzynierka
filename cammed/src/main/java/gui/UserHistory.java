@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.ScrollPane;
 import java.util.List;
 
@@ -30,8 +31,8 @@ public class UserHistory extends JPanel {
 		add(scrollPane);
 		
 		panel = new JPanel();
-		scrollPane.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		scrollPane.add(panel);
 
 	}
 	
@@ -42,32 +43,43 @@ public class UserHistory extends JPanel {
 		mController.commitTransaction();
 		
 		for (HistoryEntity history : historyList) {
-			panel.add(new Detail(history));
+			addElement(history, BorderLayout.CENTER);
 		}
 	}
 
+	public synchronized void addElement(HistoryEntity history, String position) {
+		panel.add(new Detail(history, position));
+	}
+	
 }
 
 class Detail extends JPanel {
 
 	private static final long serialVersionUID = -4796674936801942164L;
 
-	public Detail(HistoryEntity history) {
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+	public Detail(HistoryEntity history, String position) {
+		setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel = generateContent(history);
+		add(panel, position);
+	}
+
+	private JPanel generateContent(HistoryEntity history) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
 		UserEntity user = history.getUserBean();
 
-		add(new JLabel(user.getLogin()));
-		add(Box.createHorizontalStrut(20));
+		panel.add(new JLabel(user.getLogin()));
+		panel.add(Box.createHorizontalStrut(20));
 		
-		add(new JLabel(user.getImie()));
-		add(Box.createHorizontalStrut(20));
+		panel.add(new JLabel(user.getImie()));
+		panel.add(Box.createHorizontalStrut(20));
 		
-		add(new JLabel(history.getDate().toString()));
-		add(Box.createHorizontalStrut(20));
+		panel.add(new JLabel(history.getDate().toString()));
+		panel.add(Box.createHorizontalStrut(20));
 		
-		add(new JLabel(history.getContent()));
+		panel.add(new JLabel(history.getContent()));
+		return panel;
 	}
-	
 }
-
