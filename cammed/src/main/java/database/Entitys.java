@@ -10,6 +10,7 @@ public interface Entitys extends Serializable {
 	
 	
 	public final static String HISTORY = "History.findHistoryByUser";
+	public final static String USER_BY_LOGIN = "User.FindUserByLogin";
 
 	public String getPrimaryKey();
 }

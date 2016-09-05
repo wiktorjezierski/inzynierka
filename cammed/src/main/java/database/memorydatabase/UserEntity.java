@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,7 +21,10 @@ import database.Entitys;
  */
 @Entity
 @Table(name="USERS")
-@NamedQuery(name="User.findAll", query="SELECT u FROM UserEntity u")
+@NamedQueries({
+	@NamedQuery(name="User.findAll", query="SELECT u FROM UserEntity u"),
+	@NamedQuery(name="User.FindUserByLogin", query="SELECT u FROM UserEntity u where u.login=?1")
+})
 public class UserEntity implements Entitys {
 	private static final long serialVersionUID = 1L;
 	

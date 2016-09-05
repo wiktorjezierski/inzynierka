@@ -13,6 +13,7 @@ import database.User;
 import database.memorydatabase.DataBaseController;
 import database.memorydatabase.HistoryEntity;
 import database.memorydatabase.UserEntity;
+import masterdata.SystemParameter;
 
 public class UserDescriptionBottom extends JPanel {
 
@@ -54,7 +55,7 @@ public class UserDescriptionBottom extends JPanel {
 			public void mouseClicked(MouseEvent arg0) {
 				String enteredText = input.getText();
 				
-				UserEntity userEntity = convertUser(user);
+				UserEntity userEntity = (UserEntity) SystemParameter.get(SystemParameter.USER);
 				HistoryEntity history = new HistoryEntity(enteredText, userEntity);
 				userHistory.addElement(history, BorderLayout.EAST);
 				
@@ -68,14 +69,4 @@ public class UserDescriptionBottom extends JPanel {
 		};
 	}
 
-	private UserEntity convertUser(User user) {
-//		UserEntity userEntity = new UserEntity();
-//		userEntity.setImie(user.getImie());
-//		userEntity.setLogin(user.getLogin());
-//		userEntity.setNazwisko(user.getNazwisko());
-//		userEntity.setStatus(user.getStatus());
-		
-		UserEntity userEntity = mController.findByPrimaryKey(UserEntity.class, user.getUuid().toString());
-		return userEntity;
-	}
 }

@@ -6,6 +6,9 @@ import actions.DeviceType;
 import actions.Response;
 import actions.SignInAction;
 import connections.Client;
+import database.Entitys;
+import database.memorydatabase.DataBaseController;
+import database.memorydatabase.UserEntity;
 import masterdata.SystemParameter;
 
 public class LogInUC {
@@ -19,6 +22,10 @@ public class LogInUC {
 			Response response = (Response) client.readObject();
 			client.closeConnection();
 			
+			DataBaseController mController = new DataBaseController();
+			UserEntity user = mController.executeNamedQuery(UserEntity.class, Entitys.USER_BY_LOGIN, login).get(0);
+			
+			SystemParameter.put(SystemParameter.USER, user);
 			SystemParameter.put(SystemParameter.MY_LOGIN, login);
 			SystemParameter.put(SystemParameter.SESSION_ID, UUID.fromString(response.getValue()));
 			
