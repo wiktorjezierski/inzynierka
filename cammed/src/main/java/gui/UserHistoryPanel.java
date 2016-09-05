@@ -38,6 +38,8 @@ public class UserHistoryPanel extends JPanel {
 	}
 	
 	public void generateHistory(User user) {
+		panel.removeAll();
+
 		DataBaseController mController = new DataBaseController();
 		mController.beginTransaction();
 		UserEntity currentUser = (UserEntity) SystemParameter.get(SystemParameter.USER);
