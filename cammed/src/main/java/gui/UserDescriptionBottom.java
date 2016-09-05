@@ -3,24 +3,20 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.UUID;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import database.User;
-import database.memorydatabase.DataBaseController;
-import database.memorydatabase.HistoryEntity;
-import database.memorydatabase.UserEntity;
-import masterdata.SystemParameter;
+import gui.helper.Controller;
 
 public class UserDescriptionBottom extends JPanel {
 
 	private static final long serialVersionUID = -441887018410088046L;
 	
 	private User user;
-	private DataBaseController mController;
+	private Controller controller;
 	
 	private JTextField input;
 	private JButton send;
@@ -31,6 +27,8 @@ public class UserDescriptionBottom extends JPanel {
 	 */
 	public UserDescriptionBottom(UserHistoryPanel userHistory) {
 		this.userHistory = userHistory;
+		controller = new Controller();
+		
 		setLayout(new BorderLayout(0, 0));
 
 		input = new JTextField();
@@ -41,8 +39,6 @@ public class UserDescriptionBottom extends JPanel {
 		send.addMouseListener(mouseEvent());
 		add(send, BorderLayout.EAST);
 		
-		
-		mController = new DataBaseController();
 	}
 	
 	public void setUser(User user) {
@@ -55,13 +51,7 @@ public class UserDescriptionBottom extends JPanel {
 			public void mouseClicked(MouseEvent arg0) {
 				String enteredText = input.getText();
 				
-				UserEntity userEntity = (UserEntity) SystemParameter.get(SystemParameter.USER);
-				HistoryEntity history = new HistoryEntity(enteredText, userEntity);
-				userHistory.addElement(history);
-				
-				mController.beginTransaction();
-				mController.saveToDataBase(history);
-				mController.commitTransaction();
+				controller.persistMessage(enteredText, userHistory);
 				
 				input.setText("");
 				// User 4 wrz 2016 dodac tutaj wrzucenie na serwer jesli user jest niezalogowany - wspolna czesc z sygnalizacja plikow

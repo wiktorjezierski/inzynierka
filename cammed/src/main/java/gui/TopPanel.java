@@ -5,8 +5,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
-import usecases.SignOutUC;
-import usecases.UseCase;
+import gui.helper.Controller;
 
 public class TopPanel extends MainPanel {
 
@@ -30,8 +29,7 @@ public class TopPanel extends MainPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					UseCase signOut = new SignOutUC();
-					signOut.execute();
+					Controller.signOut();
 					mainFrame.displayJPanel(MainFrame.LOGIN);
 				} catch (Exception e) {
 					e.printStackTrace();

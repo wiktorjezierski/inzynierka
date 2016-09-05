@@ -1,9 +1,8 @@
 package gui;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.JPanel;
+
+import gui.helper.Controller;
 
 public abstract class MainPanel extends JPanel {
 	
@@ -19,21 +18,8 @@ public abstract class MainPanel extends JPanel {
 	}
 	
 	protected String setColor(String text, Colors color) {
-		text = clearText(text);
+		text = Controller.clearText(text);
 		return "<html><font color='"+ color.getValue() +"'>" + text + "</font></html>";
-	}
-	
-	private String clearText(String text) {
-		String pattern = "(.*)('>)(.*)(</font>)(.*)";
-		Pattern r = Pattern.compile(pattern);
-		Matcher m = r.matcher(text);
-		
-		if(m.matches()) {
-			String group = m.group(3);
-			return group;
-		} else {
-			return text;
-		}
 	}
 
 }

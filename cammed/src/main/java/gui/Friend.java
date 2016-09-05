@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -13,17 +12,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import actions.CallAction;
-import actions.Response;
-import connections.Client;
 import database.User;
-import usecases.EstablishConnectionUC;
-import usecases.UseCase;
+import gui.helper.Controller;
 
 public class Friend extends MainPanel {
 
 	private static final long serialVersionUID = 1L;
 	private User user;
+	private Controller controller;
 	
 	private JLabel name;
 	private JButton call;
@@ -34,6 +30,7 @@ public class Friend extends MainPanel {
 	public Friend(User userLocal, MainFrame mainFrame) {
 		super(mainFrame);
 		this.user = userLocal;
+		controller = new Controller();
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
@@ -77,14 +74,7 @@ public class Friend extends MainPanel {
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			try {
-				CallAction callAction = new CallAction(user.getUuid());
-
-				Client client = Client.connectWithMainSerwer();
-				client.writeObject(callAction);
-				Response response = client.readObject();
-				
-				UseCase establishConnection = new EstablishConnectionUC(response.getValue(), response.getDeviceType());
-				establishConnection.execute();
+				controller.friendEstablishConnection(user);
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
@@ -95,7 +85,6 @@ public class Friend extends MainPanel {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-//				JOptionPane.showMessageDialog(null, user.toString());
 				UserDescription userDescription = (UserDescription) mainFrame.getPanel(MainFrame.USER_DETAILS);
 				userDescription.setValue(user);
 				

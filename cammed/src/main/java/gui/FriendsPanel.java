@@ -7,20 +7,19 @@ import java.awt.GridLayout;
 import java.awt.Panel;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.io.IOException;
 import java.util.List;
 
 import javax.swing.BoxLayout;
 
-import actions.RefreshFriendsList;
-import actions.Response;
-import connections.Client;
-import connections.DataHelper;
 import database.User;
+import gui.helper.Controller;
+import gui.helper.Refresh;
 
 public class FriendsPanel extends MainPanel {
 
 	private static final long serialVersionUID = 1L;
+	
+	private Controller controller;
 	
 	private Panel panel;
 	/**
@@ -28,6 +27,8 @@ public class FriendsPanel extends MainPanel {
 	 */
 	public FriendsPanel(MainFrame mainFrame) {
 		super(mainFrame);
+		controller = new Controller();
+		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		panel = new Panel();
@@ -54,38 +55,14 @@ public class FriendsPanel extends MainPanel {
 		generateFriendsList(users);
 	}
 
-	protected void generateFriendsList(List<User> users) {
-		sortByActiv(users);
+	public void generateFriendsList(List<User> users) {
+		controller.sortByActiv(users);
 		panel.removeAll();
 		for (User user : users) {
 			panel.add(new Friend(user, mainFrame));
 		}
 		repaint();
 		revalidate();
-	}
-	
-	public void sortByActiv(List<User> users) {
-		int i, j;
-		for (i = 0; i < users.size(); i++) {
-			if(!users.get(i).getStatus()){
-				break;
-			}
-		}
-		
-		for (j = users.size() - 1; j >= 0; j--) {
-			if(users.get(j).getStatus()){
-				break;
-			}
-		}
-		
-		if(i < j) {
-			User temp = users.get(i);
-			users.set(i, users.get(j));
-			users.set(j, temp);
-			sortByActiv(users);
-		} else {
-			return;
-		}
 	}
 
 	private void regenerateLayoutSize() {
@@ -98,33 +75,3 @@ public class FriendsPanel extends MainPanel {
 		this.panel.setLayout(new GridLayout(Math.max(minRows, components.length), 0, 0, 0));
 	}
 }
-
-class Refresh extends Thread {
-	
-	private List<User> users;
-	private FriendsPanel friendsPanel;
-
-	public Refresh(List<User> users, FriendsPanel friendsPanel) {
-		super();
-		this.friendsPanel = friendsPanel;
-		this.users = users;
-	}
-	
-	public void run() {
-		try {
-			RefreshFriendsList refreshFriendsList = new RefreshFriendsList(users);
-			Client connection = Client.connectWithMainSerwer();
-			while (true) {
-				Thread.sleep(DataHelper.TIME_DELAY);
-				connection.writeObject(refreshFriendsList);
-				Response response = (Response) connection.readObject();
-				friendsPanel.generateFriendsList(response.getUsers());
-			}
-		} catch (IOException | ClassNotFoundException | InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-}
-
-
-
