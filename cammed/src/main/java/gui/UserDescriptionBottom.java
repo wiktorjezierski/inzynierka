@@ -57,7 +57,7 @@ public class UserDescriptionBottom extends JPanel {
 				
 				UserEntity userEntity = (UserEntity) SystemParameter.get(SystemParameter.USER);
 				HistoryEntity history = new HistoryEntity(enteredText, userEntity);
-				userHistory.addElement(history, BorderLayout.EAST);
+				userHistory.addElement(history);
 				
 				mController.beginTransaction();
 				mController.saveToDataBase(history);

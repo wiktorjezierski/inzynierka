@@ -14,6 +14,7 @@ import database.User;
 import database.memorydatabase.DataBaseController;
 import database.memorydatabase.HistoryEntity;
 import database.memorydatabase.UserEntity;
+import masterdata.SystemParameter;
 
 public class UserHistoryPanel extends JPanel {
 
@@ -39,16 +40,17 @@ public class UserHistoryPanel extends JPanel {
 	public void generateHistory(User user) {
 		DataBaseController mController = new DataBaseController();
 		mController.beginTransaction();
-		List<HistoryEntity> historyList = mController.executeNamedQuery(HistoryEntity.class, Entitys.HISTORY, user.getUuid().toString());
+		UserEntity currentUser = (UserEntity) SystemParameter.get(SystemParameter.USER);
+		List<HistoryEntity> historyList = mController.executeNamedQuery(HistoryEntity.class, Entitys.HISTORY, user.getUuid().toString(), currentUser.getUuid().toString());
 		mController.commitTransaction();
 		
 		for (HistoryEntity history : historyList) {
-			addElement(history, BorderLayout.CENTER);
+			addElement(history);
 		}
 	}
 
-	public synchronized void addElement(HistoryEntity history, String position) {
-		panel.add(new Detail(history, position));
+	public synchronized void addElement(HistoryEntity history) {
+		panel.add(new Detail(history));
 		panel.repaint();
 		panel.revalidate();
 	}
@@ -59,11 +61,15 @@ class Detail extends JPanel {
 
 	private static final long serialVersionUID = -4796674936801942164L;
 
-	public Detail(HistoryEntity history, String position) {
+	public Detail(HistoryEntity history) {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = generateContent(history);
-		add(panel, position);
+		if(SystemParameter.get(SystemParameter.MY_LOGIN).equals(history.getUserBean().getLogin())){
+			add(panel, BorderLayout.EAST);
+		} else {
+			add(panel, BorderLayout.WEST);
+		}
 	}
 
 	private JPanel generateContent(HistoryEntity history) {
