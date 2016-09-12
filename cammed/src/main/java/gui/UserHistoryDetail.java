@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import database.memorydatabase.HistoryEntity;
 import database.memorydatabase.UserEntity;
 import masterdata.SystemParameter;
+import java.awt.Component;
 
 public class UserHistoryDetail extends JPanel {
 
@@ -31,6 +32,9 @@ public class UserHistoryDetail extends JPanel {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
 		UserEntity user = history.getUserBean();
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		panel.add(horizontalStrut);
 
 		panel.add(new JLabel(user.getLogin()));
 		panel.add(Box.createHorizontalStrut(20));
@@ -42,6 +46,9 @@ public class UserHistoryDetail extends JPanel {
 		panel.add(Box.createHorizontalStrut(20));
 		
 		panel.add(new JLabel(history.getContent()));
+		
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		panel.add(horizontalStrut_1);
 		return panel;
 	}
 }
