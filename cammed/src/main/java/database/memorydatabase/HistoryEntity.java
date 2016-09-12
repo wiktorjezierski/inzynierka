@@ -48,8 +48,9 @@ public class HistoryEntity implements Entitys {
 	@JoinColumn(name="USER", referencedColumnName="UUID")
 	private UserEntity userBean;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@PrimaryKeyJoinColumn
+	//bi-directional many-to-one association to User
+	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="FILE", referencedColumnName="UUID")
 	private FileEntity fileEntity;
 
 	public HistoryEntity() {
@@ -64,10 +65,20 @@ public class HistoryEntity implements Entitys {
 		date = LocalDateTime.now();
 	}
 	
-	public HistoryEntity(String content, UserEntity userBean) {
-		this.uuid = UUID.randomUUID().toString();
+//	public HistoryEntity(String content, UserEntity userBean) {
+//		this.content = content;
+//		this.userBean = userBean;
+//		this.uuid = UUID.randomUUID().toString();
+//		date = LocalDateTime.now();
+//	}
+	
+
+	public HistoryEntity(String content, boolean isFile, UserEntity userBean, FileEntity fileEntity) {
 		this.content = content;
+		this.isFile = isFile;
 		this.userBean = userBean;
+		this.fileEntity = fileEntity;
+		this.uuid = UUID.randomUUID().toString();
 		date = LocalDateTime.now();
 	}
 
