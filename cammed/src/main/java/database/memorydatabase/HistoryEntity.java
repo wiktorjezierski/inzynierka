@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import database.Entitys;
@@ -37,10 +40,17 @@ public class HistoryEntity implements Entitys {
 
 	private LocalDateTime date;
 	
+	@Column(name="IS_FILE")
+	private boolean isFile;
+	
 	//bi-directional many-to-one association to User
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="USER", referencedColumnName="UUID")
 	private UserEntity userBean;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	private FileEntity fileEntity;
 
 	public HistoryEntity() {
 		uuid = UUID.randomUUID().toString();
@@ -91,6 +101,14 @@ public class HistoryEntity implements Entitys {
 
 	public void setDate(LocalDateTime date) {
 		this.date = date;
+	}
+	
+	public boolean isFile() {
+		return isFile;
+	}
+
+	public void setFile(boolean isFile) {
+		this.isFile = isFile;
 	}
 
 	@Override
