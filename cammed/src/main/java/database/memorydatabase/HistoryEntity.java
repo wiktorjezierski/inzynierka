@@ -65,17 +65,18 @@ public class HistoryEntity implements Entitys {
 		date = LocalDateTime.now();
 	}
 	
-//	public HistoryEntity(String content, UserEntity userBean) {
-//		this.content = content;
-//		this.userBean = userBean;
-//		this.uuid = UUID.randomUUID().toString();
-//		date = LocalDateTime.now();
-//	}
+	public HistoryEntity(String content, UserEntity userBean) {
+		this.isFile = false;
+		this.content = content;
+		this.userBean = userBean;
+		this.uuid = UUID.randomUUID().toString();
+		date = LocalDateTime.now();
+	}
 	
 
-	public HistoryEntity(String content, boolean isFile, UserEntity userBean, FileEntity fileEntity) {
+	public HistoryEntity(String content, UserEntity userBean, FileEntity fileEntity) {
+		this.isFile = true;
 		this.content = content;
-		this.isFile = isFile;
 		this.userBean = userBean;
 		this.fileEntity = fileEntity;
 		this.uuid = UUID.randomUUID().toString();

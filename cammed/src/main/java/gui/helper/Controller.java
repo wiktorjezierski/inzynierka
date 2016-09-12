@@ -82,7 +82,7 @@ public class Controller {
 	
 	public void persistMessage(String enteredText, UserHistoryPanel userHistory) {
 		UserEntity userEntity = (UserEntity) SystemParameter.get(SystemParameter.USER);
-		HistoryEntity history = new HistoryEntity(enteredText, false, userEntity, null);
+		HistoryEntity history = new HistoryEntity(enteredText, userEntity);
 		userHistory.addElement(history);
 		
 		mController.beginTransaction();
