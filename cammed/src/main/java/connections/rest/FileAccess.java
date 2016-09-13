@@ -22,8 +22,18 @@ public class FileAccess {
 		client = Client.create();
 		gson = new Gson();
 	}
+	
+	public static boolean downloadFiles(String filename) {
+		FileAccess fileAccess = new FileAccess();
+		return fileAccess.sendGet(filename);
+	}
+	
+	public static String sendFile(File file) {
+		FileAccess fileAccess = new FileAccess();
+		return fileAccess.sendPost(file);
+	}
 
-	public void downloadFile(String filename) {
+	private boolean sendGet(String filename) {
 		try {
 			WebResource webResource = client
 					.resource(DataHelper.REQUEST_PATH + DataHelper.SUFFIX_DOWNLOAD + "?" + DataHelper.QUERY_PARAM_FILE_NAME + "=" + filename);	// docelowo to przekazac jako argument
@@ -38,17 +48,19 @@ public class FileAccess {
 			MultivaluedMap<String, String> headers = response.getHeaders();
 			String value = headers.getFirst(DataHelper.HEADER_PARAM_FILE_NAME);
 			
-			output.renameTo(new File(DataHelper.FILE_PATH_DESTINATION + value));
+			output.renameTo(new File(DataHelper.FILE_PATH + value));
 			
 			System.out.println("Output from Server .... \n");
 			System.out.println(output);
 			
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 	
-	public void uploadFile(File file) {
+	private String sendPost(File file) {
 		try {
 			WebResource webResource = client.resource(DataHelper.REQUEST_PATH + DataHelper.SUFFIX_UPLOAD);
 			
@@ -65,8 +77,10 @@ public class FileAccess {
 			String output = response.getEntity(String.class);
 			System.out.println(output);
 
+			return fileTO.getFileName();
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 }

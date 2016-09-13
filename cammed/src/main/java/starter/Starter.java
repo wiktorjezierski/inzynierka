@@ -6,6 +6,7 @@ import actions.DeviceType;
 import database.memorydatabase.DataBaseController;
 import gui.MainFrame;
 import usecases.ReceiveConnectionUC;
+import usecases.UpdateFiles;
 import usecases.UseCase;
 
 public class Starter {
@@ -15,13 +16,9 @@ public class Starter {
 	 */
 	public static void main(String[] args) {
 
-		Thread database = new Thread() {
-			public void run() {
-				DataBaseController mController = new DataBaseController();
-				mController.openConnection();
-			}
-		};
-		database.start();
+		
+		Thread updateFiles = new UpdateFiles();
+		updateFiles.start();
 		
 		Thread serwer = new Thread() {
 			public void run() {

@@ -17,5 +17,5 @@ public interface DataHelper {
 	public static final String SUFFIX_DOWNLOAD = "files";
 	public static final String HEADER_PARAM_FILE_NAME = "fileName";
 	public static final String QUERY_PARAM_FILE_NAME = "fileName";
-	public static final String FILE_PATH_DESTINATION = "C:\\Projekty2TEMP\\cammedFTP\\";
+	public static final String FILE_PATH = "C:\\Users\\user\\cammed\\";
 }
