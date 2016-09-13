@@ -19,8 +19,10 @@ public class FileAccess {
 	private Gson gson;
 	
 	public FileAccess() {
-		client = Client.create();
-		gson = new Gson();
+		if (client == null || gson == null) {
+			client = Client.create();
+			gson = new Gson();
+		}
 	}
 	
 	public static boolean downloadFiles(String filename) {

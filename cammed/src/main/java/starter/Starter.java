@@ -3,7 +3,6 @@ package starter;
 import java.awt.EventQueue;
 
 import actions.DeviceType;
-import database.memorydatabase.DataBaseController;
 import gui.MainFrame;
 import usecases.ReceiveConnectionUC;
 import usecases.UpdateFiles;
