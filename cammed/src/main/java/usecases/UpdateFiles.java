@@ -11,9 +11,7 @@ import database.memorydatabase.FileEntity;
 public class UpdateFiles extends Thread implements UseCase {
 	
 	public void run() {
-		List<FileEntity> files = readFiles();
-		
-		for (FileEntity fileEntity : files) {
+		for (FileEntity fileEntity : readFiles()) {
 			String name = fileEntity.getName();
 			File file = new File(DataHelper.FILE_PATH + name);
 			if(!file.exists()) {
