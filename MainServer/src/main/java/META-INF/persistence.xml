@@ -5,6 +5,7 @@
 		<class>database.Relation</class>
 		<class>database.User</class>
 		<class>database.UserCurrentDetail</class>
+		<class>database.Message</class>
 	        <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/cammed"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

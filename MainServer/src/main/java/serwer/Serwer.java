@@ -8,10 +8,11 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 import database.DataBaseController;
+import masterdata.DataHelper;
 
 public class Serwer extends Thread {
 
-	private static int port = 6066;
+	private static int port = DataHelper.DEFAULT_PORT;
 	private ServerSocket serverSocket;
 	private DataOutputStream out;
 	private DataBaseController mController;

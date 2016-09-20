@@ -101,7 +101,7 @@ public class DataBaseController {
 	/**
 	 * Save object into Data Base, function is template
 	 */
-	public <T extends Entitys> void saveToDataBase(T param) throws RuntimeException {
+	public synchronized <T extends Entitys> void saveToDataBase(T param) throws RuntimeException {
 		try {
 			entityManager.persist(param);
 
