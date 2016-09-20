@@ -7,8 +7,11 @@ public class Starter {
 
 	public static void main(String[] args) throws Exception {
 
-		Thread t = new Serwer();
-		t.start();
+		Thread mainSerwer = new Serwer();
+		mainSerwer.start();
+		
+		Thread serwerMessage = new Thread();
+		serwerMessage.start();
 	}
 
 }

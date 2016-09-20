@@ -41,6 +41,33 @@ INSERT INTO `logins` VALUES ('e2a68517-f442-4e01-8407-0f9aa9ce48c8','wjeziorko1'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `message`
+--
+
+DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message` (
+  `UUID` varchar(50) NOT NULL,
+  `user_from` varchar(50) NOT NULL,
+  `uset_to` varchar(50) NOT NULL,
+  `is_file` varchar(45) DEFAULT NULL,
+  `content` varchar(100) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`UUID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `message`
+--
+
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `relations`
 --
 
@@ -108,7 +135,7 @@ CREATE TABLE `user_current_details` (
 
 LOCK TABLES `user_current_details` WRITE;
 /*!40000 ALTER TABLE `user_current_details` DISABLE KEYS */;
-INSERT INTO `user_current_details` VALUES ('4d25cebf-7081-4275-b4dd-39f9bdb3a837',0,'192.168.0.4','b6812302-3c5d-4314-9b90-1d1182fe774e'),('a6620caa-65e1-4097-8434-2fd8f666f149',0,'192.168.0.4','cc09d948-bf0e-4d4b-a90b-f3777e3766e9'),('bc8aec54-d2a5-43c5-943d-a5c10ea0aef5',0,'192.168.0.4','4c24b1c8-c2f1-45fa-99fe-b74b0c50bef6'),('f3050e49-6b6f-4540-9ce9-af7a75629f83',0,'192.168.0.4','e396b234-4886-4cc4-9175-730da4247f66');
+INSERT INTO `user_current_details` VALUES ('a6620caa-65e1-4097-8434-2fd8f666f149',0,'192.168.0.4','cc09d948-bf0e-4d4b-a90b-f3777e3766e9'),('bc8aec54-d2a5-43c5-943d-a5c10ea0aef5',0,'192.168.0.4','4c24b1c8-c2f1-45fa-99fe-b74b0c50bef6'),('f3050e49-6b6f-4540-9ce9-af7a75629f83',0,'192.168.0.4','e396b234-4886-4cc4-9175-730da4247f66');
 /*!40000 ALTER TABLE `user_current_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,7 +166,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('2205db8e-7c9c-4916-8ed2-58936ef46b8d','wjeziorko2','wiktor','jezierski',0,NULL,1),('6f383763-f392-46f4-8785-ff2039c35431','wjeziorko1','Wiktor','Jezierski',1,'4d25cebf-7081-4275-b4dd-39f9bdb3a837',0),('c4eb4330-944b-4454-9e68-31d9fd366550','wjeziorko6','wiktor','jezierski',1,'f3050e49-6b6f-4540-9ce9-af7a75629f83',1);
+INSERT INTO `users` VALUES ('2205db8e-7c9c-4916-8ed2-58936ef46b8d','wjeziorko2','wiktor','jezierski',0,NULL,1),('6f383763-f392-46f4-8785-ff2039c35431','wjeziorko1','Wiktor','Jezierski',0,NULL,0),('c4eb4330-944b-4454-9e68-31d9fd366550','wjeziorko6','wiktor','jezierski',1,'f3050e49-6b6f-4540-9ce9-af7a75629f83',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -152,4 +179,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-15 15:36:39
+-- Dump completed on 2016-09-20 21:14:56
