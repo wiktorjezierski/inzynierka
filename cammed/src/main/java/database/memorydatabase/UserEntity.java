@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import database.Entitys;
+import database.User;
 
 
 /**
@@ -45,6 +46,14 @@ public class UserEntity implements Entitys {
 
 	public UserEntity() {
 		uuid = UUID.randomUUID().toString();
+	}
+	
+	public UserEntity(User user) {
+		uuid = user.getUuid().toString();
+		imie = user.getImie();
+		nazwisko = user.getNazwisko();
+		login = user.getLogin();
+		status = user.getStatus();
 	}
 
 	public String getImie() {

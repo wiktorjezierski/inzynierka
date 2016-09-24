@@ -50,6 +50,7 @@ public class SignInAction implements Actions {
 				List<User> friends = findActivFriends(relations);
 				mController.commitTransaction();
 				friends.stream().forEach( f -> f.setUserCurrentDetail(null));
+				setCurrentUsetAsFirst(user, friends);
 				
 				return new Response(friends, userCurrentDetail.getSessionId().toString());
 			}
@@ -57,6 +58,10 @@ public class SignInAction implements Actions {
 			mController.rollbackTransaction();
 		}
 		return new Response(false);
+	}
+
+	private void setCurrentUsetAsFirst(User user, List<User> friends) {
+		friends.add(0, user);
 	}
 
 	private List<User> findActivFriends(List<Relation> relations) {
