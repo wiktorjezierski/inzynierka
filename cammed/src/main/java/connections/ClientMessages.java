@@ -5,6 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.UUID;
 
+import database.memorydatabase.UserEntity;
 import masterdata.SystemParameter;
 
 public class ClientMessages {
@@ -24,18 +25,24 @@ public class ClientMessages {
 	
 	public void openConnection() {
 		try {
-			client = new Socket(serverAddress, port);
-			objectOutputStream = new ObjectOutputStream(client.getOutputStream());
-			objectInputStream = new ObjectInputStream(client.getInputStream());
-			
+			if (client == null || objectOutputStream == null || objectInputStream == null) {
+				client = new Socket(serverAddress, port);
+				objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+				objectInputStream = new ObjectInputStream(client.getInputStream());
+				
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private UUID retrieveUUID() {
+		UserEntity user = (UserEntity) SystemParameter.get(SystemParameter.USER);
+		return UUID.fromString(user.getUuid());
+	}
+	
+	public void sendObject() {
 		
-		Object user = SystemParameter.get(SystemParameter.USER);
-		return null;
 	}
 }

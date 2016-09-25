@@ -27,6 +27,11 @@ import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 
 import database.User;
+import usecases.SignOutUC;
+import usecases.UseCase;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MainFrame extends JFrame {
 	
@@ -49,6 +54,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		addWindowListener(frameAction());
 		createJPanels();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,6 +89,20 @@ public class MainFrame extends JFrame {
 		
 		contentPane.add(maping.get(LOGIN), BorderLayout.CENTER);
 		
+	}
+
+	private WindowAdapter frameAction() {
+		return new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				try {
+					UseCase signOut = new SignOutUC();
+					signOut.execute();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
 	}
 
 	private MouseAdapter keyAbout() {
