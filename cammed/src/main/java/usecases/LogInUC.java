@@ -7,6 +7,8 @@ import actions.DeviceType;
 import actions.Response;
 import actions.SignInAction;
 import connections.Client;
+import connections.ClientMessages;
+import connections.DataHelper;
 import database.Entitys;
 import database.memorydatabase.DataBaseController;
 import database.memorydatabase.UserEntity;
@@ -45,11 +47,18 @@ public class LogInUC {
 				
 				SystemParameter.put(SystemParameter.USER, localUser);
 				response.getUsers().remove(0);
+				
+				runMessages();
 			}
 			
 			return response;
 		} catch (Exception e) {
 			return new Response(false);
 		}
+	}
+
+	private void runMessages() {
+		Thread clientMessages = new ClientMessages(DataHelper.MAIN_SERVER_ADDRESS, DataHelper.MAIN_SERVER_MESSAGES_PORT);
+		clientMessages.start();
 	}
 }

@@ -61,16 +61,19 @@ public class Messages {
 		mController.beginTransaction();
 		List<Message> messages = mController.executeNamedQuery(Message.class, Actions.MESSAGE_FOR_USER, user.toString());
 		mController.commitTransaction();
-		MessageTO messageTO = new MessageTO(messages);
-		objectOutputStream.writeObject(messageTO);
+		
+		for (Message message : messages) {
+			MessageTO messageTO = new MessageTO(message);
+			objectOutputStream.writeObject(messageTO);
+		}
 	}
 
 	private void receiveMessages() throws Exception {
-		Message message = (Message) objectInputStream.readObject();
+		MessageTO message = (MessageTO) objectInputStream.readObject();
 		while (mController.transactionIsActive());
 
 		mController.beginTransaction();
-		mController.saveToDataBase(message);
+		mController.saveToDataBase(message.getEntity());
 		mController.commitTransaction();
 	}
 }

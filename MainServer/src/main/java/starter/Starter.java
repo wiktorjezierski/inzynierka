@@ -2,6 +2,7 @@ package starter;
 
 
 import serwer.Serwer;
+import serwer.SerwerMessages;
 
 public class Starter {
 
@@ -10,8 +11,9 @@ public class Starter {
 		Thread mainSerwer = new Serwer();
 		mainSerwer.start();
 		
-		Thread serwerMessage = new Thread();
+		Thread serwerMessage = new SerwerMessages();
 		serwerMessage.start();
+		
 	}
 
 }

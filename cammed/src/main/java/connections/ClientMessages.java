@@ -1,14 +1,16 @@
 package connections;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.UUID;
 
+import actions.MessageTO;
 import database.memorydatabase.UserEntity;
 import masterdata.SystemParameter;
 
-public class ClientMessages {
+public class ClientMessages extends Thread {
 	
 	private static Socket client;
 	
@@ -23,6 +25,11 @@ public class ClientMessages {
 		this.port = port;
 	}
 	
+	@Override
+	public void run() {
+		openConnection();
+	}
+	
 	public void openConnection() {
 		try {
 			if (client == null || objectOutputStream == null || objectInputStream == null) {
@@ -30,6 +37,7 @@ public class ClientMessages {
 				objectOutputStream = new ObjectOutputStream(client.getOutputStream());
 				objectInputStream = new ObjectInputStream(client.getInputStream());
 				
+				objectOutputStream.writeObject(retrieveUUID());
 			}
 
 		} catch (Exception e) {
@@ -42,7 +50,20 @@ public class ClientMessages {
 		return UUID.fromString(user.getUuid());
 	}
 	
-	public void sendObject() {
-		
+	public void sendObject(MessageTO message) {
+		try {
+			objectOutputStream.writeObject(message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public MessageTO readObject() {
+		try {
+			return (MessageTO) objectInputStream.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null; 
 	}
 }

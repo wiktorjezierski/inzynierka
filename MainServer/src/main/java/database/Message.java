@@ -54,6 +54,16 @@ public class Message implements Entitys {
 		this.usetTo = usetTo;
 		date = new Date();
 	}
+	
+	public Message(String uuid, String content, String isFile, String userFrom, String usetTo, Date date) {
+		super();
+		this.uuid = uuid;
+		this.content = content;
+		this.isFile = isFile;
+		this.userFrom = userFrom;
+		this.usetTo = usetTo;
+		this.date = date;
+	}
 
 
 	public UUID getUuid() {

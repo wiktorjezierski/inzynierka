@@ -3,8 +3,6 @@ package actions;
 import java.io.Serializable;
 import java.util.Date;
 
-import database.Message;
-
 public class MessageTO implements Serializable {
 
 	private static final long serialVersionUID = 8985162540577327498L;
@@ -16,17 +14,13 @@ public class MessageTO implements Serializable {
 	private String userFrom;
 	private String usetTo;
 	
-	public MessageTO(Message message) {
-		uuid = message.getUuid().toString();
-		content = message.getContent();
-		date = message.getDate();
-		isFile = message.getIsFile();
-		userFrom = message.getUserFrom();
-		usetTo = message.getUsetTo();
-	}
-	
-	public Message getEntity() {
-		return new Message(uuid, content, isFile, userFrom, usetTo, date);
+	public MessageTO(String uuid, String content, Date date, String isFile, String userFrom, String usetTo) {
+		this.uuid = uuid;
+		this.content = content;
+		this.date = date;
+		this.isFile = isFile;
+		this.userFrom = userFrom;
+		this.usetTo = usetTo;
 	}
 
 	public String getUuid() {
