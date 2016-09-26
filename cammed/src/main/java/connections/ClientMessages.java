@@ -20,9 +20,9 @@ public class ClientMessages extends Thread {
 	private static ObjectInputStream objectInputStream;
 	private static ObjectOutputStream objectOutputStream;
 	
-	public ClientMessages(String serverAddress, int port) {
-		this.serverAddress = serverAddress;
-		this.port = port;
+	public ClientMessages() {
+		this.serverAddress = DataHelper.MAIN_SERVER_ADDRESS;
+		this.port = DataHelper.MAIN_SERVER_MESSAGES_PORT;
 	}
 	
 	@Override

@@ -45,12 +45,12 @@ public class Messages {
 		Thread receive = new Thread() {
 			@Override
 			public void run() {
-				while (true) {
-					try {
+				try {
+					while (true) {
 						receiveMessages();
-					} catch (Exception e) {
-						e.printStackTrace();
 					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		};

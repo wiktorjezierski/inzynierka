@@ -58,7 +58,7 @@ public class LogInUC {
 	}
 
 	private void runMessages() {
-		Thread clientMessages = new ClientMessages(DataHelper.MAIN_SERVER_ADDRESS, DataHelper.MAIN_SERVER_MESSAGES_PORT);
+		Thread clientMessages = new ClientMessages();
 		clientMessages.start();
 	}
 }
