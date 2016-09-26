@@ -2,6 +2,7 @@ package actions;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 public class MessageTO implements Serializable {
 
@@ -10,14 +11,14 @@ public class MessageTO implements Serializable {
 	private String uuid;
 	private String content;
 	private Date date;
-	private String isFile;
+	private boolean isFile;
 	private String userFrom;
 	private String usetTo;
 	
-	public MessageTO(String uuid, String content, Date date, String isFile, String userFrom, String usetTo) {
-		this.uuid = uuid;
+	public MessageTO(String content, boolean isFile, String userFrom, String usetTo) {
+		this.uuid = UUID.randomUUID().toString();
 		this.content = content;
-		this.date = date;
+		this.date = new Date();
 		this.isFile = isFile;
 		this.userFrom = userFrom;
 		this.usetTo = usetTo;
@@ -47,11 +48,11 @@ public class MessageTO implements Serializable {
 		this.date = date;
 	}
 
-	public String getIsFile() {
+	public boolean getIsFile() {
 		return isFile;
 	}
 
-	public void setIsFile(String isFile) {
+	public void setIsFile(boolean isFile) {
 		this.isFile = isFile;
 	}
 

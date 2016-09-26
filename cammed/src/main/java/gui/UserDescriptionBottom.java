@@ -8,8 +8,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import actions.MessageTO;
+import connections.ClientMessages;
 import database.User;
+import database.memorydatabase.UserEntity;
 import gui.helper.Controller;
+import masterdata.SystemParameter;
 
 public class UserDescriptionBottom extends JPanel {
 
@@ -17,6 +21,7 @@ public class UserDescriptionBottom extends JPanel {
 	
 	private User user;
 	private Controller controller;
+	private ClientMessages message;
 	
 	private JTextField input;
 	private JButton send;
@@ -28,6 +33,7 @@ public class UserDescriptionBottom extends JPanel {
 	public UserDescriptionBottom(UserHistoryPanel userHistory) {
 		this.userHistory = userHistory;
 		controller = new Controller();
+		message = new ClientMessages();
 		
 		setLayout(new BorderLayout(0, 0));
 
@@ -50,11 +56,12 @@ public class UserDescriptionBottom extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				String enteredText = input.getText();
-				
 				controller.persistMessage(enteredText, userHistory);
-				
 				input.setText("");
-				// User 4 wrz 2016 dodac tutaj wrzucenie na serwer jesli user jest niezalogowany - wspolna czesc z sygnalizacja plikow
+				
+				UserEntity loggedUser = (UserEntity) SystemParameter.get(SystemParameter.USER);
+				MessageTO messageTO = new MessageTO(enteredText, false, loggedUser.getUuid().toString() , user.getUuid().toString());
+				message.sendObject(messageTO);
 			}
 		};
 	}

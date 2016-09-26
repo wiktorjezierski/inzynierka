@@ -33,7 +33,7 @@ public class Message implements Entitys {
 	private Date date;
 
 	@Column(name="is_file")
-	private String isFile;
+	private boolean isFile;
 
 	@Column(name="user_from")
 	private String userFrom;
@@ -45,7 +45,7 @@ public class Message implements Entitys {
 		date = new Date();
 	}
 
-	public Message(String uuid, String content, String isFile, String userFrom, String usetTo) {
+	public Message(String uuid, String content, boolean isFile, String userFrom, String usetTo) {
 		super();
 		this.uuid = uuid;
 		this.content = content;
@@ -55,7 +55,7 @@ public class Message implements Entitys {
 		date = new Date();
 	}
 	
-	public Message(String uuid, String content, String isFile, String userFrom, String usetTo, Date date) {
+	public Message(String uuid, String content, boolean isFile, String userFrom, String usetTo, Date date) {
 		super();
 		this.uuid = uuid;
 		this.content = content;
@@ -90,11 +90,11 @@ public class Message implements Entitys {
 		this.date = date;
 	}
 
-	public String getIsFile() {
+	public boolean getIsFile() {
 		return this.isFile;
 	}
 
-	public void setIsFile(String isFile) {
+	public void setIsFile(boolean isFile) {
 		this.isFile = isFile;
 	}
 

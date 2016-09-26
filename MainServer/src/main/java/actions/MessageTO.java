@@ -12,7 +12,7 @@ public class MessageTO implements Serializable {
 	private String uuid;
 	private String content;
 	private Date date;
-	private String isFile;
+	private boolean isFile;
 	private String userFrom;
 	private String usetTo;
 	
@@ -53,11 +53,11 @@ public class MessageTO implements Serializable {
 		this.date = date;
 	}
 
-	public String getIsFile() {
+	public boolean getIsFile() {
 		return isFile;
 	}
 
-	public void setIsFile(String isFile) {
+	public void setIsFile(boolean isFile) {
 		this.isFile = isFile;
 	}
 
