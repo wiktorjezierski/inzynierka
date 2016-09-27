@@ -14,6 +14,7 @@ public class UserHistoryPanel extends JPanel {
 
 	private static final long serialVersionUID = -5915173622961906936L;
 
+	private User user;
 	private Controller controller;
 	
 	private JPanel panel;
@@ -35,6 +36,7 @@ public class UserHistoryPanel extends JPanel {
 	}
 	
 	public void generateHistory(User user) {
+		this.user = user;
 		panel.removeAll();
 		List<HistoryEntity> historyList = controller.generateHistoryDetails(user);
 
@@ -42,7 +44,6 @@ public class UserHistoryPanel extends JPanel {
 			addElement(history);
 		}
 	}
-
 
 	public synchronized void addElement(HistoryEntity history) {
 		panel.add(new UserHistoryDetail(history));

@@ -49,9 +49,11 @@ public class DataBaseController {
 	/**
 	 * Open connection with database
 	 */
-	public void openConnection() {
-		entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_NAME);
-		entityManager = entityManagerFactory.createEntityManager();
+	public synchronized void openConnection() {
+		if (entityManagerFactory == null || entityManager == null) {
+			entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_NAME);
+			entityManager = entityManagerFactory.createEntityManager();
+		}
 	}
 
 	/**
@@ -65,7 +67,7 @@ public class DataBaseController {
 	/**
 	 * 
 	 * */
-	public boolean transactionIsActive() {
+	public synchronized boolean transactionIsActive() {
 		return entityManager.getTransaction().isActive();
 	}
 	

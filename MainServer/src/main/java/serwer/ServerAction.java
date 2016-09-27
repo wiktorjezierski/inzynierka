@@ -53,8 +53,8 @@ public class ServerAction extends Thread {
 		}
 		
 		try {
-			server.close();
-			serverSocket.close();
+//			server.close();
+//			serverSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

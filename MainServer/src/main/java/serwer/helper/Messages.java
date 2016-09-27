@@ -16,14 +16,12 @@ public class Messages {
 
 	private ObjectInputStream objectInputStream;
 	private ObjectOutputStream objectOutputStream;
-	private DataBaseController mController;
 	private UUID user;
 
 	public Messages(ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream, UUID user) {
 		this.objectInputStream = objectInputStream;
 		this.objectOutputStream = objectOutputStream;
 		this.user = user;
-		mController = new DataBaseController();
 	}
 
 	public void runMessages() {
@@ -58,6 +56,8 @@ public class Messages {
 	}
 
 	private void sendMessages() throws IOException {
+		DataBaseController mController = new DataBaseController();
+		while(mController.transactionIsActive());
 		mController.beginTransaction();
 		List<Message> messages = mController.executeNamedQuery(Message.class, Actions.MESSAGE_FOR_USER, user.toString());
 		mController.commitTransaction();
@@ -69,6 +69,7 @@ public class Messages {
 	}
 
 	private void receiveMessages() throws Exception {
+		DataBaseController mController = new DataBaseController();
 		MessageTO message = (MessageTO) objectInputStream.readObject();
 		while (mController.transactionIsActive());
 

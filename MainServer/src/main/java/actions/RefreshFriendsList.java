@@ -27,6 +27,7 @@ public class RefreshFriendsList implements Actions {
 		}
 		
 		DataBaseController mController = new DataBaseController();
+		mController.openConnection();
 		
 		mController.beginTransaction();
 		List<User> result = (List<User>) mController.executeQuery(sql);
