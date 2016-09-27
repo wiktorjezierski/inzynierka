@@ -17,7 +17,7 @@ public class SignOutAction implements Actions {
 	public Response run(String addressIp) {
 		DataBaseController mController = new DataBaseController();
 		try {
-			while(!mController.transactionIsActive());
+			while(mController.transactionIsActive());
 			mController.beginTransaction();
 			User user = mController.executeNamedQuery(User.class, Entitys.FIND_USER_BY_LOGIN, userLogin).get(0);
 			UserCurrentDetail userCurrentDetail = user.getUserCurrentDetail();
