@@ -7,6 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import database.memorydatabase.FileEntity;
 import database.memorydatabase.HistoryEntity;
 import database.memorydatabase.UserEntity;
 import masterdata.SystemParameter;
@@ -45,7 +46,13 @@ public class UserHistoryDetail extends JPanel {
 		panel.add(new JLabel(history.getDate().toString()));
 		panel.add(Box.createHorizontalStrut(20));
 		
-		panel.add(new JLabel(history.getContent()));
+		if(history.isFile()){
+			FileEntity file = history.getFileEntity();
+			panel.add(new JLabel(file.getName()));
+		}
+		else {
+			panel.add(new JLabel(history.getContent()));
+		}
 		
 		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
 		panel.add(horizontalStrut_1);

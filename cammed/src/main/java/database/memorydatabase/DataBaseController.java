@@ -41,16 +41,18 @@ public class DataBaseController {
 	 * */
 	@Override
 	protected void finalize() throws Exception {
-		entityManager.close();
-		entityManagerFactory.close();
+//		entityManager.close();
+//		entityManagerFactory.close();
 	}
 
 	/**
 	 * Open connection with database
 	 */
-	public void openConnection() {
-		entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_NAME);
-		entityManager = entityManagerFactory.createEntityManager();
+	public synchronized void openConnection() {
+		if(entityManagerFactory == null || entityManager == null) {
+			entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_NAME);
+			entityManager = entityManagerFactory.createEntityManager();
+		}
 	}
 
 	/**
@@ -64,7 +66,7 @@ public class DataBaseController {
 	/**
 	 * 
 	 * */
-	public boolean transactionIsActive() {
+	public synchronized boolean transactionIsActive() {
 		return entityManager.getTransaction().isActive();
 	}
 	
@@ -82,14 +84,14 @@ public class DataBaseController {
 	/**
 	 * Open transaction for JPA entityManager
 	 */
-	public void commitTransaction() {
+	public synchronized void commitTransaction() {
 		entityManager.getTransaction().commit();
 	}
 
 	/**
 	 * Close transaction for JPA entityManager
 	 */
-	public void beginTransaction() {
+	public synchronized void beginTransaction() {
 		entityManager.getTransaction().begin();
 	}
 	
@@ -100,7 +102,7 @@ public class DataBaseController {
 	/**
 	 * Save object into Data Base, function is template
 	 */
-	public <T extends Entitys> void saveToDataBase(T param) throws RuntimeException {
+	public synchronized <T extends Entitys> void saveToDataBase(T param) throws RuntimeException {
 		try {
 			entityManager.persist(param);
 

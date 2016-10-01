@@ -3,6 +3,7 @@ package connections;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class ClientMessages extends Thread {
 	
 	private static ObjectInputStream objectInputStream;
 	private static ObjectOutputStream objectOutputStream;
+	private static OutputStream outputStream;
 	
 	public ClientMessages() {
 		this.serverAddress = DataHelper.MAIN_SERVER_ADDRESS;
@@ -30,11 +32,12 @@ public class ClientMessages extends Thread {
 		openConnection();
 	}
 	
-	public void openConnection() {
+	public synchronized void openConnection() {
 		try {
-			if (client == null || objectOutputStream == null || objectInputStream == null) {
+			if (client == null || objectOutputStream == null || objectInputStream == null || outputStream == null) {
 				client = new Socket(serverAddress, port);
-				objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+				outputStream  = client.getOutputStream();
+				objectOutputStream = new ObjectOutputStream(outputStream);
 				objectInputStream = new ObjectInputStream(client.getInputStream());
 				
 				objectOutputStream.writeObject(retrieveUUID());
@@ -46,11 +49,12 @@ public class ClientMessages extends Thread {
 	}
 	
 	private UUID retrieveUUID() {
-		UserEntity user = (UserEntity) SystemParameter.get(SystemParameter.USER);
+		UserEntity user = null;
+		while((user = (UserEntity) SystemParameter.get(SystemParameter.USER)) == null);
 		return UUID.fromString(user.getUuid());
 	}
 	
-	public void sendObject(MessageTO message) {
+	public void sendObject(Object message) {
 		try {
 			objectOutputStream.writeObject(message);
 		} catch (IOException e) {

@@ -1,7 +1,7 @@
 package database.memorydatabase;
 
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -13,8 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import database.Entitys;
@@ -38,7 +36,7 @@ public class HistoryEntity implements Entitys {
 	
 	private String content;
 
-	private LocalDateTime date;
+	private Date date;
 	
 	@Column(name="IS_FILE")
 	private boolean isFile;
@@ -55,14 +53,7 @@ public class HistoryEntity implements Entitys {
 
 	public HistoryEntity() {
 		uuid = UUID.randomUUID().toString();
-		date = LocalDateTime.now();
-	}
-	
-	public HistoryEntity(String uuid, String content, UserEntity userBean) {
-		this.uuid = uuid;
-		this.content = content;
-		this.userBean = userBean;
-		date = LocalDateTime.now();
+		date = new Date();
 	}
 	
 	public HistoryEntity(String content, UserEntity userBean) {
@@ -70,17 +61,25 @@ public class HistoryEntity implements Entitys {
 		this.content = content;
 		this.userBean = userBean;
 		this.uuid = UUID.randomUUID().toString();
-		date = LocalDateTime.now();
+		date = new Date();
 	}
 	
-
-	public HistoryEntity(String content, UserEntity userBean, FileEntity fileEntity) {
-		this.isFile = true;
+	public HistoryEntity(String content, Date date, boolean isFile, UserEntity userBean, FileEntity fileEntity) {
+		super();
+		this.uuid = UUID.randomUUID().toString();
 		this.content = content;
+		this.date = date;
+		this.isFile = isFile;
 		this.userBean = userBean;
 		this.fileEntity = fileEntity;
+	}
+
+	public HistoryEntity(String content, Date date, boolean isFile, UserEntity userBean) {
 		this.uuid = UUID.randomUUID().toString();
-		date = LocalDateTime.now();
+		this.content = content;
+		this.date = date;
+		this.isFile = isFile;
+		this.userBean = userBean;
 	}
 
 	public String getContent() {
@@ -107,11 +106,11 @@ public class HistoryEntity implements Entitys {
 		this.userBean = userBean;
 	}
 	
-	public LocalDateTime getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	
@@ -121,6 +120,14 @@ public class HistoryEntity implements Entitys {
 
 	public void setFile(boolean isFile) {
 		this.isFile = isFile;
+	}
+
+	public FileEntity getFileEntity() {
+		return fileEntity;
+	}
+
+	public void setFileEntity(FileEntity fileEntity) {
+		this.fileEntity = fileEntity;
 	}
 
 	@Override

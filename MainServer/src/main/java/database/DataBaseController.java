@@ -42,8 +42,8 @@ public class DataBaseController {
 	 * */
 	@Override
 	protected void finalize() throws Exception {
-		entityManager.close();
-		entityManagerFactory.close();
+//		entityManager.close();
+//		entityManagerFactory.close();
 	}
 
 	/**

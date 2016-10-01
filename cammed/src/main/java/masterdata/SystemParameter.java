@@ -1,7 +1,7 @@
 package masterdata;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SystemParameter {
 	
@@ -12,13 +12,13 @@ public class SystemParameter {
 //	public final static String SESSION_ID = "sessionID";
 //	public final static String SESSION_ID = "sessionID";
 	
-	private static Map<String, Object> parameters = new HashMap<String, Object>();
+	private static Map<String, Object> parameters = new ConcurrentHashMap<String, Object>();
 	
-	public static void put(String key, Object value) {
+	public synchronized static void put(String key, Object value) {
 		parameters.put(key, value);
 	}
 	
-	public static Object get(String key) {
+	public synchronized static Object get(String key) {
 		return parameters.get(key);
 	}
 

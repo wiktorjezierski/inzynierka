@@ -38,7 +38,7 @@ public class SerwerMessages extends Thread {
                 UUID userUUID = (UUID) objectInputStream.readObject();
                 
                 // new thread for a client
-                message = new Messages(objectInputStream, objectOutputStream, userUUID);
+                message = new Messages(objectInputStream, objectOutputStream, serverSocket, userUUID);
                 message.runMessages();
             } catch (IOException e) {
                 System.out.println("I/O error: " + e);

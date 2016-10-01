@@ -88,7 +88,7 @@ public class UserDescription extends MainPanel {
 		lastAccessDate = new JLabel("data");
 		panel_3.add(lastAccessDate);
 		
-		userHistory = new UserHistoryPanel();
+		userHistory = new UserHistoryPanel(mainFrame);
 		userDescriptionBottom = new UserDescriptionBottom(userHistory);
 		add(userDescriptionBottom, BorderLayout.SOUTH);
 	}

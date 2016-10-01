@@ -9,8 +9,9 @@ import javax.swing.JPanel;
 import database.User;
 import database.memorydatabase.HistoryEntity;
 import gui.helper.Controller;
+import gui.helper.Message;
 
-public class UserHistoryPanel extends JPanel {
+public class UserHistoryPanel extends MainPanel {
 
 	private static final long serialVersionUID = -5915173622961906936L;
 
@@ -22,7 +23,8 @@ public class UserHistoryPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public UserHistoryPanel() {
+	public UserHistoryPanel(MainFrame mainFrame) {
+		super(mainFrame);
 		controller = new Controller();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
@@ -32,9 +34,11 @@ public class UserHistoryPanel extends JPanel {
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		scrollPane.add(panel);
+		
+		runReceiveMessages();
 
 	}
-	
+
 	public void generateHistory(User user) {
 		this.user = user;
 		panel.removeAll();
@@ -51,4 +55,8 @@ public class UserHistoryPanel extends JPanel {
 		panel.revalidate();
 	}
 	
+	private void runReceiveMessages() {
+		Thread message = new Message(this, mainFrame);
+		message.start();
+	}
 }
