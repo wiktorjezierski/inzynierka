@@ -3,6 +3,8 @@ package actions;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+
 import database.Message;
 
 public class MessageTO implements Serializable {
@@ -15,6 +17,8 @@ public class MessageTO implements Serializable {
 	private boolean isFile;
 	private String userFrom;
 	private String usetTo;
+	private String fileUuid;
+	private String fileName;
 	
 	public MessageTO(Message message) {
 		uuid = message.getUuid().toString();
@@ -23,10 +27,12 @@ public class MessageTO implements Serializable {
 		isFile = message.getIsFile();
 		userFrom = message.getUserFrom();
 		usetTo = message.getUsetTo();
+		fileUuid = message.getFileUuid();
+		fileName = message.getFileName();
 	}
 	
 	public Message getEntity() {
-		return new Message(uuid, content, isFile, userFrom, usetTo, date);
+		return new Message(uuid, content, isFile, userFrom, usetTo, date, fileUuid, fileName);
 	}
 
 	public String getUuid() {

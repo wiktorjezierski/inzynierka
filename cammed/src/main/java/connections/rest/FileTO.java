@@ -19,7 +19,7 @@ public class FileTO {
 			array = new byte[(int) file.length()];
 			inputStream.read(array);
 			
-			this.fileName = generateFilename(file, fileName);
+			this.fileName = fileName;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

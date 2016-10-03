@@ -12,10 +12,10 @@ public class UpdateFiles extends Thread implements UseCase {
 	
 	public void run() {
 		for (FileEntity fileEntity : readFiles()) {
-			String name = fileEntity.getName();
-			File file = new File(DataHelper.FILE_PATH + name);
+			String uuid = fileEntity.getUuid();
+			File file = new File(DataHelper.FILE_PATH + uuid);
 			if(!file.exists()) {
-				FileAccess.downloadFiles(name);
+				FileAccess.downloadFiles(uuid, fileEntity.getName());
 			}
 		}
 	}

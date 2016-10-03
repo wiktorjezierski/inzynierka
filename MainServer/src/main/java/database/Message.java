@@ -40,6 +40,12 @@ public class Message implements Entitys {
 
 	@Column(name="uset_to")
 	private String usetTo;
+	
+	@Column(name="file_uuid")
+	private String fileUuid;
+	
+	@Column(name="file_name")
+	private String fileName;
 
 	public Message() {
 		date = new Date();
@@ -55,7 +61,7 @@ public class Message implements Entitys {
 		date = new Date();
 	}
 	
-	public Message(String uuid, String content, boolean isFile, String userFrom, String usetTo, Date date) {
+	public Message(String uuid, String content, boolean isFile, String userFrom, String usetTo, Date date, String fileUuid, String fileName) {
 		super();
 		this.uuid = uuid;
 		this.content = content;
@@ -63,6 +69,8 @@ public class Message implements Entitys {
 		this.userFrom = userFrom;
 		this.usetTo = usetTo;
 		this.date = date;
+		this.fileUuid = fileUuid;
+		this.fileName = fileName;
 	}
 
 
@@ -112,6 +120,26 @@ public class Message implements Entitys {
 
 	public void setUsetTo(String usetTo) {
 		this.usetTo = usetTo;
+	}
+
+	public String getFileUuid() {
+		return fileUuid;
+	}
+
+	public void setFileUuid(String fileUuid) {
+		this.fileUuid = fileUuid;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public void setFile(boolean isFile) {
+		this.isFile = isFile;
 	}
 
 	@Override

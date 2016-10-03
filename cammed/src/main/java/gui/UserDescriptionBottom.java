@@ -3,17 +3,15 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import actions.MessageTO;
-import connections.ClientMessages;
 import database.User;
-import database.memorydatabase.UserEntity;
 import gui.helper.Controller;
-import masterdata.SystemParameter;
 
 public class UserDescriptionBottom extends JPanel {
 
@@ -21,11 +19,13 @@ public class UserDescriptionBottom extends JPanel {
 	
 	private User user;
 	private Controller controller;
-	private ClientMessages message;
 	
 	private JTextField input;
 	private JButton send;
+	private JButton chooseFile;
 	private UserHistoryPanel userHistory;
+	private boolean isChoosenFile;
+	private File selectedFile;
 	
 	/**
 	 * Create the panel.
@@ -33,18 +33,44 @@ public class UserDescriptionBottom extends JPanel {
 	public UserDescriptionBottom(UserHistoryPanel userHistory) {
 		this.userHistory = userHistory;
 		controller = new Controller();
-		message = new ClientMessages();
 		
 		setLayout(new BorderLayout(0, 0));
 
 		input = new JTextField();
 		add(input, BorderLayout.CENTER);
 		input.setColumns(10);
+		
+		JPanel panel = new JPanel();
+		add(panel, BorderLayout.EAST);
+		
+		chooseFile = new JButton("choose file");
+		chooseFile.addMouseListener(chooseFileMouseEvent());
+		panel.add(chooseFile);
 
 		send = new JButton("   Send   ");
+		panel.add(send);
 		send.addMouseListener(mouseEvent());
-		add(send, BorderLayout.EAST);
-		
+
+	}
+
+	private MouseAdapter chooseFileMouseEvent() {
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser();
+				int returnValue = fileChooser.showOpenDialog(null);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					isChoosenFile = true;
+					selectedFile = fileChooser.getSelectedFile();
+					chooseFile.setText(selectedFile.getName());
+				}
+				else {
+					isChoosenFile = false;
+					selectedFile = null;
+					chooseFile.setText("choose file");
+				}
+			}
+		};
 	}
 	
 	public void setUser(User user) {
@@ -56,12 +82,17 @@ public class UserDescriptionBottom extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				String enteredText = input.getText();
-				controller.persistMessage(enteredText, userHistory);
-				input.setText("");
 				
-				UserEntity loggedUser = (UserEntity) SystemParameter.get(SystemParameter.USER);
-				MessageTO messageTO = new MessageTO(enteredText, false, loggedUser.getUuid().toString() , user.getUuid().toString());
-				message.sendObject(messageTO);
+				if(isChoosenFile){
+					controller.sendMessage(enteredText, user, userHistory, selectedFile);
+					isChoosenFile = false;
+				}
+				else {
+					controller.persistMessage(enteredText, userHistory);
+					controller.sendMessage(enteredText, user);
+				}
+				
+				input.setText("");
 			}
 		};
 	}

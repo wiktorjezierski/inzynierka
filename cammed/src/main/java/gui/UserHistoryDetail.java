@@ -46,14 +46,16 @@ public class UserHistoryDetail extends JPanel {
 		panel.add(new JLabel(history.getDate().toString()));
 		panel.add(Box.createHorizontalStrut(20));
 		
+		String message = history.getContent();
+		if(message != null && message.length() > 0) {
+			panel.add(new JLabel(message));
+		}
+		
 		if(history.isFile()){
 			FileEntity file = history.getFileEntity();
 			panel.add(new JLabel(file.getName()));
 		}
-		else {
-			panel.add(new JLabel(history.getContent()));
-		}
-		
+
 		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
 		panel.add(horizontalStrut_1);
 		return panel;

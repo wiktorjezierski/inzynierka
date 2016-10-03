@@ -42,17 +42,15 @@ public class Message extends Thread{
 		HistoryEntity history = null;
 		if (messageTO.getIsFile()) {
 
-			String filename = messageTO.getContent();
-			FileEntity file = new FileEntity("", filename);
+			String fileUuid = messageTO.getFileUuid();
+			FileEntity file = new FileEntity(messageTO.getUuid(), fileUuid);
 			
-			history = new HistoryEntity(messageTO.getContent(), messageTO.getDate(),
-					messageTO.getIsFile(), findUser(messageTO.getUserFrom()), file);
-			FileAccess.downloadFiles(filename);
+			history = new HistoryEntity(messageTO.getContent(), messageTO.getDate(), messageTO.getIsFile(), findUser(messageTO.getUserFrom()), file);
+			FileAccess.downloadFiles(fileUuid, messageTO.getFileName());
 			// User 29 wrz 2016 dorzucic plik do panelu po prawej
 		} else {
 
-			history = new HistoryEntity(messageTO.getContent(), messageTO.getDate(),
-					messageTO.getIsFile(), findUser(messageTO.getUserFrom()));
+			history = new HistoryEntity(messageTO.getContent(), messageTO.getDate(), messageTO.getIsFile(), findUser(messageTO.getUserFrom()));
 
 		}
 		return history;

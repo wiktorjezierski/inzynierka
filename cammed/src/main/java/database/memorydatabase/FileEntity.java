@@ -43,13 +43,18 @@ public class FileEntity implements Entitys {
 	@OneToMany(mappedBy="fileEntity", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<HistoryEntity> historyEntitys;
 
-	public FileEntity(String localPath, String name) {
+	public FileEntity(String name) {
 		uuid = UUID.randomUUID().toString();
 		date = new Date();
-		this.localPath = localPath;
 		this.name = name;
 	}
 
+	public FileEntity(String uuid, String name) {
+		this.uuid = uuid;
+		this.date = new Date();
+		this.name = name;
+	}
+	
 	public FileEntity() {
 	}
 

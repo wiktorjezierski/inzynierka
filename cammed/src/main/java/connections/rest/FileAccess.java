@@ -1,7 +1,6 @@
 package connections.rest;
 
 import java.io.File;
-import java.util.UUID;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -11,7 +10,6 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import connections.DataHelper;
-import connections.rest.FileTO;
 
 public class FileAccess {
 	
@@ -25,20 +23,20 @@ public class FileAccess {
 		}
 	}
 	
-	public static boolean downloadFiles(String filename) {
+	public static boolean downloadFiles(String fileUuid, String fileName) {
 		FileAccess fileAccess = new FileAccess();
-		return fileAccess.sendGet(filename);
+		return fileAccess.sendGet(fileUuid, fileName);
 	}
 	
-	public static String sendFile(File file) {
+	public static String sendFile(File file, String fileUUID) {
 		FileAccess fileAccess = new FileAccess();
-		return fileAccess.sendPost(file);
+		return fileAccess.sendPost(file, fileUUID);
 	}
 
-	private boolean sendGet(String filename) {
+	private boolean sendGet(String fileUuid, String newFileName) {
 		try {
 			WebResource webResource = client
-					.resource(DataHelper.REQUEST_PATH + DataHelper.SUFFIX_DOWNLOAD + "?" + DataHelper.QUERY_PARAM_FILE_NAME + "=" + filename);	// docelowo to przekazac jako argument
+					.resource(DataHelper.REQUEST_PATH + DataHelper.SUFFIX_DOWNLOAD + "?" + DataHelper.QUERY_PARAM_FILE_NAME + "=" + fileUuid);	// docelowo to przekazac jako argument
 
 			ClientResponse response = webResource.get(ClientResponse.class);
 
@@ -48,9 +46,9 @@ public class FileAccess {
 
 			File output = response.getEntity(File.class);
 			MultivaluedMap<String, String> headers = response.getHeaders();
-			String value = headers.getFirst(DataHelper.HEADER_PARAM_FILE_NAME);
+//			String value = headers.getFirst(DataHelper.HEADER_PARAM_FILE_NAME);
 			
-			output.renameTo(new File(DataHelper.FILE_PATH + value));
+			output.renameTo(new File(DataHelper.FILE_PATH + newFileName));
 			
 			System.out.println("Output from Server .... \n");
 			System.out.println(output);
@@ -62,11 +60,11 @@ public class FileAccess {
 		}
 	}
 	
-	private String sendPost(File file) {
+	private String sendPost(File file, String fileUUID) {
 		try {
 			WebResource webResource = client.resource(DataHelper.REQUEST_PATH + DataHelper.SUFFIX_UPLOAD);
 			
-			FileTO fileTO = new FileTO(file, UUID.randomUUID().toString());
+			FileTO fileTO = new FileTO(file, fileUUID);
 			String input = gson.toJson(fileTO);
 			
 			ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);

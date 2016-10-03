@@ -14,6 +14,19 @@ public class MessageTO implements Serializable {
 	private boolean isFile;
 	private String userFrom;
 	private String usetTo;
+	private String fileUuid;
+	private String fileName;
+	
+	public MessageTO(String content, boolean isFile, String userFrom, String usetTo, String fileUuid, String fileName) {
+		this.uuid = UUID.randomUUID().toString();
+		this.content = content;
+		this.date = new Date();
+		this.isFile = isFile;
+		this.userFrom = userFrom;
+		this.usetTo = usetTo;
+		this.fileUuid = fileUuid;
+		this.fileName = fileName;
+	}
 	
 	public MessageTO(String content, boolean isFile, String userFrom, String usetTo) {
 		this.uuid = UUID.randomUUID().toString();
@@ -66,6 +79,26 @@ public class MessageTO implements Serializable {
 
 	public String getUsetTo() {
 		return usetTo;
+	}
+
+	public String getFileUuid() {
+		return fileUuid;
+	}
+
+	public void setFileUuid(String fileUuid) {
+		this.fileUuid = fileUuid;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public void setFile(boolean isFile) {
+		this.isFile = isFile;
 	}
 
 	public void setUsetTo(String usetTo) {
