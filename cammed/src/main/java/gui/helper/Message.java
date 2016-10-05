@@ -43,7 +43,7 @@ public class Message extends Thread{
 		if (messageTO.getIsFile()) {
 
 			String fileUuid = messageTO.getFileUuid();
-			FileEntity file = new FileEntity(messageTO.getUuid(), fileUuid);
+			FileEntity file = new FileEntity(messageTO.getFileUuid(), messageTO.getFileName());
 			
 			history = new HistoryEntity(messageTO.getContent(), messageTO.getDate(), messageTO.getIsFile(), findUser(messageTO.getUserFrom()), file);
 			FileAccess.downloadFiles(fileUuid, messageTO.getFileName());
@@ -57,9 +57,13 @@ public class Message extends Thread{
 	}
 	
 	private void save(Entitys history) {
-		mController.beginTransaction();
-		mController.saveToDataBase(history);
-		mController.commitTransaction();
+		try {
+			mController.beginTransaction();
+			mController.saveToDataBase(history);
+			mController.commitTransaction();
+		} catch (RuntimeException e) {
+			
+		}
 	}
 	
 	private UserEntity findUser(String uuid) {

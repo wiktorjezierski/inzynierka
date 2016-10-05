@@ -18,5 +18,10 @@ public interface DataHelper {
 	public static final String SUFFIX_DOWNLOAD = "files";
 	public static final String HEADER_PARAM_FILE_NAME = "fileName";
 	public static final String QUERY_PARAM_FILE_NAME = "fileName";
-	public static final String FILE_PATH = "C:\\Users\\user\\cammed\\";
+//	public static final String FILE_PATH = "C:\\Users\\user\\cammed\\";
+	public static final String FILE_PATH = initialize() + "\\cammed\\";
+	
+	static String initialize() {
+		return System.getProperty("user.home");
+	}
 }
