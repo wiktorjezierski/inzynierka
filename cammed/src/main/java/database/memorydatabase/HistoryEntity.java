@@ -1,6 +1,7 @@
 package database.memorydatabase;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -109,7 +110,11 @@ public class HistoryEntity implements Entitys {
 	public Date getDate() {
 		return date;
 	}
-
+	
+	public String getFormatedDate() {
+		return new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(date);
+	}
+	
 	public void setDate(Date date) {
 		this.date = date;
 	}

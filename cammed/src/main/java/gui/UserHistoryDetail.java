@@ -43,7 +43,7 @@ public class UserHistoryDetail extends JPanel {
 		panel.add(new JLabel(user.getImie()));
 		panel.add(Box.createHorizontalStrut(20));
 		
-		panel.add(new JLabel(history.getDate().toString()));
+		panel.add(new JLabel(history.getFormatedDate()));
 		panel.add(Box.createHorizontalStrut(20));
 		
 		String message = history.getContent();
