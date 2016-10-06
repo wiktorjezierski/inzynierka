@@ -11,6 +11,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,9 +32,6 @@ import database.User;
 import usecases.SignOutUC;
 import usecases.UseCase;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 public class MainFrame extends JFrame {
 	
 	public static final int LOGIN = 0;
@@ -41,6 +40,7 @@ public class MainFrame extends JFrame {
 	public static final int FRIENDS = 3;
 	public static final int SIGN_UP = 4;
 	public static final int USER_DETAILS = 5;
+	public static final int FILES = 6;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -159,9 +159,8 @@ public class MainFrame extends JFrame {
         });
         splitPane_1.setLeftComponent(srodek);
         
-        JPanel prawa = new JPanel();
-        prawa.setMaximumSize(new Dimension(100, 1080));
-        splitPane_1.setRightComponent(prawa);
+        MainPanel filesPanel = getPanel(FILES);
+        splitPane_1.setRightComponent(filesPanel);
         
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMinimumSize(new Dimension(250, 100));
@@ -215,6 +214,7 @@ public class MainFrame extends JFrame {
 		maping.put(FRIENDS, new FriendsPanel(this));
 		maping.put(SIGN_UP, new SignUpPanel(this));
 		maping.put(USER_DETAILS, new UserDescription(this));
+		maping.put(FILES, new FilesPanel(this));
 	}
 	
 	public MainPanel getPanel(int name) {
