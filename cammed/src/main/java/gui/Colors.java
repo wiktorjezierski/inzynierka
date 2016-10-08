@@ -15,5 +15,7 @@ public class Colors {
 	public final static Colors BLACK = new Colors("black");
 	public final static Colors RED = new Colors("red");
 	public final static Colors GREEN = new Colors("green");
-
+	public final static Colors GRAY = new Colors("gray");
+	public final static Colors BLUE = new Colors("blue");
+	
 }

@@ -9,55 +9,113 @@ import javax.swing.JPanel;
 
 import database.memorydatabase.FileEntity;
 import database.memorydatabase.HistoryEntity;
-import database.memorydatabase.UserEntity;
 import masterdata.SystemParameter;
-import java.awt.Component;
 
-public class UserHistoryDetail extends JPanel {
+public class UserHistoryDetail extends MainPanel {
 
 	private static final long serialVersionUID = -4796674936801942164L;
 
 	public UserHistoryDetail(HistoryEntity history) {
+		super();
 		setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = generateContent(history);
 		if(SystemParameter.get(SystemParameter.MY_LOGIN).equals(history.getUserBean().getLogin())){
+			JPanel panel = displaySentMessage(history);
 			add(panel, BorderLayout.EAST);
+			if(history.isFile()){
+				JPanel panel2 = displaySentFile(history);
+				add(panel2, BorderLayout.SOUTH);
+			}
 		} else {
+			JPanel panel = displayReceivedMessage(history);
 			add(panel, BorderLayout.WEST);
+			if(history.isFile()){
+				JPanel panel2 = displayReceivedFile(history);
+				add(panel2, BorderLayout.SOUTH);
+			}
 		}
 	}
 
-	private JPanel generateContent(HistoryEntity history) {
+	private JPanel displayReceivedMessage(HistoryEntity history) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
-		UserEntity user = history.getUserBean();
-		
-		Component horizontalStrut = Box.createHorizontalStrut(20);
-		panel.add(horizontalStrut);
+		panel.add(Box.createHorizontalStrut(20));
 
-		panel.add(new JLabel(user.getLogin()));
-		panel.add(Box.createHorizontalStrut(20));
-		
-		panel.add(new JLabel(user.getImie()));
-		panel.add(Box.createHorizontalStrut(20));
-		
-		panel.add(new JLabel(history.getFormatedDate()));
-		panel.add(Box.createHorizontalStrut(20));
-		
 		String message = history.getContent();
 		if(message != null && message.length() > 0) {
-			panel.add(new JLabel(message));
+			panel.add(new JLabel(setColor(message, Colors.GREEN)));
 		}
 		
-		if(history.isFile()){
+		panel.add(Box.createHorizontalStrut(20));
+		
+		String date = history.getFormatedDate();
+		panel.add(new JLabel(setColor(date, Colors.GRAY)));
+		panel.add(Box.createHorizontalStrut(20));
+		
+		panel.add(Box.createHorizontalStrut(20));
+		return panel;
+	}
+	
+	private JPanel displayReceivedFile(HistoryEntity history) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+
+		panel.add(Box.createHorizontalStrut(20));
+
+		if (history.isFile()) {
 			FileEntity file = history.getFileEntity();
 			panel.add(new JLabel(file.getName()));
 		}
 
-		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
-		panel.add(horizontalStrut_1);
+		panel.add(Box.createHorizontalStrut(20));
+
+		String date = history.getFormatedDate();
+		panel.add(new JLabel(setColor(date, Colors.GRAY)));
+		panel.add(Box.createHorizontalStrut(20));
+		
+		panel.add(Box.createHorizontalStrut(20));
+		return panel;
+	}
+
+	private JPanel displaySentMessage(HistoryEntity history) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		
+		panel.add(Box.createHorizontalStrut(20));
+
+		String date = history.getFormatedDate();
+		panel.add(new JLabel(setColor(date, Colors.GRAY)));
+		panel.add(Box.createHorizontalStrut(20));
+		
+		String message = history.getContent();
+		if(message != null && message.length() > 0) {
+			panel.add(new JLabel(setColor(message, Colors.BLUE)));
+		}
+		
+		panel.add(Box.createHorizontalStrut(20));
+		return panel;
+	}
+	
+	private JPanel displaySentFile(HistoryEntity history) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		
+		panel.add(Box.createHorizontalStrut(60));
+
+		String date = history.getFormatedDate();
+		
+		panel.add(Box.createHorizontalStrut(40));
+		
+		FileEntity file = history.getFileEntity();
+		panel.add(new JLabel(file.getName()));
+
+		panel.add(Box.createHorizontalStrut(40));
+		
+		panel.add(new JLabel(setColor(date, Colors.GRAY)));
+		panel.add(Box.createHorizontalStrut(20));
+		
+		panel.add(Box.createHorizontalStrut(20));
 		return panel;
 	}
 }

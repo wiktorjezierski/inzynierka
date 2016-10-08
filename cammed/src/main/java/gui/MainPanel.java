@@ -17,6 +17,10 @@ public abstract class MainPanel extends JPanel {
 		this.mainFrame = mainFrame;
 	}
 	
+	public MainPanel() {
+		super();
+	}
+
 	protected String setColor(String text, Colors color) {
 		text = Controller.clearText(text);
 		return "<html><font color='"+ color.getValue() +"'>" + text + "</font></html>";
