@@ -8,6 +8,7 @@ import connections.DataHelper;
 import database.User;
 import database.memorydatabase.FileEntity;
 import gui.helper.Controller;
+import java.awt.GridLayout;
 
 public class AllFilesPanel extends MainPanel {
 
@@ -15,7 +16,7 @@ public class AllFilesPanel extends MainPanel {
 
 	public AllFilesPanel(MainFrame mainFrame) {
 		super(mainFrame);
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new GridLayout(25, 0, 0, 0));
 		
 	}
 	 
@@ -23,6 +24,7 @@ public class AllFilesPanel extends MainPanel {
 		Controller controller = new Controller();
 		List<FileEntity> fileEntities = controller.readFiles(user);
 		
+		removeAll();
 		for (FileEntity fileEntity : fileEntities) {
 			add(new SingleFilePanel(mainFrame, new File(DataHelper.FILE_PATH + fileEntity.getName())));
 		}
