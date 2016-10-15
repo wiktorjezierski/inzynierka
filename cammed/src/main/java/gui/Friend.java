@@ -88,6 +88,9 @@ public class Friend extends MainPanel {
 				UserDescription userDescription = (UserDescription) mainFrame.getPanel(MainFrame.USER_DETAILS);
 				userDescription.setValue(user);
 				
+				FilesPanel allFiles = (FilesPanel) mainFrame.getPanel(MainFrame.FILES);
+				allFiles.generateContent(user);
+				
 				mainFrame.changeCenterPanel(MainFrame.USER_DETAILS);
 			}
 		};

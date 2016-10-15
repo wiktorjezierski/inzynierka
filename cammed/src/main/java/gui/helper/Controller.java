@@ -2,6 +2,7 @@ package gui.helper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -117,6 +118,17 @@ public class Controller {
 		List<HistoryEntity> historyList = mController.executeNamedQuery(HistoryEntity.class, Entitys.HISTORY, user.getUuid().toString(), currentUser.getUuid().toString());
 		mController.commitTransaction();
 		return historyList;
+	}
+	
+	public List<FileEntity> readFiles(User user) {
+		DataBaseController mController = new DataBaseController();
+		List<FileEntity> fileEntity = new ArrayList<>();
+		mController.beginTransaction();
+		UserEntity currentUser = findUser();
+		List<HistoryEntity> historyList = mController.executeNamedQuery(HistoryEntity.class, Entitys.FILES, user.getUuid().toString(), currentUser.getUuid().toString());
+		historyList.stream().forEach(h-> fileEntity.add(h.getFileEntity()));
+		mController.commitTransaction();
+		return fileEntity;
 	}
 	
 	public void sendMessage(String enteredText, User user, UserHistoryPanel userHistory, File file) {
