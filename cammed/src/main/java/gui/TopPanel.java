@@ -30,7 +30,7 @@ public class TopPanel extends MainPanel {
 			public void mouseClicked(MouseEvent arg0) {
 				try {
 					Controller.signOut();
-					mainFrame.displayJPanel(MainFrame.LOGIN);
+					mainFrame.displayJPanel(Panels.LOGIN);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

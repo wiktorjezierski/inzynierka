@@ -130,7 +130,7 @@ public class SignUpPanel extends MainPanel {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				mainFrame.displayJPanel(MainFrame.SIGN_UP, MainFrame.LOGIN, BorderLayout.CENTER);
+				mainFrame.displayJPanel(Panels.SIGN_UP, Panels.LOGIN, BorderLayout.CENTER);
 			}
 		};
 	}
@@ -152,7 +152,7 @@ public class SignUpPanel extends MainPanel {
 					Response response = (Response) client.readObject();
 					if(response.isConfirmation()) {
 						JOptionPane.showMessageDialog(null, "Congratulations");
-						mainFrame.displayJPanel(MainFrame.SIGN_UP, MainFrame.LOGIN, BorderLayout.CENTER);
+						mainFrame.displayJPanel(Panels.SIGN_UP, Panels.LOGIN, BorderLayout.CENTER);
 					} else {
 						JOptionPane.showMessageDialog(null, "Something went wrong/ntry again");
 					}

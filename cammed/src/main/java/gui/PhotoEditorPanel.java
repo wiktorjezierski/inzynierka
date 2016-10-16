@@ -17,20 +17,6 @@ import javax.swing.JPanel;
 
 public class PhotoEditorPanel extends MainPanel {
 
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					PhotoEditorPanel frame = new PhotoEditorPanel();
-//					frame.loadImage(new File("C:\\Projekty2TEMP\\cammedFTP\\Koala.jpg"));
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
 	private static final long serialVersionUID = -2520633453273662741L;
 
 	private boolean isPressed;

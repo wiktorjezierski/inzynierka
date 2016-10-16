@@ -73,7 +73,7 @@ public class LoginPanel extends MainPanel {
 	MouseAdapter mouseRejestracja = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			mainFrame.displayJPanel(MainFrame.LOGIN, MainFrame.SIGN_UP, BorderLayout.CENTER);
+			mainFrame.displayJPanel(Panels.LOGIN, Panels.SIGN_UP, BorderLayout.CENTER);
 		}
 	};
 

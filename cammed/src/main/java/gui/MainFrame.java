@@ -34,18 +34,9 @@ import usecases.UseCase;
 
 public class MainFrame extends JFrame {
 	
-	public static final int LOGIN = 0;
-	public static final int BOTTOM = 1;
-	public static final int TOP = 2;
-	public static final int FRIENDS = 3;
-	public static final int SIGN_UP = 4;
-	public static final int USER_DETAILS = 5;
-	public static final int FILES = 6;
-	public static final int PHOTO_EDITOR = 7;
-	
 	private static final long serialVersionUID = 1L;
 	
-	private Map<Integer, JPanel> maping;
+	private Map<Panels, JPanel> maping;
 	
 	private JPanel contentPane;
 	
@@ -88,7 +79,7 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(5, 5));
 		
-		contentPane.add(maping.get(LOGIN), BorderLayout.CENTER);
+		contentPane.add(maping.get(Panels.LOGIN), BorderLayout.CENTER);
 		
 	}
 
@@ -116,10 +107,10 @@ public class MainFrame extends JFrame {
 	}
 
 	public void generateMainGuiDesign(List<User> users) {
-		JPanel loginPanel = maping.get(LOGIN);
+		JPanel loginPanel = maping.get(Panels.LOGIN);
 		contentPane.remove(loginPanel);
 		
-		FriendsPanel friendsPanel = (FriendsPanel) maping.get(FRIENDS);
+		FriendsPanel friendsPanel = (FriendsPanel) maping.get(Panels.FRIENDS);
 		friendsPanel.generateFriendList(users);
 		
 		createContent();
@@ -160,17 +151,17 @@ public class MainFrame extends JFrame {
         });
         splitPane_1.setLeftComponent(srodek);
         
-        MainPanel filesPanel = getPanel(FILES);
+        MainPanel filesPanel = getPanel(Panels.FILES);
         splitPane_1.setRightComponent(filesPanel);
         
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMinimumSize(new Dimension(250, 100));
         splitPane.setLeftComponent(scrollPane);
         
-        scrollPane.add(maping.get(FRIENDS));
+        scrollPane.add(maping.get(Panels.FRIENDS));
         panel.add(centerPanel, BorderLayout.CENTER);
-        panel.add(maping.get(TOP), BorderLayout.NORTH);
-        panel.add(maping.get(BOTTOM), BorderLayout.SOUTH);
+        panel.add(maping.get(Panels.TOP), BorderLayout.NORTH);
+        panel.add(maping.get(Panels.BOTTOM), BorderLayout.SOUTH);
         getContentPane().add(panel);
         setVisible(true);
 	}
@@ -180,7 +171,7 @@ public class MainFrame extends JFrame {
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 	}
 
-	public void displayJPanel(int oldPanel, int newPanel, String position) {
+	public void displayJPanel(Panels oldPanel, Panels newPanel, String position) {
 		JPanel jPanelOld = maping.get(oldPanel);
 		jPanelOld.setVisible(false);
 		
@@ -190,7 +181,7 @@ public class MainFrame extends JFrame {
 		repaint();
 	}
 	
-	public void displayJPanel(int newPanel) {
+	public void displayJPanel(Panels newPanel) {
 		getContentPane().removeAll();
 		getContentPane().add(getPanel(newPanel));
 		repaint();
@@ -198,7 +189,7 @@ public class MainFrame extends JFrame {
 	
 	
 	
-	public void changeCenterPanel(int newPanel) {
+	public void changeCenterPanel(Panels newPanel) {
 		Component leftComponent = splitPane_1.getLeftComponent();
 		splitPane_1.remove(leftComponent);
 		
@@ -207,19 +198,19 @@ public class MainFrame extends JFrame {
 	}
 	
 	private void createJPanels() {
-		maping = new HashMap<Integer, JPanel>();
+		maping = new HashMap<Panels, JPanel>();
 		
-		maping.put(LOGIN, new LoginPanel(this));
-		maping.put(BOTTOM, new BottonPanel(this));
-		maping.put(TOP, new TopPanel(this));
-		maping.put(FRIENDS, new FriendsPanel(this));
-		maping.put(SIGN_UP, new SignUpPanel(this));
-		maping.put(USER_DETAILS, new UserDescription(this));
-		maping.put(FILES, new FilesPanel(this));
-		maping.put(PHOTO_EDITOR, new PhotoEditorPanel(this));
+		maping.put(Panels.LOGIN, new LoginPanel(this));
+		maping.put(Panels.BOTTOM, new BottonPanel(this));
+		maping.put(Panels.TOP, new TopPanel(this));
+		maping.put(Panels.FRIENDS, new FriendsPanel(this));
+		maping.put(Panels.SIGN_UP, new SignUpPanel(this));
+		maping.put(Panels.USER_DETAILS, new UserDescription(this));
+		maping.put(Panels.FILES, new FilesPanel(this));
+		maping.put(Panels.PHOTO_EDITOR, new PhotoEditorPanel(this));
 	}
 	
-	public MainPanel getPanel(int name) {
+	public MainPanel getPanel(Panels name) {
 		return (MainPanel) maping.get(name);
 	}
 }

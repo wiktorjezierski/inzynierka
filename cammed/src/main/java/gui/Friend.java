@@ -85,13 +85,13 @@ public class Friend extends MainPanel {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				UserDescription userDescription = (UserDescription) mainFrame.getPanel(MainFrame.USER_DETAILS);
+				UserDescription userDescription = (UserDescription) mainFrame.getPanel(Panels.USER_DETAILS);
 				userDescription.setValue(user);
 				
-				FilesPanel allFiles = (FilesPanel) mainFrame.getPanel(MainFrame.FILES);
+				FilesPanel allFiles = (FilesPanel) mainFrame.getPanel(Panels.FILES);
 				allFiles.generateContent(user);
 				
-				mainFrame.changeCenterPanel(MainFrame.USER_DETAILS);
+				mainFrame.changeCenterPanel(Panels.USER_DETAILS);
 			}
 		};
 	}
