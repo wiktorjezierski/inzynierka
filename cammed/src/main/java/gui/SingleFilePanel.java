@@ -27,6 +27,10 @@ public class SingleFilePanel extends MainPanel {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				PhotoEditorPanel photoEditorPanel = (PhotoEditorPanel) mainFrame.getPanel(MainFrame.PHOTO_EDITOR);
+				photoEditorPanel.loadImage(file);
+				
+				mainFrame.changeCenterPanel(MainFrame.PHOTO_EDITOR);
 			}
 		};
 	}

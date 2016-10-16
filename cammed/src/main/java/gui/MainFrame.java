@@ -41,6 +41,7 @@ public class MainFrame extends JFrame {
 	public static final int SIGN_UP = 4;
 	public static final int USER_DETAILS = 5;
 	public static final int FILES = 6;
+	public static final int PHOTO_EDITOR = 7;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -215,6 +216,7 @@ public class MainFrame extends JFrame {
 		maping.put(SIGN_UP, new SignUpPanel(this));
 		maping.put(USER_DETAILS, new UserDescription(this));
 		maping.put(FILES, new FilesPanel(this));
+		maping.put(PHOTO_EDITOR, new PhotoEditorPanel(this));
 	}
 	
 	public MainPanel getPanel(int name) {
