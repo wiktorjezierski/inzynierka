@@ -4,6 +4,7 @@ import actions.DeviceType;
 import connections.DataHelper;
 import connections.Serwer;
 import multimedia.audio.RecordAudio;
+import multimedia.video.RecordVideo;
 
 public class ReceiveConnectionUC implements UseCase {
 
@@ -19,7 +20,7 @@ private DeviceType deviceType;
 		recordAudio.start();
 		
 		Serwer serwerVideo = Serwer.establishSerwer(DataHelper.VIDEO_PORT);
-		Thread recordVideo = new RecordAudio(serwerVideo, deviceType);
+		Thread recordVideo = new RecordVideo(serwerVideo, deviceType);
 		recordVideo.start();
 	}
 

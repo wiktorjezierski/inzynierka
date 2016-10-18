@@ -61,39 +61,35 @@ public class Serwer extends Thread {
 		}
 	}
 	
-	public void sendImage(ImageBuffer temp) {
+	public void closeConnection() {
 		try {
-			objectOutput.writeObject(temp);
+			serverSocket.close();
+			serwer.close();
+			outputStream.close();
+			inputStream.close();
+			objectOutput.close();
+			objectInput.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public Image receiveImage() {
-		try{
+	public void sendImage(ImageBuffer temp) throws IOException {
+			objectOutput.writeObject(temp);
+	}
+	
+	public Image receiveImage() throws ClassNotFoundException, IOException {
 			ImageBuffer imageBuffer = (ImageBuffer) objectInput.readObject();
 			return imageBuffer.getImage();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
-	public void sendAudio(byte [] bytes) {
-		try {
+	public void sendAudio(byte [] bytes) throws IOException {
 			outputStream.write(bytes, 0, bytes.length);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public byte[] receiveAudio() {
+	public byte[] receiveAudio() throws IOException {
 		byte[] data = new byte[DataHelper.AUDIO_CHUNK_SIZE];
-		try {
 			inputStream.read(data, 0, DataHelper.AUDIO_CHUNK_SIZE);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 		if(data.length > 0){
 			return data;

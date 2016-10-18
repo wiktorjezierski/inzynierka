@@ -3,6 +3,7 @@ package multimedia.video;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import org.bytedeco.javacv.CanvasFrame;
 
@@ -39,7 +40,11 @@ public class RecordVideo extends Thread {
 		
 		Thread t2 = new Thread() {
 			public void run() {
-				displayImage();
+				try {
+					displayImage();
+				} catch (ClassNotFoundException | IOException e) {
+					e.printStackTrace();
+				}
 			}
 		};
 		t2.start();
@@ -69,7 +74,7 @@ public class RecordVideo extends Thread {
 		}
 	}
 
-	public void displayImage() {
+	public void displayImage() throws ClassNotFoundException, IOException {
 		while (true) {
 			Image image = serwer.receiveImage();
 			canvas.showImage(image);

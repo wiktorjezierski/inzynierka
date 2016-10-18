@@ -1,12 +1,14 @@
 package multimedia.audio;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
@@ -81,28 +83,38 @@ public class RecordAudio extends Thread {
 	}
 
 	private void serwerStreamPC() {
-		try {
 			Thread t2 = new Thread() {
 				public void run() {
-					recordAudio();
+					try {
+						recordAudio();
+						serwer.closeConnection();
+						serwer = null;
+					} catch (Exception e) {
+						e.printStackTrace();
+						serwer.closeConnection();
+						serwer = null;
+					} 
 				}
 			};
 			t2.start();
 
 			Thread t = new Thread() { // odebranie danych od klienta
 				public void run() {
-					playAudio();
+					try {
+						playAudio();
+						serwer.closeConnection();
+						serwer = null;
+					} catch (Exception e) {
+						e.printStackTrace();
+						serwer.closeConnection();
+						serwer = null;
+					} 
 				}
 			};
 			t.start();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
-	private void recordAudio() {
-		try {
+	private void recordAudio() throws LineUnavailableException, IOException {
 			DataLine.Info info = new DataLine.Info(TargetDataLine.class, audioFormat);
 
 			TargetDataLine microphone = AudioSystem.getTargetDataLine(audioFormat);
@@ -118,17 +130,13 @@ public class RecordAudio extends Thread {
 				numBytesRead = microphone.read(data, 0, DataHelper.AUDIO_CHUNK_SIZE);
 				bytesRead = bytesRead + numBytesRead;
 				serwer.sendAudio(data);
+				System.out.print("recordAudio ");
 //				System.out.println(bytesRead);
 			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
-	private void playAudio() {
+	private void playAudio() throws LineUnavailableException, IOException {
 		int ilosc = 0;
-		try {
 			DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat);
 			SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
 			sourceDataLine.open(audioFormat);
@@ -138,12 +146,10 @@ public class RecordAudio extends Thread {
 				tempBuffer = serwer.receiveAudio();
 				if (tempBuffer.length > 0) {
 					sourceDataLine.write(tempBuffer, 0, DataHelper.AUDIO_CHUNK_SIZE);
+					System.out.print("playAudio ");
 					System.out.println(ilosc += tempBuffer.length);
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 //		sourceDataLine.drain();
 //		sourceDataLine.close();
 	}

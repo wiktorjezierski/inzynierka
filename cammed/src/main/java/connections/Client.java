@@ -35,17 +35,17 @@ public class Client {
 	
 	public static Client connectWithMainSerwer() {
 		Client client = new Client(DataHelper.MAIN_SERVER_ADDRESS, DataHelper.MAIN_SERVER_PORT);
-		client.openConnection(true);
+		client.openConnection(true, false);
 		return client;
 	}
 	
-	public static Client connectWithAnotherUser(String serwerAddress, int port) {
+	public static Client connectWithAnotherUser(String serwerAddress, int port, boolean audio) {
 		Client client = new Client(serwerAddress, port);
-		client.openConnection(false);
+		client.openConnection(false, audio);
 		return client;
 	}
 
-	private void openConnection(boolean mainSerwer) {
+	private void openConnection(boolean mainSerwer, boolean audio) {
 		try {
 			System.out.println("Connecting to " + serverAddress + " on port " + port);
 			client = new Socket(serverAddress, port);
@@ -78,7 +78,9 @@ public class Client {
 	public void closeConnection() {
 		try {
 			client.close();
-			clientAction.close();
+			if(clientAction != null) {
+				clientAction.close();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
