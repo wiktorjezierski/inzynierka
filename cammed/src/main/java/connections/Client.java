@@ -94,31 +94,18 @@ public class Client {
 		return (Response) objectInputStream.readObject();
 	}
 	
-	public Image receiveImage() {
-		try{
-			ImageBuffer imageBuffer = (ImageBuffer) objectInputStream.readObject();
-			return imageBuffer.getImage();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	public Image receiveImage() throws ClassNotFoundException, IOException {
+		ImageBuffer imageBuffer = (ImageBuffer) objectInputStream.readObject();
+		return imageBuffer.getImage();
 	}
 	
-	public void sendImage(ImageBuffer image) {
-		try{
-			objectOutputStream.writeObject(image);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+	public void sendImage(ImageBuffer image) throws IOException {
+		objectOutputStream.writeObject(image);
 	}
 	
-	public byte[] receiveAudio() {
+	public byte[] receiveAudio() throws IOException {
 		byte[] data = new byte[DataHelper.AUDIO_CHUNK_SIZE];
-		try {
 			inputStream.read(data, 0, DataHelper.AUDIO_CHUNK_SIZE);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 		if(data.length > 0){
 			return data;
@@ -127,11 +114,7 @@ public class Client {
 		}
 	}
 	
-	public void sendAudio(byte [] bytes) {
-		try {
-			outputStream.write(bytes, 0, bytes.length);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void sendAudio(byte[] bytes) throws IOException {
+		outputStream.write(bytes, 0, bytes.length);
 	}
 }

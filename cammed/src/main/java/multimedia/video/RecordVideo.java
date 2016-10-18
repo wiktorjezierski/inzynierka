@@ -27,7 +27,7 @@ public class RecordVideo extends Thread {
 		this.deviceType = deviceType;
 		
 		canvas = new CanvasFrame("Web Cam2");
-		canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+//		canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	}
 
 	public void run() {

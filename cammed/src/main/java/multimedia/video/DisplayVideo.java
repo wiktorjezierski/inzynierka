@@ -3,6 +3,7 @@ package multimedia.video;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import org.bytedeco.javacv.CanvasFrame;
 
@@ -26,7 +27,7 @@ public class DisplayVideo extends Thread {
 		this.deviceType = device;
 		
 		canvas = new CanvasFrame("Web Cam");
-		canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+//		canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	}
 
 	public void run() {
@@ -38,7 +39,11 @@ public class DisplayVideo extends Thread {
 	public void clientPC() {
 		Thread t = new Thread() {
 			public void run() {
-				displayImage();
+				try {
+					displayImage();
+				} catch (ClassNotFoundException | IOException e) {
+					e.printStackTrace();
+				}
 			}
 		};
 		t.start();
@@ -51,7 +56,7 @@ public class DisplayVideo extends Thread {
 		t2.start();
 	}
 
-	public void displayImage() {
+	public void displayImage() throws ClassNotFoundException, IOException {
 		while (true) {
 			Image image = client.receiveImage();
 			canvas.showImage(image);

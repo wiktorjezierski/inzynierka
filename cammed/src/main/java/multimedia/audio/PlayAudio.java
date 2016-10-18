@@ -1,5 +1,7 @@
 package multimedia.audio;
 
+import java.io.IOException;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
@@ -38,7 +40,7 @@ public class PlayAudio extends Thread {
 				public void run() {
 					try {
 						playAudio();
-					} catch (LineUnavailableException e) {
+					} catch (LineUnavailableException | IOException e) {
 						e.printStackTrace();
 					}
 				}
@@ -49,7 +51,7 @@ public class PlayAudio extends Thread {
 				public void run() {
 					try {
 						recordAudio();
-					} catch (LineUnavailableException e) {
+					} catch (LineUnavailableException | IOException e) {
 						e.printStackTrace();
 					}
 				}
@@ -61,7 +63,7 @@ public class PlayAudio extends Thread {
 		}
 	}
 	
-	private void playAudio() throws LineUnavailableException {
+	private void playAudio() throws LineUnavailableException, IOException {
 		DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat);
 		sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
 		sourceDataLine.open(audioFormat);
@@ -76,7 +78,7 @@ public class PlayAudio extends Thread {
 		}
 	}
 	
-	private void recordAudio() throws LineUnavailableException {
+	private void recordAudio() throws LineUnavailableException, IOException {
 		DataLine.Info info = new DataLine.Info(TargetDataLine.class, audioFormat);
 
 		TargetDataLine microphone = AudioSystem.getTargetDataLine(audioFormat);
