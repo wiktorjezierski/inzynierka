@@ -8,7 +8,7 @@ public class SystemParameter {
 	public final static String SESSION_ID = "sessionID";
 	public final static String MY_LOGIN = "userLogin";
 	public final static String USER = "currentUser";
-//	public final static String SESSION_ID = "sessionID";
+	public final static String VIDEO_INTERVIEW = "videoInterview";
 //	public final static String SESSION_ID = "sessionID";
 //	public final static String SESSION_ID = "sessionID";
 	

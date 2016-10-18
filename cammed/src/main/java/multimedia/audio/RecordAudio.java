@@ -15,6 +15,7 @@ import javax.sound.sampled.TargetDataLine;
 import actions.DeviceType;
 import connections.DataHelper;
 import connections.Serwer;
+import masterdata.SystemParameter;
 
 public class RecordAudio extends Thread {
 
@@ -130,7 +131,7 @@ public class RecordAudio extends Thread {
 			byte[] data = new byte[DataHelper.AUDIO_CHUNK_SIZE];
 			int bytesRead = 0;
 
-			while (true) {
+			while ((boolean) SystemParameter.get(SystemParameter.VIDEO_INTERVIEW)) {
 				numBytesRead = microphone.read(data, 0, DataHelper.AUDIO_CHUNK_SIZE);
 				bytesRead = bytesRead + numBytesRead;
 				serwer.sendAudio(data);
@@ -146,7 +147,7 @@ public class RecordAudio extends Thread {
 			sourceDataLine.open(audioFormat);
 			sourceDataLine.start();
 			byte tempBuffer[];
-			while (true) {
+			while ((boolean) SystemParameter.get(SystemParameter.VIDEO_INTERVIEW)) {
 				tempBuffer = serwer.receiveAudio();
 				if (tempBuffer.length > 0) {
 					sourceDataLine.write(tempBuffer, 0, DataHelper.AUDIO_CHUNK_SIZE);

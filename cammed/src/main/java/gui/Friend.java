@@ -14,15 +14,20 @@ import javax.swing.JLabel;
 
 import database.User;
 import gui.helper.Controller;
+import masterdata.SystemParameter;
 
 public class Friend extends MainPanel {
 
+	private static final String CALL_ICON = "C:\\Projekty\\inzynierka\\cammed\\icons\\call.png";
+	private static final String END_CALL_ICON = "C:\\Projekty\\inzynierka\\cammed\\icons\\endCall.png";
 	private static final long serialVersionUID = 1L;
 	private User user;
 	private Controller controller;
 	
 	private JLabel name;
 	private JButton call;
+	
+	private static boolean buttonState;
 
 	/**
 	 * Create the panel.
@@ -51,7 +56,11 @@ public class Friend extends MainPanel {
 		call = new JButton("");
 
 		call.addMouseListener(mouseEvents);
-		call.setIcon(new ImageIcon("C:\\Projekty\\inzynierka\\cammed\\icons\\call.png"));
+		if(!buttonState) {
+			call.setIcon(new ImageIcon(CALL_ICON));
+		} else {
+			call.setIcon(new ImageIcon(END_CALL_ICON));
+		}
 		add(call);
 
 	}
@@ -74,7 +83,18 @@ public class Friend extends MainPanel {
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			try {
-				controller.friendEstablishConnection(user);
+				if (arg0.getButton() == MouseEvent.BUTTON1) {
+					if (!buttonState) {
+						controller.friendEstablishConnection(user);
+						call.setIcon(new ImageIcon(END_CALL_ICON));
+						buttonState = true;
+						SystemParameter.put(SystemParameter.VIDEO_INTERVIEW, true);
+					} else {
+						call.setIcon(new ImageIcon(CALL_ICON));
+						SystemParameter.put(SystemParameter.VIDEO_INTERVIEW, false);
+						buttonState = false;
+					}
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 

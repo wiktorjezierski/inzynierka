@@ -12,6 +12,7 @@ import com.github.sarxos.webcam.WebcamResolution;
 
 import actions.DeviceType;
 import connections.Client;
+import masterdata.SystemParameter;
 
 public class DisplayVideo extends Thread {
 
@@ -47,17 +48,15 @@ public class DisplayVideo extends Thread {
 			}
 		};
 		t.start();
+
+		captureImage();
 		
-		Thread t2 = new Thread() {
-			public void run() {
-				captureImage();
-			}
-		};
-		t2.start();
+		canvas.dispose();
+		webcam.close();
 	}
 
 	public void displayImage() throws ClassNotFoundException, IOException {
-		while (true) {
+		while ((boolean) SystemParameter.get(SystemParameter.VIDEO_INTERVIEW)) {
 			Image image = client.receiveImage();
 			canvas.showImage(image);
 		}
@@ -77,7 +76,7 @@ public class DisplayVideo extends Thread {
 			
 			BufferedImage image;
 
-			while (true) {
+			while ((boolean) SystemParameter.get(SystemParameter.VIDEO_INTERVIEW)) {
 				image = webcam.getImage();
 				ImageBuffer imageToSend = new ImageBuffer(image);
 				client.sendImage(imageToSend);

@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import actions.DeviceType;
 import gui.MainFrame;
+import masterdata.SystemParameter;
 import usecases.ReceiveConnectionUC;
 import usecases.UpdateFiles;
 import usecases.UseCase;
@@ -22,6 +23,7 @@ public class Starter {
 		Thread serwer = new Thread() {
 			public void run() {
 				try {
+					SystemParameter.put(SystemParameter.VIDEO_INTERVIEW, true);
 					UseCase useCase = new ReceiveConnectionUC(DeviceType.PC);
 					useCase.execute();
 				} catch (Exception e) {
