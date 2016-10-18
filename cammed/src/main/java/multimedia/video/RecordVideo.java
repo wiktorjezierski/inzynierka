@@ -63,10 +63,11 @@ public class RecordVideo extends Thread {
 			webcam.open();
 			
 			BufferedImage image;
+			ImageBuffer imageToSend;
 
 			while (true) {
 				image = webcam.getImage();
-				ImageBuffer imageToSend = new ImageBuffer(image);
+				imageToSend = new ImageBuffer(image);
 				serwer.sendImage(imageToSend);
 			}
 		} catch (Exception e) {
@@ -76,8 +77,8 @@ public class RecordVideo extends Thread {
 
 	public void displayImage() throws ClassNotFoundException, IOException {
 		while (true) {
-			Image image = serwer.receiveImage();
-			canvas.showImage(image);
+//			Image image = serwer.receiveImage();
+			canvas.showImage(serwer.receiveImage());
 		}
 	}
 }

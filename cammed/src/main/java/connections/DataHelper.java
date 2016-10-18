@@ -8,7 +8,7 @@ public interface DataHelper {
 	public final static int MAIN_SERVER_MESSAGES_PORT = 6060;
 	
 	public final static int VIDEO_PORT = 7070;
-	public final static int AUDIO_PORT = 7071;
+	public final static int AUDIO_PORT = 7072;
 	
 	public final static int AUDIO_CHUNK_SIZE = 4096;
 	

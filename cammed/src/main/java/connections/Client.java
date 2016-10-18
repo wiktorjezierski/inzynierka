@@ -101,6 +101,7 @@ public class Client {
 	
 	public void sendImage(ImageBuffer image) throws IOException {
 		objectOutputStream.writeObject(image);
+		objectOutputStream.flush();
 	}
 	
 	public byte[] receiveAudio() throws IOException {

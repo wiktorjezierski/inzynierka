@@ -15,13 +15,23 @@ private DeviceType deviceType;
 	}
 	
 	public void execute() {
-		Serwer serwerAudio = Serwer.establishSerwer(DataHelper.AUDIO_PORT);
-		Thread recordAudio = new RecordAudio(serwerAudio, deviceType);
-		recordAudio.start();
+		Thread t1 = new Thread() {
+			public void run() {
+				Serwer serwerAudio = Serwer.establishSerwer(DataHelper.AUDIO_PORT);
+				RecordAudio recordAudio = new RecordAudio(serwerAudio, deviceType);
+				recordAudio.run();
+			}
+		};
+		t1.start();
 		
-		Serwer serwerVideo = Serwer.establishSerwer(DataHelper.VIDEO_PORT);
-		Thread recordVideo = new RecordVideo(serwerVideo, deviceType);
-		recordVideo.start();
+		Thread t2 = new Thread() {
+			public void run() {
+				Serwer serwerVideo = Serwer.establishSerwer(DataHelper.VIDEO_PORT);
+				Thread recordVideo = new RecordVideo(serwerVideo, deviceType);
+				recordVideo.run();
+			}
+		};
+		t2.start();
 	}
 
 }

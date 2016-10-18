@@ -119,7 +119,11 @@ public class RecordAudio extends Thread {
 
 			TargetDataLine microphone = AudioSystem.getTargetDataLine(audioFormat);
 			microphone = (TargetDataLine) AudioSystem.getLine(info);
-			microphone.open(audioFormat);
+			try{
+				microphone.open(audioFormat);
+			} catch (Exception e) {
+				
+			}
 			microphone.start();
 			
 			int numBytesRead;
@@ -130,7 +134,7 @@ public class RecordAudio extends Thread {
 				numBytesRead = microphone.read(data, 0, DataHelper.AUDIO_CHUNK_SIZE);
 				bytesRead = bytesRead + numBytesRead;
 				serwer.sendAudio(data);
-				System.out.print("recordAudio ");
+				System.out.print("Serwer recordAudio ");
 //				System.out.println(bytesRead);
 			}
 	}
@@ -146,7 +150,7 @@ public class RecordAudio extends Thread {
 				tempBuffer = serwer.receiveAudio();
 				if (tempBuffer.length > 0) {
 					sourceDataLine.write(tempBuffer, 0, DataHelper.AUDIO_CHUNK_SIZE);
-					System.out.print("playAudio ");
+					System.out.print("Serwer playAudio ");
 					System.out.println(ilosc += tempBuffer.length);
 				}
 			}

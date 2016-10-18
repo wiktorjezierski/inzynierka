@@ -76,6 +76,7 @@ public class Serwer extends Thread {
 	
 	public void sendImage(ImageBuffer temp) throws IOException {
 			objectOutput.writeObject(temp);
+			objectOutput.flush();
 	}
 	
 	public Image receiveImage() throws ClassNotFoundException, IOException {

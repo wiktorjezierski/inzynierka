@@ -15,9 +15,11 @@ public class ImageBuffer implements Serializable {
 	int[] pixels;
 
 	public ImageBuffer(BufferedImage bi) {
-		width = bi.getWidth();
-		height = bi.getHeight();
-		pixels = new int[width * height];
+		if(pixels == null) {
+			width = bi.getWidth();
+			height = bi.getHeight();
+			pixels = new int[width * height];
+		}
 		bi.getRGB(0, 0, width, height, pixels, 0, width);
 	}
 

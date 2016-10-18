@@ -74,6 +74,7 @@ public class PlayAudio extends Thread {
 			tempBuffer = client.receiveAudio();
 			if (tempBuffer.length > 0) {
 				sourceDataLine.write(tempBuffer, 0, DataHelper.AUDIO_CHUNK_SIZE);
+				System.out.println("Client playAudio");
 			}
 		}
 	}
@@ -94,7 +95,7 @@ public class PlayAudio extends Thread {
 			numBytesRead = microphone.read(data, 0, DataHelper.AUDIO_CHUNK_SIZE);
 			bytesRead = bytesRead + numBytesRead;
 			client.sendAudio(data);
-			System.out.println(bytesRead);
+			System.out.println("Client playAudio" + bytesRead);
 		}
 	}
 }
