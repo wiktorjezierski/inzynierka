@@ -96,7 +96,7 @@ public class PlayAudio extends Thread {
 			numBytesRead = microphone.read(data, 0, DataHelper.AUDIO_CHUNK_SIZE);
 			bytesRead = bytesRead + numBytesRead;
 			client.sendAudio(data);
-			System.out.println("Client playAudio" + bytesRead);
+			System.out.println("Client recordAudio " + bytesRead);
 		}
 	}
 }

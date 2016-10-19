@@ -77,9 +77,13 @@ public class DisplayVideo extends Thread {
 			BufferedImage image;
 
 			while ((boolean) SystemParameter.get(SystemParameter.VIDEO_INTERVIEW)) {
-				image = webcam.getImage();
-				ImageBuffer imageToSend = new ImageBuffer(image);
-				client.sendImage(imageToSend);
+				try {
+					image = webcam.getImage();
+					ImageBuffer imageToSend = new ImageBuffer(image);
+					client.sendImage(imageToSend);
+				} catch (NullPointerException e) {
+
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
