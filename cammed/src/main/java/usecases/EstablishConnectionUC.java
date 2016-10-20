@@ -29,6 +29,7 @@ public class EstablishConnectionUC implements UseCase {
 //			return;
 //		}
 		
+		findLocalAddress();
 		Client clientAudio = Client.connectWithAnotherUser(addressIp, DataHelper.AUDIO_PORT, true);
 		Thread playAudio = new PlayAudio(clientAudio, deviceType);
 		playAudio.run();
@@ -39,13 +40,12 @@ public class EstablishConnectionUC implements UseCase {
 	}
 	
 	private String findLocalAddress() {
-//		try {
-//			return InetAddress.getLocalHost().toString().split("/")[1];
-			return "192.168.0.4";
-//		} catch (UnknownHostException e) {
-//			e.printStackTrace();
-//			throw new RuntimeException();
-//		}
+		try {
+			return InetAddress.getLocalHost().toString().split("/")[1];
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
 	}
 
 }
