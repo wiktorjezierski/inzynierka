@@ -85,7 +85,9 @@ public class UserDescriptionBottom extends JPanel {
 				
 				if(isChoosenFile){
 					controller.sendMessage(enteredText, user, userHistory, selectedFile);
+					controller.copyFile(selectedFile);
 					isChoosenFile = false;
+					chooseFile.setText("choose file");
 				}
 				else {
 					controller.persistMessage(enteredText, userHistory);

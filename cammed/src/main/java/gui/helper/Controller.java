@@ -1,6 +1,9 @@
 package gui.helper;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +16,7 @@ import actions.MessageTO;
 import actions.Response;
 import connections.Client;
 import connections.ClientMessages;
+import connections.DataHelper;
 import connections.rest.FileAccess;
 import database.Entitys;
 import database.User;
@@ -153,5 +157,20 @@ public class Controller {
 	private String parseFileName(String name) {
 		String[] split = name.split(Pattern.quote("\\"));
 		return split[split.length - 1];
+	}
+	
+	public void copyFile(File file) {
+		try {
+			FileInputStream fileInputStream = new FileInputStream(file.getAbsolutePath());
+			FileOutputStream fileOutputStream = new FileOutputStream(new File(DataHelper.FILE_PATH) + "\\" + file.getName());
+			byte [] array = new byte[fileInputStream.available()];
+			fileInputStream.read(array);
+			fileOutputStream.write(array);
+			fileInputStream.close();
+			fileOutputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
