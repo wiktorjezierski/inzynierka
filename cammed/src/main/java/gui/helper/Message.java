@@ -28,13 +28,16 @@ public class Message extends Thread{
 	@Override
 	public void run() {
 		client.openConnection();
-		
-		while(true) {
+
+		while (true) {
 			MessageTO messageTO = client.readObject();
 			HistoryEntity history = convert(messageTO);
-			save(history);
-			userHistory.addElement(history);
-			// User 29 wrz 2016 zrobic oznaczenie na liscie znajomych o otrzymaniu nowego komunikatu
+			if (!checkIfExist(history)) {
+				save(history);
+				userHistory.addElement(history);
+			}
+			// User 29 wrz 2016 zrobic oznaczenie na liscie znajomych o
+			// otrzymaniu nowego komunikatu
 		}
 	}
 
@@ -72,5 +75,14 @@ public class Message extends Thread{
 		mController.commitTransaction();
 		return user;
 	}
+	
+	private boolean checkIfExist(HistoryEntity history) {
+		mController.beginTransaction();
+		FileEntity file = mController.findByPrimaryKey(FileEntity.class, history.getFileEntity().getUuid());
+		mController.rollbackTransaction();
+		
+		return file != null ? true : false;
+	}
+
 	
 }
