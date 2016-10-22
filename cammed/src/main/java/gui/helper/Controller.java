@@ -2,9 +2,10 @@ package gui.helper;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,8 @@ import actions.Response;
 import connections.Client;
 import connections.ClientMessages;
 import connections.DataHelper;
+import connections.messaging.FakeDeviceIdResolver;
+import connections.messaging.MessageSender;
 import connections.rest.FileAccess;
 import database.Entitys;
 import database.User;
@@ -172,5 +175,25 @@ public class Controller {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void shareWithAndroidDevice(String description) {
+		final String DEVICE = "dwg-S6Jjz5g:APA91bG_8tfBTiaXy3oxxYO_ODlLzEWwvUDfuwmmV3pVc4KhBFzAPgdIMbyIphPF0WqKPqc6zCKF5N50rvgE5-P25PBBfxgQG6afDs7CYBcayao9mCM3aWgOgdh_1MFk5JkGgG0MXSdD";
+        MessageSender sender = new MessageSender(new FakeDeviceIdResolver());
+        sender.sendDicomSharedMessage(
+                DEVICE,
+                description,
+                retrieveAddress()    // replace with valid url
+        );
+	}
+	
+	private String retrieveAddress() {
+		
+		try {
+			String address = InetAddress.getLocalHost().getHostAddress().toString();
+			return DataHelper.REQUEST_PATH.replaceFirst("localhost", address);
+		} catch (UnknownHostException e) {
+			return null;
+		}
 	}
 }

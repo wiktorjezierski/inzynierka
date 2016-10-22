@@ -86,6 +86,7 @@ public class UserDescriptionBottom extends JPanel {
 				if(isChoosenFile){
 					controller.sendMessage(enteredText, user, userHistory, selectedFile);
 					controller.copyFile(selectedFile);
+					controller.shareWithAndroidDevice("");
 					isChoosenFile = false;
 					chooseFile.setText("choose file");
 				}
