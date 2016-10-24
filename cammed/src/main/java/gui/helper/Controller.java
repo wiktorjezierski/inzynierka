@@ -177,21 +177,21 @@ public class Controller {
 		
 	}
 	
-	public void shareWithAndroidDevice(String description) {
+	public void shareWithAndroidDevice(String description, String fileName) {
 		final String DEVICE = "d7L14dlyUxE:APA91bHQ9Br9MxGt2TNlyRYQUo1hnO3LcSlBD3F4jBQLhKNiCgszU8tWLGp1yIL-txujGV56aTcK12IIEmhuCgmGjDkc4N1Y3ofR7e4kbolqKHnUeb9EvKbtWcI_aR3ZIySDvy7oz0RC";
         MessageSender sender = new MessageSender(new FakeDeviceIdResolver());
         sender.sendDicomSharedMessage(
                 DEVICE,
                 description,
-                retrieveAddress()    // replace with valid url
+                retrieveAddress(fileName)    // replace with valid url
         );
 	}
 	
-	private String retrieveAddress() {
+	private String retrieveAddress(String fileName) {
 		
 		try {
 			String address = InetAddress.getLocalHost().getHostAddress().toString();
-			return DataHelper.REQUEST_PATH.replaceFirst("localhost", address);
+			return DataHelper.REQUEST_PATH.replaceFirst("localhost", address) + DataHelper.SUFFIX_DOWNLOAD + "?" + DataHelper.QUERY_PARAM_FILE_NAME + "=" + fileName;
 		} catch (UnknownHostException e) {
 			return null;
 		}

@@ -10,6 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import connections.rest.FileAccess;
 import database.User;
 import gui.helper.Controller;
 
@@ -86,7 +87,7 @@ public class UserDescriptionBottom extends JPanel {
 				if(isChoosenFile){
 					controller.sendMessage(enteredText, user, userHistory, selectedFile);
 					controller.copyFile(selectedFile);
-					controller.shareWithAndroidDevice("description");
+					sendNotificationToAndroid();
 					isChoosenFile = false;
 					chooseFile.setText("choose file");
 				}
@@ -96,6 +97,13 @@ public class UserDescriptionBottom extends JPanel {
 				}
 				
 				input.setText("");
+			}
+
+			private void sendNotificationToAndroid() {
+				
+				String fileName = selectedFile.getName();
+				FileAccess.sendFile(selectedFile, fileName);
+				controller.shareWithAndroidDevice("description", fileName);
 			}
 		};
 	}
