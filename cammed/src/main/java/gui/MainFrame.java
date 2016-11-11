@@ -58,14 +58,12 @@ public class MainFrame extends JFrame {
 		JMenu mnNewMenu = new JMenu("Plik");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmJeden = new JMenuItem("jeden");
-		mnNewMenu.add(mntmJeden);
-		
-		JMenuItem mntmDwa = new JMenuItem("dwa");
-		mnNewMenu.add(mntmDwa);
-		
 		JMenu mnNewMenu_1 = new JMenu("Edit");
 		menuBar.add(mnNewMenu_1);
+		
+		JMenuItem mntmSaveFile = new JMenuItem("Save file");
+		mntmSaveFile.addMouseListener(saveFileAction());
+		mnNewMenu_1.add(mntmSaveFile);
 		
 		JMenu mnNewMenu_2 = new JMenu("Help");
 		menuBar.add(mnNewMenu_2);
@@ -81,6 +79,16 @@ public class MainFrame extends JFrame {
 		
 		contentPane.add(maping.get(Panels.LOGIN), BorderLayout.CENTER);
 		
+	}
+
+	private MouseAdapter saveFileAction() {
+		return new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				PhotoEditorPanel photoEditorPanel = (PhotoEditorPanel) getPanel(Panels.PHOTO_EDITOR);
+				photoEditorPanel.saveFile();
+			}
+		};
 	}
 
 	private WindowAdapter frameAction() {

@@ -26,6 +26,7 @@ public class PhotoEditorPanel extends MainPanel {
 	private BufferedImage image;
 	private JPanel panel;
 	private Canvas canvas;
+	private File file;
 
 	public PhotoEditorPanel(MainFrame mainFrame) {
 		super(mainFrame);
@@ -56,8 +57,17 @@ public class PhotoEditorPanel extends MainPanel {
 	
 	public void loadImage(File file) {
 		try {
+			this.file = file;
 			image = ImageIO.read(file);
 			color = new Color(0, 0, 0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveFile() {
+		try {
+			ImageIO.write(image, findFileExtension(file.getName()), file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -114,5 +124,9 @@ public class PhotoEditorPanel extends MainPanel {
 			}
 		};
 	}
-
+	
+	private String findFileExtension(String name) {
+		String[] split = name.split("\\.");
+		return split[split.length - 1];
+	}
 }
