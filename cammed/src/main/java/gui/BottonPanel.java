@@ -12,11 +12,5 @@ public class BottonPanel extends MainPanel {
 	public BottonPanel(MainFrame mainFrame) {
 		super(mainFrame);
 		setLayout(new BorderLayout(0, 0));
-		
-		JButton btnNewButton = new JButton("New button");
-		add(btnNewButton, BorderLayout.NORTH);
-		
-		JButton btnNewButton_1 = new JButton("New button");
-		add(btnNewButton_1, BorderLayout.SOUTH);
 	}
 }
