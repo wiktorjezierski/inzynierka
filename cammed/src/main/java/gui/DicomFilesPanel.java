@@ -8,15 +8,13 @@ import database.User;
 import database.memorydatabase.FileEntity;
 import gui.helper.Controller;
 
-public class AllFilesPanel extends MainPanel {
+public class DicomFilesPanel extends MainPanel {
 
-	private static final String BMP = ".bmp";
-	private static final String PNG = ".png";
-	private static final String JPG = ".jpg";
+	private static final String DCM = ".dcm";
 	
 	private static final long serialVersionUID = 6464373460904425758L;
 
-	public AllFilesPanel(MainFrame mainFrame) {
+	public DicomFilesPanel(MainFrame mainFrame) {
 		super(mainFrame);
 		setLayout(new GridLayout(25, 0, 0, 0));
 		
@@ -30,7 +28,7 @@ public class AllFilesPanel extends MainPanel {
 		for (FileEntity fileEntity : fileEntities) {
 			String fileName = fileEntity.getName();
 			
-			if(fileName.endsWith(JPG) || fileName.endsWith(PNG) || fileName.endsWith(BMP)) {
+			if(fileName.endsWith(DCM)) {
 				add(new SingleFilePanel(mainFrame, new File(DataHelper.FILE_PATH + fileName)));
 			}
 		}

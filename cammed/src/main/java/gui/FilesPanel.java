@@ -13,7 +13,7 @@ public class FilesPanel extends MainPanel {
 	private static final long serialVersionUID = -6212995464528143641L;
 	
 	private AllFilesPanel files;
-	private JPanel dicom;
+	private DicomFilesPanel dicom;
 
 	public FilesPanel(MainFrame mainFrame) {
 		super(mainFrame);
@@ -25,11 +25,12 @@ public class FilesPanel extends MainPanel {
 		files = new AllFilesPanel(mainFrame);
 		tabbedPane.addTab(ALL_FILES, null, files, null);
 		
-		dicom = new JPanel();
+		dicom = new DicomFilesPanel(mainFrame);
 		tabbedPane.addTab(DICOM, null, dicom, null);
 	}
 	
 	public void generateContent(User user) {
 		files.generateContent(user);
+		dicom.generateContent(user);
 	}
 }
