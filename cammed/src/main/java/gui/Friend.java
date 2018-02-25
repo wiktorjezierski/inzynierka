@@ -50,6 +50,7 @@ public class Friend extends MainPanel {
 		name.setText(" " + user.getImie() + " " + user.getNazwisko() + " ");
 		name.addMouseListener(showDetails());
 		name.addMouseListener(mouseActions());
+		buttonState = userLocal.getStatus();
 		repaint();
 		add(name);
 		

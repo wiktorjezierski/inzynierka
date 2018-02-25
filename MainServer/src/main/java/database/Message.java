@@ -142,7 +142,6 @@ public class Message implements Entitys {
 		this.isFile = isFile;
 	}
 
-	@Override
 	public String getPrimaryKey() {
 		return getUuid().toString();
 	}

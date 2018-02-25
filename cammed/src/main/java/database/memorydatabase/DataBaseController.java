@@ -10,6 +10,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import database.Entitys;
 
 
@@ -24,6 +27,8 @@ public class DataBaseController {
 	private static EntityManager entityManager;
 
 	public static void main(String[] args) {
+		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		sessionFactory.openSession().getCriteriaBuilder().createQuery(UserEntity.class);
 	}
 
 	/**

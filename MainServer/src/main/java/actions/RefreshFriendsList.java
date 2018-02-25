@@ -13,7 +13,6 @@ public class RefreshFriendsList implements Actions {
 	
 	private List<UUID> users;
 
-	@Override
 	public Response run(String addressIp) {
 		String sql = "SELECT u FROM User u WHERE ";
 		

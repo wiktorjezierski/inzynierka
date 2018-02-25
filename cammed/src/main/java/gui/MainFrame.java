@@ -150,7 +150,7 @@ public class MainFrame extends JFrame {
         splitPane_1 = new JSplitPane();
         splitPane.setRightComponent(splitPane_1);
         
-        JPanel srodek = new JPanel();
+        final JPanel srodek = new JPanel();
         srodek.addComponentListener(new ComponentAdapter() {
         	@Override
         	public void componentResized(ComponentEvent arg0) {

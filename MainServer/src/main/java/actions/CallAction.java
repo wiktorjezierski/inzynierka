@@ -11,7 +11,6 @@ public class CallAction implements Actions {
 	private static final long serialVersionUID = -125696276215436557L;
 	private UUID userUUID;
 
-	@Override
 	public Response run(String addressIp) {
 		DataBaseController mController = new DataBaseController();
 		

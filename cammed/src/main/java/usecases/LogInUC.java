@@ -28,7 +28,7 @@ public class LogInUC {
 
 			SignInAction logowanie = new SignInAction(login, password, true, DeviceType.PC);
 			client.writeObject(logowanie);
-			Response response = (Response) client.readObject();
+			Response response = client.readObject();
 			client.closeConnection();
 			
 			if(response.isConfirmation()){
