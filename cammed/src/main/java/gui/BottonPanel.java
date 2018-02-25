@@ -1,5 +1,4 @@
 package gui;
-import javax.swing.JButton;
 import java.awt.BorderLayout;
 
 public class BottonPanel extends MainPanel {
